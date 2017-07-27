@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Leaflet Layers Tree Demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet-src.js" crossorigin=""></script>
+
+    <style type="text/css">
+        html, body { width: 100%; height: 100%; margin: 0; }
+        #map { width: 100%; height: 100%; }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <link rel="stylesheet" href="../L.Control.Layers.Tree.css" crossorigin=""/>
+    <script src="../L.Control.Layers.Tree.js"></script>
+
+    <script type="text/javascript">
+        var center = [40, 0];
+
+        var osm = L.tileLayer(
+            '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {attribution: '© OpenStreetMap contributors'}
+        );
+
+        var osm_bw = L.tileLayer(
+            '//{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+            {attribution: '© OpenStreetMap contributors'}
+        );
+
+        var humanitarian = L.tileLayer(
+            'http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+            {attribution: '© OpenStreetMap contributors. Tiles courtesy of Humanitarian OpenStreetMap Team'}
+        );
+
+        var thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'}
+        var transport = L.tileLayer(
+            '//{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+            thunderAttr
+        );
+
+        var cycle = L.tileLayer(
+            '//{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
+            thunderAttr
+        );
+
+        var andalucia = L.layerGroup([
+            L.marker([36.722, -4.432]).bindPopup('Malaga'),
+            L.marker([37.375, -5.955]).bindPopup('Sevilla'),
+        ]);
+
+
+        var spain = L.layerGroup([
+            L.marker([40.377, -3.580]).bindPopup('Madrid'),
+            L.marker([41.396, 2.173]).bindPopup('Barcelona'),
+            andalucia,
+        ]);
+        var france = L.layerGroup ([
+            L.marker([48.858, 2.347]).bindPopup('Paris')
+        ]);
+
+        var map = L.map('map', {
+            layers: [osm_bw],
+            center: center,
+            zoom: 5
+        });
+
+        var baseLayers = {
+            "OpenStreeMap": osm,
+            "OpenStreeMap B&W": osm_bw,
+            "Humanitarian this is muchlonger than expected": humanitarian,
+            "Transport": transport,
+            "Cycle": cycle,
+            "OSM": osm,
+        };
+
+        var overlays = {
+            "Spain": spain,
+            "Andalucía": andalucia,
+            "France": france,
+        }
+
+        var baseTree = {
+            label: "BaseLayers",
+            noShow: true,
+            children: [
+                {
+                    label: "OpenStreeMap",
+                    name: "pues otra cosa, <b>mariposa</b>",
+                    layer: osm,
+                    children: [
+                      //  { label: "OSM", layer: osm },
+                        { label: "B&W", layer: osm_bw },
+                    ]
+                },
+                {
+                    label: "Thunder",
+                    children: [
+                        { label: 'Cycle', layer: cycle },
+                        { label: 'Transport', layer: transport },
+            //            { label: "OSM", layer: osm },
+                    ]
+                },
+                { label: 'Humanitarian', layer: humanitarian },
+           ]
+        };
+
+        var overlaysTree = {
+            label: "Overlays",
+            noShoe: false,
+            children: [
+                { 
+                    label: "Spain",
+                    layer: spain,
+                    children: [
+                        { label: 'Andalucía', layer: andalucia }
+                    ]
+                },
+                { label: "France", layer: france },
+            ]
+        }
+
+
+        L.control.layers(baseLayers, overlays).addTo(map);
+        var lay = L.control.layers.tree(baseTree, overlaysTree, {collapsed: true, namedToggle: true});
+        lay.addTo(map);
+
+    </script>
+</body>
+</html>
