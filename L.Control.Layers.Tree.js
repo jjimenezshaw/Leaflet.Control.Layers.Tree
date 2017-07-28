@@ -52,14 +52,17 @@
 
         addBaseLayer: function (layer, name) {
             console.log('addBaseLayer disabled for now');
+            return this;
         },
 
         addOverlay: function (layer, name) {
             console.log('addOverlay disabled for now');
+            return this;
         },
 
         removeLayer: function (layer) {
             console.log('removeLayer disabled for now');
+            return this;
         },
 
         onAdd: function(map) {
@@ -83,14 +86,18 @@
 
         expandTree: function(overlay) {
             var container = overlay ? this._overlaysList : this._baseLayersList;
-            if (!container) return;
-            this._applyOnTree(container, false);
+            if (container) {
+                this._applyOnTree(container, false);
+            }
+            return this;
         },
 
         collapseTree: function(overlay) {
             var container = overlay ? this._overlaysList : this._baseLayersList;
-            if (!container) return;
-            this._applyOnTree(container, true);
+            if (container) {
+                this._applyOnTree(container, true);
+            }
+            return this;
         },
 
         expandSelected: function(overlay) {
@@ -112,7 +119,7 @@
 
             var that = this;
             var container = overlay ? this._overlaysList : this._baseLayersList;
-            if (!container) return;
+            if (!container) return this;
             var hide = 'leaflet-layerstree-hide';
             var inputs =  this._layerControlInputs || container.getElementsByTagName('input');
             for (var i = 0; i < inputs.length; i++) {
@@ -122,6 +129,7 @@
                     iter(input.parentElement.parentElement.parentElement.parentElement);
                 }
             }
+            return this;
         },
 
         _applyOnTree: function(container, collapse) {

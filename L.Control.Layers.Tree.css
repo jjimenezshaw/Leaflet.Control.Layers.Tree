@@ -8,6 +8,10 @@
 .leaflet-layerstree-node {
 }
 
+.leaflet-layerstree-header input{
+    margin-left: 0px;
+}
+
 
 .leaflet-layerstree-header {
 }

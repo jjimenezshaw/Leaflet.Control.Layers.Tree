@@ -84,7 +84,7 @@
 
         var baseTree = {
             label: "BaseLayers",
-            //noShow: true,
+            noShow: true,
             children: [
                 {
                     label: "OpenStreeMap",
@@ -126,20 +126,20 @@
         }
 
 
-        L.control.layers(baseLayers, overlays).addTo(map);
+        L.control.layers(baseLayers, overlays, {position: 'topleft'}).addTo(map);
         var lay = L.control.layers.tree(baseTree, overlaysTree,
             {
                 collapsed: false,
                 namedToggle: true,
                 selectorBack: false,
-                closedSymbol: '+&#x1f4c2;',
-                openedSymbol: '&minus;&#x1f4c2;',
+                closedSymbol: '&#8862; &#x1f5c0;',
+                openedSymbol: '&#8863; &#x1f5c1;',
                 spaceSymbol: ' ',
                 collapseAll: 'Collapse all',
                 expandAll: 'Expand all',
              });
 
-        lay.addTo(map);
+        lay.addTo(map).collapseTree().expandSelected();
         //setTimeout(function(){ lay.collapseTree(); }, 5000);
         //setTimeout(function(){ lay.expandSelected(); }, 10000);
         //setTimeout(function(){ lay.expandTree(); }, 10000);
