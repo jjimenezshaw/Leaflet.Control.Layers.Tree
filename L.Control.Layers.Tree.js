@@ -169,22 +169,22 @@
                 var els = container.getElementsByClassName(it.cls);
                 for (var i = 0; i < els.length; i++) {
                     var el = els[i];
-                    if (!L.DomUtil.hasClass(el, this.cls.childrenNopad)) {
-                        if (it.hide) {
-                            L.DomUtil.addClass(el, this.cls.hide);
-                        } else {
-                            L.DomUtil.removeClass(el, this.cls.hide);
-                        }
+                    if (L.DomUtil.hasClass(el, this.cls.childrenNopad)) {
+                        // do nothing
+                    } else if (it.hide) {
+                        L.DomUtil.addClass(el, this.cls.hide);
+                    } else {
+                        L.DomUtil.removeClass(el, this.cls.hide);
                     }
                 }
             }, this);
         },
 
+        // it is called in the original _update, and shouldn't do anything.
         _addItem: function(obj) {
-            // it is called in the original _update, and shouldn't do anything.
         },
 
-        /* overwrite _update function in Control.Layers */
+        // overwrite _update function in Control.Layers
         _update: function () {
             if (!this._container) { return this; }
             var ret = L.Control.Layers.prototype._update.call(this);
@@ -230,6 +230,7 @@
                 return obj;
             }
 
+            // create the header with it fields
             var header = creator('div', this.cls.header, container);
             var sel = creator('span');
             var entry = creator('span');
@@ -247,6 +248,7 @@
             }
 
             var hide = this.cls.hide; // To toggle state
+            // create the children group, with the header event click
             if (tree.children) {
                 var children = creator('div', this.cls.children, container);
                 var sensible = tree.layer ? sel : header;
@@ -269,9 +271,11 @@
                     this._iterateTreeLayout(child, node, overlay);
                 }, this);
             } else {
+                // no children, so the selector makes no sense.
                 L.DomUtil.addClass(sel, this.cls.neverShow);
             }
 
+            // create the input and label, as in Control.Layers
             var label = creator('label', this.cls.label, entry);
             if (tree.layer) {
                 // now create the element like in _addItem
