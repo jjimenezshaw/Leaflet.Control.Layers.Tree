@@ -21,6 +21,24 @@
             expandAll: '',
         },
 
+        // Class names are error prone texts, so write them once here
+        _initClassesNames: function() {
+            this.cls = {
+                children: 'leaflet-layerstree-children',
+                childrenNopad: 'leaflet-layerstree-children-nopad',
+                hide: 'leaflet-layerstree-hide',
+                closed: 'leaflet-layerstree-closed',
+                opened: 'leaflet-layerstree-opened',
+                space: 'leaflet-layerstree-header-space',
+                pointer: 'leaflet-layerstree-header-pointer',
+                header: 'leaflet-layerstree-header',
+                neverShow: 'leaflet-layerstree-nevershow',
+                node: 'leaflet-layerstree-node',
+                name: 'leaflet-layerstree-header-name',
+                label: 'leaflet-layerstree-header-label',
+            };
+        },
+
         initialize: function (baseTree, overlaysTree, options) {
             var id = 0; // to keep unique id
             function iterate(tree, output, overlays) {
@@ -39,6 +57,7 @@
                 return output;
             }
 
+            this._initClassesNames();
             this._baseTree = baseTree;
             this._overlaysTree = overlaysTree;
             L.Util.setOptions(this, options);
@@ -108,13 +127,13 @@
                 // Function to iterate the whole DOM upwards
                 var p = el.parentElement;
                 if (p) {
-                    if (L.DomUtil.hasClass(p, 'leaflet-layerstree-children') &&
-                        !L.DomUtil.hasClass(el, 'leaflet-layerstree-children-nopad')) {
+                    if (L.DomUtil.hasClass(p, that.cls.children) &&
+                        !L.DomUtil.hasClass(el, that.cls.childrenNopad)) {
                         L.DomUtil.removeClass(p, hide);
                     }
 
-                    if (L.DomUtil.hasClass(p, 'leaflet-layerstree-node')) {
-                        var h = p.getElementsByClassName('leaflet-layerstree-header')[0];
+                    if (L.DomUtil.hasClass(p, that.cls.node)) {
+                        var h = p.getElementsByClassName(that.cls.header)[0];
                         that._applyOnTree(h, false);
                     }
                     iter(p);
@@ -124,7 +143,7 @@
             var that = this;
             var container = overlay ? this._overlaysList : this._baseLayersList;
             if (!container) return this;
-            var hide = 'leaflet-layerstree-hide';
+            var hide = this.cls.hide;
             var inputs =  this._layerControlInputs || container.getElementsByTagName('input');
             for (var i = 0; i < inputs.length; i++) {
                 // Loop over every (valid) input.
@@ -142,24 +161,23 @@
         // collapses or expands the tree in the containter.
         _applyOnTree: function(container, collapse) {
             var iters = [
-                { cls: 'leaflet-layerstree-children', hide: collapse },
-                { cls: 'leaflet-layerstree-opened', hide: collapse },
-                { cls: 'leaflet-layerstree-closed', hide: !collapse },
+                { cls: this.cls.children, hide: collapse },
+                { cls: this.cls.opened, hide: collapse },
+                { cls: this.cls.closed, hide: !collapse },
             ];
-            var hide = 'leaflet-layerstree-hide';
             iters.forEach(function (it) {
                 var els = container.getElementsByClassName(it.cls);
                 for (var i = 0; i < els.length; i++) {
                     var el = els[i];
-                    if (!L.DomUtil.hasClass(el, 'leaflet-layerstree-children-nopad')) {
+                    if (!L.DomUtil.hasClass(el, this.cls.childrenNopad)) {
                         if (it.hide) {
-                            L.DomUtil.addClass(el, hide);
+                            L.DomUtil.addClass(el, this.cls.hide);
                         } else {
-                            L.DomUtil.removeClass(el, hide);
+                            L.DomUtil.removeClass(el, this.cls.hide);
                         }
                     }
                 }
-            });
+            }, this);
         },
 
         _addItem: function(obj) {
@@ -212,12 +230,12 @@
                 return obj;
             }
 
-            var header = creator('div', 'leaflet-layerstree-header', container);
+            var header = creator('div', this.cls.header, container);
             var sel = creator('span');
             var entry = creator('span');
-            var closed = creator('span', 'leaflet-layerstree-closed', sel, this.options.closedSymbol);
-            var opened = creator('span', 'leaflet-layerstree-opened', sel, this.options.openedSymbol);
-            var space = creator('span', 'leaflet-layerstree-header-space', null, this.options.spaceSymbol);
+            var closed = creator('span', this.cls.closed, sel, this.options.closedSymbol);
+            var opened = creator('span', this.cls.opened, sel, this.options.openedSymbol);
+            var space = creator('span', this.cls.space, null, this.options.spaceSymbol);
             if (this.options.selectorBack) {
                 sel.insertBefore(space, closed);
                 header.appendChild(entry);
@@ -228,12 +246,11 @@
                 header.appendChild(entry);
             }
 
-            var hide = 'leaflet-layerstree-hide'; // To toggle state
-            var neverShow = 'leaflet-layerstree-nevershow'; // To hide elements permanently
+            var hide = this.cls.hide; // To toggle state
             if (tree.children) {
-                var children = creator('div', 'leaflet-layerstree-children', container);
+                var children = creator('div', this.cls.children, container);
                 var sensible = tree.layer ? sel : header;
-                L.DomUtil.addClass(sensible, 'leaflet-layerstree-header-pointer');
+                L.DomUtil.addClass(sensible, this.cls.pointer);
                 L.DomEvent.on(sensible, 'click', function(e) {
                     if (L.DomUtil.hasClass(opened, hide)) {
                         // it is not opened, so open it
@@ -248,14 +265,14 @@
                     }
                 });
                 tree.children.forEach(function(child) {
-                    var node = creator('div', 'leaflet-layerstree-node', children)
+                    var node = creator('div', this.cls.node, children)
                     this._iterateTreeLayout(child, node, overlay);
                 }, this);
             } else {
-                L.DomUtil.addClass(sel, neverShow);
+                L.DomUtil.addClass(sel, this.cls.neverShow);
             }
 
-            var label = creator('label', 'leaflet-layerstree-header-label', entry);
+            var label = creator('label', this.cls.label, entry);
             if (tree.layer) {
                 // now create the element like in _addItem
                 var checked = this._map.hasLayer(tree.layer)
@@ -273,11 +290,11 @@
                 //L.DomEvent.on(input, 'click', this._onInputClick, this);
                 label.append(input);
             }
-            var name = creator('span', 'leaflet-layerstree-header-name', label, tree.label);
+            var name = creator('span', this.cls.name, label, tree.label);
             L.DomUtil.addClass(closed, hide);
             if (noShow) {
-                L.DomUtil.addClass(header, neverShow);
-                L.DomUtil.addClass(children, 'leaflet-layerstree-children-nopad');
+                L.DomUtil.addClass(header, this.cls.neverShow);
+                L.DomUtil.addClass(children, this.cls.childrenNopad);
             }
         },
 
