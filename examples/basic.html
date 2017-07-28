@@ -127,10 +127,21 @@
 
 
         L.control.layers(baseLayers, overlays).addTo(map);
-        var lay = L.control.layers.tree(baseTree, overlaysTree, {collapsed: false, namedToggle: true, selectorBack: false});
+        var lay = L.control.layers.tree(baseTree, overlaysTree,
+            {
+                collapsed: false,
+                namedToggle: true,
+                selectorBack: false,
+                closedSymbol: '+&#x1f4c2;',
+                openedSymbol: '&minus;&#x1f4c2;',
+                spaceSymbol: ' ',
+                collapseAll: 'Collapse all',
+                expandAll: 'Expand all',
+             });
+
         lay.addTo(map);
-        setTimeout(function(){ lay.collapseTree(); }, 5000);
-        setTimeout(function(){ lay.expandSelected(); }, 10000);
+        //setTimeout(function(){ lay.collapseTree(); }, 5000);
+        //setTimeout(function(){ lay.expandSelected(); }, 10000);
         //setTimeout(function(){ lay.expandTree(); }, 10000);
 
     </script>

@@ -17,6 +17,8 @@
             spaceSymbol: ' ',
             selectorBack: false,
             namedToggle: false,
+            collapseAll: '',
+            expandAll: '',
         },
 
         initialize: function (baseTree, overlaysTree, options) {
@@ -161,10 +163,25 @@
         _addTreeLayout: function(tree, overlay) {
             if (!tree) return;
             var container = overlay ? this._overlaysList : this._baseLayersList;
+            this._expandCollapseAll(overlay, this.options.collapseAll, this.collapseTree, this);
+            this._expandCollapseAll(overlay, this.options.expandAll, this.expandTree, this);
             this._iterateTreeLayout(tree, container, overlay, tree.noShow)
             if (this._checkDisabledLayers) {
                 // to keep compatibility
                 this._checkDisabledLayers();
+            }
+        },
+
+        _expandCollapseAll: function(overlay, text, fn, ctx) {
+            var container = overlay ? this._overlaysList : this._baseLayersList;
+            if (text) {
+                var o = document.createElement('div');
+                o.className = 'leaflet-layerstree-expand-collapse';
+                container.appendChild(o);
+                o.innerHTML = text;
+                L.DomEvent.on(o, 'click', function(e) {
+                    fn.call(ctx, overlay);
+                });
             }
         },
 

@@ -33,6 +33,7 @@
 .leaflet-layerstree-children {
     padding-left: 10px;
 }
+
 .leaflet-layerstree-children-nopad {
     padding-left: 0px;
 }
@@ -46,6 +47,11 @@
 .leaflet-layerstree-hide {
     display: none;
 }
+
 .leaflet-layerstree-nevershow {
     display: none;
+}
+
+.leaflet-layerstree-expand-collapse {
+    cursor: pointer;
 }
