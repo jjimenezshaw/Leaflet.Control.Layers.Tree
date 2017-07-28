@@ -84,6 +84,7 @@
             return ret;
         },
 
+        // Expands the whole tree (base other overlays)
         expandTree: function(overlay) {
             var container = overlay ? this._overlaysList : this._baseLayersList;
             if (container) {
@@ -92,6 +93,7 @@
             return this;
         },
 
+        // Collapses the whole tree (base other overlays)
         collapseTree: function(overlay) {
             var container = overlay ? this._overlaysList : this._baseLayersList;
             if (container) {
@@ -100,8 +102,10 @@
             return this;
         },
 
+        // Expands the tree, only to show the selected inputs
         expandSelected: function(overlay) {
             function iter(el) {
+                // Function to iterate the whole DOM upwards
                 var p = el.parentElement;
                 if (p) {
                     if (L.DomUtil.hasClass(p, 'leaflet-layerstree-children') &&
@@ -123,17 +127,20 @@
             var hide = 'leaflet-layerstree-hide';
             var inputs =  this._layerControlInputs || container.getElementsByTagName('input');
             for (var i = 0; i < inputs.length; i++) {
+                // Loop over every (valid) input.
                 var input = inputs[i];
                 if (this._getLayer && this._getLayer(input.layerId).overlay != overlay) continue
                 if (input.checked) {
+                    // Get out of the header,
+                    // to not open the posible (but rare) children
                     iter(input.parentElement.parentElement.parentElement.parentElement);
                 }
             }
             return this;
         },
 
+        // collapses or expands the tree in the containter.
         _applyOnTree: function(container, collapse) {
-            // collapses or expands the tree in the containter.
             var iters = [
                 { cls: 'leaflet-layerstree-children', hide: collapse },
                 { cls: 'leaflet-layerstree-opened', hide: collapse },
@@ -168,11 +175,12 @@
             return ret;
         },
 
+        // Create the DOM objects for the tree
         _addTreeLayout: function(tree, overlay) {
             if (!tree) return;
             var container = overlay ? this._overlaysList : this._baseLayersList;
-            this._expandCollapseAll(overlay, this.options.collapseAll, this.collapseTree, this);
-            this._expandCollapseAll(overlay, this.options.expandAll, this.expandTree, this);
+            this._expandCollapseAll(overlay, this.options.collapseAll, this.collapseTree);
+            this._expandCollapseAll(overlay, this.options.expandAll, this.expandTree);
             this._iterateTreeLayout(tree, container, overlay, tree.noShow)
             if (this._checkDisabledLayers) {
                 // to keep compatibility
@@ -180,8 +188,10 @@
             }
         },
 
+        // Create the "Collapse all" or expand, if needed.
         _expandCollapseAll: function(overlay, text, fn, ctx) {
             var container = overlay ? this._overlaysList : this._baseLayersList;
+            ctx = ctx ? ctx : this;
             if (text) {
                 var o = document.createElement('div');
                 o.className = 'leaflet-layerstree-expand-collapse';
@@ -193,14 +203,12 @@
             }
         },
 
+        // recursive funtion to create the DOM children
         _iterateTreeLayout: function(tree, container, overlay, noShow) {
             if (!tree) return;
-            var that = this;
             function creator(type, cls, append, innerHTML) {
-                var obj = document.createElement(type);
-                if (cls) obj.className = cls;
+                var obj = L.DomUtil.create(type, cls, append);
                 if (innerHTML) obj.innerHTML = innerHTML;
-                if (append) append.appendChild(obj);
                 return obj;
             }
 
@@ -241,8 +249,8 @@
                 });
                 tree.children.forEach(function(child) {
                     var node = creator('div', 'leaflet-layerstree-node', children)
-                    that._iterateTreeLayout(child, node, overlay);
-                });
+                    this._iterateTreeLayout(child, node, overlay);
+                }, this);
             } else {
                 L.DomUtil.addClass(sel, neverShow);
             }
@@ -271,7 +279,6 @@
                 L.DomUtil.addClass(header, neverShow);
                 L.DomUtil.addClass(children, 'leaflet-layerstree-children-nopad');
             }
-
         },
 
         _createCheckboxElement: function(checked) {
