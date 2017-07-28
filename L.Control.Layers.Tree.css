@@ -46,3 +46,6 @@
 .leaflet-layerstree-hide {
     display: none;
 }
+.leaflet-layerstree-nevershow {
+    display: none;
+}
