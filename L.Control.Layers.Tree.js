@@ -215,8 +215,12 @@
                 o.className = 'leaflet-layerstree-expand-collapse';
                 container.appendChild(o);
                 o.innerHTML = text;
-                L.DomEvent.on(o, 'click', function(e) {
-                    fn.call(ctx, overlay);
+                o.tabIndex = 0;
+                L.DomEvent.on(o, 'click keydown', function(e) {
+                    if (e.type !== 'keydown' || e.keyCode === 32) {
+                        o.blur()
+                        fn.call(ctx, overlay);
+                    }
                 });
             }
         },
@@ -253,7 +257,13 @@
                 var children = creator('div', this.cls.children, container);
                 var sensible = tree.layer ? sel : header;
                 L.DomUtil.addClass(sensible, this.cls.pointer);
-                L.DomEvent.on(sensible, 'click', function(e) {
+                sensible.tabIndex = 0;
+                L.DomEvent.on(sensible, 'click keydown', function(e) {
+                    if (e.type === 'keydown' && e.keyCode !== 32) {
+                        return
+                    }
+                    sensible.blur();
+
                     if (L.DomUtil.hasClass(opened, hide)) {
                         // it is not opened, so open it
                         L.DomUtil.addClass(closed, hide);
