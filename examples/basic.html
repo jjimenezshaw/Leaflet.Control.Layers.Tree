@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <title>Leaflet Layers Tree Demo</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js" crossorigin=""></script>
+    <!--script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js" crossorigin=""></script-->
+    <script src="../../Leaflet/dist/leaflet-src.js" crossorigin=""></script>
 
     <style type="text/css">
         html, body { width: 100%; height: 100%; margin: 0; }
@@ -25,7 +26,7 @@
             {attribution: '© OpenStreetMap contributors'}
         );
 
-        var osm_bw = L.tileLayer(
+        var osmBw = L.tileLayer(
             '//{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors'}
         );
@@ -68,60 +69,60 @@
         });
 
         var baseLayers = {
-            "OpenStreeMap": osm,
-            "OpenStreeMap B&W": osm_bw,
-            "Humanitarian this is muchlonger than expected": humanitarian,
-            "Transport": transport,
-            "Cycle": cycle,
-            "OSM": osm,
+            'OpenStreeMap': osm,
+            'OpenStreeMap B&W': osmBw,
+            'Humanitarian this is muchlonger than expected': humanitarian,
+            'Transport': transport,
+            'OSM': osm,
+            'Cycle': cycle,
         };
 
         var overlays = {
-            "Spain": spain,
-            "Andalucía": andalucia,
-            "France": france,
+            'Spain': spain,
+            'Andalucía': andalucia,
+            'España': spain,
+            'France': france,
+            'Francia': france,
         }
 
         var baseTree = {
-            label: "BaseLayers",
+            label: 'BaseLayers',
             noShow: true,
             children: [
                 {
-                    label: "OpenStreeMap",
-                    name: "pues otra cosa, <b>mariposa</b>",
+                    label: 'OpenStreeMap',
+                    name: 'pues otra cosa, <b>mariposa</b>',
                     layer: osm,
                     children: [
-                      //  { label: "OSM", layer: osm },
-                        { label: "B&W", layer: osm_bw },
+                        {label: 'B&W', layer: osmBw},
                     ]
                 },
                 {
-                    label: "Thunder",
+                    label: 'Thunder',
                     children: [
-                        { label: 'Cycle', layer: cycle },
-                        { label: 'Transport', layer: transport },
-            //            { label: "OSM", layer: osm },
-                        { label: 'Mas', children: [
-                            { label: 'Humanitarian', layer: humanitarian },
+                        {label: 'Cycle', layer: cycle},
+                        {label: 'Transport', layer: transport},
+                        {label: 'Mas', children: [
+                            {label: 'Humanitarian', layer: humanitarian},
                         ]}
                     ]
                 },
-                { label: 'Humanitarian', layer: humanitarian },
-           ]
+                {label: 'Humanitarian', layer: humanitarian},
+            ]
         };
 
         var overlaysTree = {
-            label: "Overlays",
+            label: 'Overlays',
             noShoe: false,
             children: [
                 { 
-                    label: "Spain",
+                    label: 'Spain',
                     layer: spain,
                     children: [
-                        { label: 'Andalucía', layer: andalucia }
+                        {label: 'Andalucía', layer: andalucia}
                     ]
                 },
-                { label: "France", layer: france },
+                {label: 'France', layer: france},
             ]
         }
 
@@ -137,7 +138,7 @@
                 spaceSymbol: ' ',
                 collapseAll: 'Collapse all',
                 expandAll: 'Expand all',
-             });
+            });
 
         lay.addTo(map).collapseTree().expandSelected();
         //setTimeout(function(){ lay.collapseTree(); }, 5000);

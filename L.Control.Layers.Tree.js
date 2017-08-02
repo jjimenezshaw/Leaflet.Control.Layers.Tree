@@ -39,7 +39,7 @@
             };
         },
 
-        initialize: function (baseTree, overlaysTree, options) {
+        initialize: function(baseTree, overlaysTree, options) {
             var id = 0; // to keep unique id
             function iterate(tree, output, overlays) {
                 if (tree && tree.layer) {
@@ -69,18 +69,18 @@
 
         },
 
-        addBaseLayer: function (layer, name) {
-            console.log('addBaseLayer disabled for now');
+        addBaseLayer: function(layer, name) {
+            // console.log('addBaseLayer disabled for now');
             return this;
         },
 
-        addOverlay: function (layer, name) {
-            console.log('addOverlay disabled for now');
+        addOverlay: function(layer, name) {
+            // console.log('addOverlay disabled for now');
             return this;
         },
 
-        removeLayer: function (layer) {
-            console.log('removeLayer disabled for now');
+        removeLayer: function(layer) {
+            // console.log('removeLayer disabled for now');
             return this;
         },
 
@@ -144,7 +144,7 @@
             var container = overlay ? this._overlaysList : this._baseLayersList;
             if (!container) return this;
             var hide = this.cls.hide;
-            var inputs =  this._layerControlInputs || container.getElementsByTagName('input');
+            var inputs = this._layerControlInputs || container.getElementsByTagName('input');
             for (var i = 0; i < inputs.length; i++) {
                 // Loop over every (valid) input.
                 var input = inputs[i];
@@ -161,11 +161,11 @@
         // collapses or expands the tree in the containter.
         _applyOnTree: function(container, collapse) {
             var iters = [
-                { cls: this.cls.children, hide: collapse },
-                { cls: this.cls.opened, hide: collapse },
-                { cls: this.cls.closed, hide: !collapse },
+                {cls: this.cls.children, hide: collapse},
+                {cls: this.cls.opened, hide: collapse},
+                {cls: this.cls.closed, hide: !collapse},
             ];
-            iters.forEach(function (it) {
+            iters.forEach(function(it) {
                 var els = container.getElementsByClassName(it.cls);
                 for (var i = 0; i < els.length; i++) {
                     var el = els[i];
@@ -185,7 +185,7 @@
         },
 
         // overwrite _update function in Control.Layers
-        _update: function () {
+        _update: function() {
             if (!this._container) { return this; }
             var ret = L.Control.Layers.prototype._update.call(this);
             this._addTreeLayout(this._baseTree, false);
