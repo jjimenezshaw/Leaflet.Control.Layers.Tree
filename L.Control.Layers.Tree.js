@@ -291,7 +291,7 @@
                     this._layerControlInputs.push(input);
                 }
                 input.layerId = L.Util.stamp(tree.layer);
-                //L.DomEvent.on(input, 'click', this._onInputClick, this);
+                L.DomEvent.on(input, 'click', this._onInputClick, this);
                 label.append(input);
             }
             var name = creator('span', this.cls.name, label, tree.label);
