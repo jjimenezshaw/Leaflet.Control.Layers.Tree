@@ -1,0 +1,48 @@
+{
+  "name": "leaflet.control.layers.tree",
+  "version": "0.0.1",
+  "description": "Control Layers in a Tree structure",
+  "main": "L.Control.Layers.Tree.js",
+  "style": "L.Control.Layers.Tree.css",
+  "directories": {
+    "test": "test"
+  },
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "lint": "eslint L.*.js examples/* test/*",
+    "lintfix": "eslint L.*.js examples/* test/* --fix",
+    "spec": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html",
+    "test": "npm run lint && npm run spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjimenezshaw/Leaflet.ControlLayersTree.git"
+  },
+  "keywords": [
+    "Leaflet",
+    "map",
+    "geo",
+    "tree",
+    "control",
+    "layers"
+  ],
+  "devDependencies": {
+    "blanket": "^1.2.3",
+    "chai": "~4.1.0",
+    "chai-leaflet": "^0.0.13",
+    "eslint": "^4.3.0",
+    "eslint-plugin-html": "^3.1.1",
+    "mocha": "^3.5.0",
+    "mocha-phantomjs-core": "^2.1.2",
+    "phantomjs-prebuilt": "^2.1.1"
+  },
+  "dependencies": {
+    "leaflet": "^1.0.3"
+  },
+  "author": "Javier Jimenez Shaw",
+  "contributors": [
+    {
+    }
+  ],
+  "readmeFilename": "README.md"
+}
