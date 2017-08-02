@@ -302,7 +302,7 @@
                 }
                 input.layerId = L.Util.stamp(tree.layer);
                 L.DomEvent.on(input, 'click', this._onInputClick, this);
-                label.append(input);
+                label.appendChild(input);
             }
             var name = creator('span', this.cls.name, label, tree.label);
             L.DomUtil.addClass(closed, hide);
