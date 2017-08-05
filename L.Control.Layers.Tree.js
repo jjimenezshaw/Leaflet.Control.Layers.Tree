@@ -1,4 +1,6 @@
 /*
+ * Control like L.Control.Layers, but showing layers in a tree.
+ * Do not forget to include the css file.
  */
 
 (function(L) {
