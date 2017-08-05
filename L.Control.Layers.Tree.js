@@ -44,8 +44,7 @@
             function iterate(tree, output, overlays) {
                 if (tree && tree.layer) {
                     if (!overlays) {
-                        tree.layer._layersTreeName = tree.name ?
-                                                     tree.name : tree.label;
+                        tree.layer._layersTreeName = tree.name || tree.label;
                     }
                     output[id++] = tree.layer;
                 }
