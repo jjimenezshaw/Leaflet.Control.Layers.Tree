@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title>Leaflet Layers Tree Demo</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" crossorigin=""/>
-    <!--script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js" crossorigin=""></script-->
-    <script src="../../Leaflet/dist/leaflet-src.js" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js" crossorigin=""></script>
+    <!--script src="../../Leaflet/dist/leaflet-src.js" crossorigin=""></script-->
 
     <style type="text/css">
         html, body { width: 100%; height: 100%; margin: 0; }
@@ -89,6 +89,7 @@
             label: 'BaseLayers',
             noShow: true,
             children: [
+                {label: '<label onclick="lay.collapse()" tabindex="0">Close</label>'},
                 {
                     label: 'OpenStreeMap',
                     name: 'pues otra cosa, <b>mariposa</b>',
@@ -115,7 +116,7 @@
             label: 'Overlays',
             noShoe: false,
             children: [
-                { 
+                {
                     label: 'Spain',
                     layer: spain,
                     children: [
