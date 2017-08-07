@@ -18,6 +18,7 @@
     "key-spacing": 2,
     "no-shadow": 0,
     "no-console": 2,
+    "no-trailing-spaces": 2,
   },
   "globals": {
     "L": true,
