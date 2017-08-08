@@ -70,3 +70,12 @@ Creates the control. The arguments are:
 * `baseTree`: Tree defining the base layers (like the one above).
 * `overlaysTree`: Similar than baseTree, but for overlays.
 * `options`: specific options for the tree. See that it includes `L.Control.Layer` [options](http://leafletjs.com/reference-1.2.0.html#control-layers)
+
+##### constructor options
+* `closedSymbol`: `<String>` Symbol displayed on a closed node (that you can click to open). Default '+'
+* `openedSymbol`: `<String>` Symbol displayed on a opened node (that you can click to close). Default '&minus;' (`&minus;`)
+* `spaceSymbol`: `<String>` Symbol between the closed or opened symbol, and the text. Default ' ' (a normal space)
+* `selectorBack`: `<Boolean>` Flag to indicate if the selector (+ or &minus;) is _after_ the text. Default 'false'
+* `namedToggle`: `<Boolean>` Flag to replace the toggle image (box with the layers image) with the 'name' of the selected base layer. If the `name` field is not present in the tree for this layer, `label` is used. See that you can show a different name when control is collapsed than the one that appears in the tree when it is expanded. Your node in the tree can be `{ label: 'OSM', name: 'OpenStreetMap', layer: layer }`. Default 'false'
+* `collapseAll`: `<String>` Text for an entry in control that collapses the tree (baselayers or overlays). If empty, no entry is created. Default ''
+* `expandAll`: `<String>` Text for an entry in control that expands the tree. If empty, no entry is created. Default ''
