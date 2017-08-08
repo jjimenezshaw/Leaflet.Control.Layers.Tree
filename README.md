@@ -23,9 +23,9 @@ var baseTree = {
     noShow: false,
     children: [
         {
-            label: 'World',
+            label: 'World &#x1f5fa;',
             children: [
-                { label: 'OpenStreeMap', layer: osm },
+                { label: 'OpenStreetMap', layer: osm },
                 { label: 'Esri', layer: esri },
                 { label: 'Google Satellite', layer: g_s },
                 /* ... */
