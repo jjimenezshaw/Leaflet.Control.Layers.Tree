@@ -1,4 +1,6 @@
 # Leaflet.Control.Layers.Tree
+[![Build Status](https://travis-ci.org/jjimenezshaw/Leaflet.Control.Layers.Tree.png)](https://travis-ci.org/jjimenezshaw/Leaflet.Control.Layers.Tree)
+
 A Tree Layers Control for Leaflet.
 
 ## Description
