@@ -84,14 +84,14 @@ Creates the control. The arguments are:
 See that those strings can be html code, with unicode, images or whatever you want.
 
 #### `expandTree(overlays)`
-This method expands the tree. When `overlays` is `true` expands the overlays tree. Otherwise expands the baselayers tree.
+This method expands the tree. When `overlays` is `true` expands the overlays tree. Otherwise expands the baselayers tree. Returns `this`.
 
 
 #### `collapseTree(overlays)`
-This method collapses the tree. When `overlays` is `true` collapses the overlays tree. Otherwise collapses the baselayers tree.
+This method collapses the tree. When `overlays` is `true` collapses the overlays tree. Otherwise collapses the baselayers tree. Returns `this`.
 
 #### `expandSelected(overlays)`
-This method expands only the selected item in the tree. When `overlays` is `true` affects the overlays tree. Otherwise affects the baselayers tree.
+This method expands only the selected item in the tree. When `overlays` is `true` affects the overlays tree. Otherwise affects the baselayers tree. Returns `this`.
 
 ## Tricks about the tree
 You can see an example of a baselayers tree (the javascript code) above. As every tree, you need a root node. If you don't want the root node to be displayed, but directly show its nodes in the control, add the attribute `noShow: true`. That makes sense only in the root node.
