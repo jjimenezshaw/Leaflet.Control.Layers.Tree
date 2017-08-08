@@ -16,50 +16,50 @@ This plugin has been tested with Leaflet 1.0.3, 1.1.0 and 1.2.0.
 3. Create the control and add to the map: `L.control.layers.tree(baseTree, overalysTree, options).addTo(map);`
 4. Voilà!
 ```javascript
-var baseTree = {                                                                
-    label: 'Base Layers',                                                        
-    children: [                                                                 
-        {                                                                       
-            label: 'World',                                                     
-            children: [                                                         
-                { label: 'OpenStreeMap', layer: osm },                          
+var baseTree = {
+    label: 'Base Layers',
+    children: [
+        {
+            label: 'World',
+            children: [
+                { label: 'OpenStreeMap', layer: osm },
                 { label: 'Esri', layer: esri },
-                { label: 'Google Satellite', layer: g_s },                      
-                /* ... */                                                       
-            ]                                                                   
-        },                                                                      
-        {                                                                       
-            label: 'Europe',                                                    
-            children: [                                                         
-                { label: 'France', layer: france },                             
-                { label: 'Germany', layer: germany },                           
-                { label: 'Spain', layer: spain },                               
-                /* ... */                                                       
-            ]                                                                   
-        },                                                                      
-        {                                                                       
-            label: 'USA',                                                       
-            children: [                                                         
-                {                                                               
-                    label: 'General',                                           
-                    children: [                                                 
-                        { label: 'Nautical', layer: usa_naut },                 
-                        { label: 'Satellite', layer: usa_sat },                 
-                        { label: 'Topographical', layer: usa_topo },             
-                    ]                                                           
-                },                                                              
-                {                                                               
-                    label: 'States',                                            
-                    children: [                                                 
-                        { label: 'CA', layer: usa_ca },                         
-                        { label: 'NY', layer: usa_ny },                         
-                        /* ... */                                               
-                    ]                                                           
-                }                                                               
-            ]                                                                   
-        },                                                                      
-    ]                                                                           
-}; 
+                { label: 'Google Satellite', layer: g_s },
+                /* ... */
+            ]
+        },
+        {
+            label: 'Europe',
+            children: [
+                { label: 'France', layer: france },
+                { label: 'Germany', layer: germany },
+                { label: 'Spain', layer: spain },
+                /* ... */
+            ]
+        },
+        {
+            label: 'USA',
+            children: [
+                {
+                    label: 'General',
+                    children: [
+                        { label: 'Nautical', layer: usa_naut },
+                        { label: 'Satellite', layer: usa_sat },
+                        { label: 'Topographical', layer: usa_topo },
+                    ]
+                },
+                {
+                    label: 'States',
+                    children: [
+                        { label: 'CA', layer: usa_ca },
+                        { label: 'NY', layer: usa_ny },
+                        /* ... */
+                    ]
+                }
+            ]
+        },
+    ]
+};
 ```
 
 ## API
