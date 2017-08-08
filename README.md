@@ -18,6 +18,7 @@ This plugin has been tested with Leaflet 1.0.3, 1.1.0 and 1.2.0.
 ```javascript
 var baseTree = {
     label: 'Base Layers',
+    noShow: false,
     children: [
         {
             label: 'World',
@@ -79,3 +80,24 @@ Creates the control. The arguments are:
 * `namedToggle`: `<Boolean>` Flag to replace the toggle image (box with the layers image) with the 'name' of the selected base layer. If the `name` field is not present in the tree for this layer, `label` is used. See that you can show a different name when control is collapsed than the one that appears in the tree when it is expanded. Your node in the tree can be `{ label: 'OSM', name: 'OpenStreetMap', layer: layer }`. Default 'false'
 * `collapseAll`: `<String>` Text for an entry in control that collapses the tree (baselayers or overlays). If empty, no entry is created. Default ''
 * `expandAll`: `<String>` Text for an entry in control that expands the tree. If empty, no entry is created. Default ''
+
+See that those strings can be html code, with unicode, images or whatever you want.
+
+#### `expandTree(overlays)`
+This method expands the tree. When `overlays` is `true` expands the overlays tree. Otherwise expands the baselayers tree.
+
+
+#### `collapseTree(overlays)`
+This method collapses the tree. When `overlays` is `true` collapses the overlays tree. Otherwise collapses the baselayers tree.
+
+#### `expandSelected(overlays)`
+This method expands only the selected item in the tree. When `overlays` is `true` affects the overlays tree. Otherwise affects the baselayers tree.
+
+## Tricks about the tree
+You can see an example of a baselayers tree (the javascript code) above. As every tree, you need a root node. If you don't want the root node to be displayed, but directly show its nodes in the control, add the attribute `noShow: true`. That makes sense only in the root node.
+
+Non leaf nodes (that is, those with `children`) can also have a layer. In this case you will be able to select the layer, and only the icon will collapse or expand this branch.
+
+You can include HTML code, not only ascii chars, in the `label` attribute. It will be included as `innerHTML`. Be carefull with unicodes, because not every browser supports them all.
+
+A leaf node without `layer` attribute is also posible. Only with `label`. This can be used to include special commands calling a javascript function, or a separator, or whatever you like.
