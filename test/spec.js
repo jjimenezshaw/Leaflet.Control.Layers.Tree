@@ -14,7 +14,7 @@ function baseTree1() {
                 label: 'Node 1',
                 children: [
                     {label: 'Leaf 11', name: 'Name Leaf 11', layer: layerA},
-                    {label: 'Leaf 12', name: 'Name Leaf 12', layer: L.tileLayer('')}
+                    {label: 'Leaf 12', layer: L.tileLayer('')}
                 ]
             },
             {label: 'Leaf three', name: 'Name Leaf three', layer: layerB}
@@ -22,9 +22,39 @@ function baseTree1() {
     };
 }
 
+var markerO = L.marker([0, 0]);
+var markerA = L.marker([40, 0]);
+var markerB = L.marker([0, 30]);
+
+function overlaysTree1() {
+    return {
+        noShow: false,
+        label: 'Root O node',
+        children: [
+            {label: 'Over one', name: 'Name Over one', layer: markerO},
+            {label: 'Over two', name: 'Name Over two', layer: L.layerGroup([])},
+            {
+                label: 'O Node 1',
+                children: [
+                    {label: 'Over 11', name: 'Name Over 11', layer: markerA},
+                    {label: 'Over 12', layer: L.layerGroup([])}
+                ]
+            },
+            {label: 'Over three', name: 'Name Over three', layer: markerB}
+        ]
+    };
+}
+
 function isHidden(el) {
     // https://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
     return (el.offsetParent === null)
+}
+
+function checkHidden(list, value, first) {
+    first = first || 0;
+    for (var i = first; i < list.length; i++) {
+        isHidden(list[i]).should.be.equal(value);
+    }
 }
 
 describe('L.Control.Layers.Tree', function() {
@@ -68,13 +98,9 @@ describe('L.Control.Layers.Tree', function() {
             inputs.length.should.be.equal(5);
             var headers = map._container.querySelectorAll('.leaflet-control-layers-base .leaflet-layerstree-header');
             headers.length.should.be.equal(7);
-            for (var i = 0; i < headers.length; i++) {
-                isHidden(headers[i]).should.be.false;
-            }
+            checkHidden(headers, false, 0);
             ctl.collapseTree();
-            for (var i = 1; i < headers.length; i++) {
-                isHidden(headers[i]).should.be.true;
-            }
+            checkHidden(headers, true, 1);
         });
         it('they are accesible on mouseover', function() {
             //document.body.appendChild(map._container);
@@ -85,24 +111,53 @@ describe('L.Control.Layers.Tree', function() {
             headers.length.should.be.equal(7);
 
             // Nothing visible because the contrl is collapsed
-            for (var i = 0; i < inputs.length; i++) {
-                isHidden(inputs[i]).should.be.true;
-            }
-            for (var i = 0; i < headers.length; i++) {
-                isHidden(headers[i]).should.be.true;
-            }
+            checkHidden(inputs, true, 0);
+            checkHidden(headers, true, 0);
 
             // mouse over the control to show it.
             happen.once(ctrl._container, {type: 'mouseover'});
-            for (var i = 0; i < inputs.length; i++) {
-                isHidden(inputs[i]).should.be.false;
-            }
-            for (var i = 0; i < headers.length; i++) {
-                isHidden(headers[i]).should.be.false;
-            }
+            checkHidden(inputs, false, 0);
+            checkHidden(headers, false, 0);
             // Hi, let it as you found it.
             happen.once(ctrl._container, {type: 'mouseout'});
         });
+    });
 
+    describe('Simple overlays tests', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 1);
+        });
+
+        it('they are there', function() {
+            //document.body.appendChild(map._container);
+            var ctl = L.control.layers.tree(null, overlaysTree1(),
+                {collapsed: false}).addTo(map);
+            var inputs = map._container.querySelectorAll('.leaflet-control-layers-overlays input');
+            inputs.length.should.be.equal(5);
+            var headers = map._container.querySelectorAll('.leaflet-control-layers-overlays .leaflet-layerstree-header');
+            headers.length.should.be.equal(7);
+            checkHidden(headers, false, 0);
+            ctl.collapseTree(true);
+            checkHidden(headers, true, 1);
+        });
+        it('they are accesible on mouseover', function() {
+            //document.body.appendChild(map._container);
+            var ctrl = L.control.layers.tree(null, overlaysTree1()).addTo(map);
+            var inputs = map._container.querySelectorAll('.leaflet-control-layers-overlays input');
+            inputs.length.should.be.equal(5);
+            var headers = map._container.querySelectorAll('.leaflet-control-layers-overlays .leaflet-layerstree-header');
+            headers.length.should.be.equal(7);
+
+            // Nothing visible because the contrl is collapsed
+            checkHidden(inputs, true, 0);
+            checkHidden(headers, true, 0);
+
+            // mouse over the control to show it.
+            happen.once(ctrl._container, {type: 'mouseover'});
+            checkHidden(inputs, false, 0);
+            checkHidden(headers, false, 0);
+            // Hi, let it as you found it.
+            happen.once(ctrl._container, {type: 'mouseout'});
+        });
     });
 });
