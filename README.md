@@ -98,12 +98,12 @@ This method expands only the selected item in the tree. When `overlays` is `true
 
 ## Tricks about the tree
 The layers tree is a normal `Object`s tree like in the example above. The valid elements are:
-* `children`: `Array` Array of children nodes for this node. Nothing special.
-* `layer`: `L.Layer` The layer itself. You can create with `L.tileLayer`, `L.marker`, or however you want.
-* `label`: `String` Text displayed in the tree for this node. It may contain HTML code.
-* `name`: `String` Text displayed in the toggle when control is minimized. If not present, `label` is used. It makes sense only when `namedToggle` is `true`, and with base layers,
-* `noShow`: `Boolean` Flag to disable the first node. Allows you having not a 'pure tree', with a root node, in the layout. It makes sense only in the root node. Default `false`.
-* `radioGroup`: `String` Text to identify different radio button groups. It is used in the `name` attribute in the [radio button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio). It is used only in the overlays layers (ignored in the base layers), allowing you to have radio buttons instead of checkboxes. See that radio groups cannot be unselected, so create a 'fake' layer (like `L.layersGroup([])`) if you want to disable it. Deafult `''` (that means checkbox).
+* `children`: `<Array>` Array of children nodes for this node. Nothing special.
+* `layer`: `<L.Layer>` The layer itself. You can create with `L.tileLayer`, `L.marker`, or however you want.
+* `label`: `<String>` Text displayed in the tree for this node. It may contain HTML code.
+* `name`: `<String>` Text displayed in the toggle when control is minimized. If not present, `label` is used. It makes sense only when `namedToggle` is `true`, and with base layers,
+* `noShow`: `<Boolean>` Flag to disable the first node. Allows you having not a 'pure tree', with a root node, in the layout. It makes sense only in the root node. Default `false`.
+* `radioGroup`: `<String>` Text to identify different radio button groups. It is used in the `name` attribute in the [radio button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio). It is used only in the overlays layers (ignored in the base layers), allowing you to have radio buttons instead of checkboxes. See that radio groups cannot be unselected, so create a 'fake' layer (like `L.layersGroup([])`) if you want to disable it. Deafult `''` (that means checkbox).
 
 You can see an example of a baselayers tree (the javascript code) above. As every tree, you need a root node. If you don't want the root node to be displayed, but directly show its nodes in the control, add the attribute `noShow: true`. That makes sense only in the root node.
 
