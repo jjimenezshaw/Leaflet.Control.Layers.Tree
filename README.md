@@ -111,4 +111,7 @@ Non leaf nodes (that is, those with `children`) can also have a layer. In this c
 
 You can include HTML code, not only ascii chars, in the `label` attribute. It will be included as `innerHTML`. Be carefull with unicodes, because not every browser supports them all.
 
-A leaf node without `layer` attribute is also posible. Only with `label`. This can be used to include special commands calling a javascript function, or a separator, or whatever you like.
+A leaf node without `layer` attribute is also posible. Only with `label`. This can be used to include special commands calling a javascript function, or a separator, or whatever you like. An example of separator node is 
+```javascript
+{label: '<div class="leaflet-control-layers-separator"></div>'}
+```
