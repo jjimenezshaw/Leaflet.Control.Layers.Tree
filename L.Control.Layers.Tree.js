@@ -292,10 +292,11 @@
                 // now create the element like in _addItem
                 var checked = this._map.hasLayer(tree.layer)
                 var input;
-                if (overlay) {
-                    input = this._createCheckboxElement(checked);
+                var radioGroup = overlay ? tree.radioGroup : 'leaflet-base-layers';
+                if (radioGroup) {
+                    input = this._createRadioElement(radioGroup, checked);
                 } else {
-                    input = this._createRadioElement('leaflet-base-layers', checked);
+                    input = this._createCheckboxElement(checked);
                 }
                 if (this._layerControlInputs) {
                     // to keep compatibility with 1.0.3
