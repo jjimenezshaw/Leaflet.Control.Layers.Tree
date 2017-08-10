@@ -287,7 +287,7 @@
             }
 
             // create the input and label, as in Control.Layers
-            var label = creator('label', this.cls.label, entry);
+            var label = creator(tree.layer ? 'label' : 'span', this.cls.label, entry);
             if (tree.layer) {
                 // now create the element like in _addItem
                 var checked = this._map.hasLayer(tree.layer)
