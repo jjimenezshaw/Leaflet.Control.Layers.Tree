@@ -149,7 +149,7 @@
             for (var i = 0; i < inputs.length; i++) {
                 // Loop over every (valid) input.
                 var input = inputs[i];
-                if (this._getLayer && this._getLayer(input.layerId).overlay != overlay) continue
+                if (this._getLayer && !!this._getLayer(input.layerId).overlay != !!overlay) continue
                 if (input.checked) {
                     // Get out of the header,
                     // to not open the posible (but rare) children
