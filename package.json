@@ -9,8 +9,8 @@
   },
   "license": "BSD-3-Clause",
   "scripts": {
-    "lint": "eslint L.*.js examples/* test/*",
-    "lintfix": "eslint L.*.js examples/* test/* --fix",
+    "lint": "eslint L.*.js test/* examples/*",
+    "lintfix": "eslint L.*.js test/* examples/* --fix",
     "spec": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html",
     "test": "npm run lint && npm run spec"
   },
