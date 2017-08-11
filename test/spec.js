@@ -98,6 +98,18 @@ describe('L.Control.Layers.Tree', function() {
             t.should.be.a('object');
         });
     });
+
+
+    describe('Disabled functions', function() {
+        var t = L.control.layers.tree();
+        var methods = [t.addBaseLayer, t.addOverlay, t.removeLayer];
+        methods.forEach(function(method) {
+            (function() {
+                method();
+            }).should.throw(method.name + ' is disabled');
+        });
+    });
+
     describe('Simple base tests', function() {
         beforeEach(function() {
             map.setView([0, 0], 14);

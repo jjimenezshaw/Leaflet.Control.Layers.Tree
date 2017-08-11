@@ -80,18 +80,15 @@
         },
 
         addBaseLayer: function(layer, name) {
-            // console.log('addBaseLayer disabled for now');
-            return this;
+            throw 'addBaseLayer is disabled';
         },
 
         addOverlay: function(layer, name) {
-            // console.log('addOverlay disabled for now');
-            return this;
+            throw 'addOverlay is disabled';
         },
 
         removeLayer: function(layer) {
-            // console.log('removeLayer disabled for now');
-            return this;
+            throw 'removeLayer is disabled';
         },
 
         onAdd: function(map) {
