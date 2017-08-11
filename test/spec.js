@@ -66,7 +66,7 @@ function checkHidden(list, value, first) {
         for (var i = 0; i < list.length; i++) value.push(v);
     }
     for (var i = first; i < list.length; i++) {
-        isHidden(list[i]).should.be.equal(!!value[i]);
+        isHidden(list[i]).should.be.equal(!!value[i], 'position ' + i);
     }
 }
 
@@ -267,6 +267,7 @@ describe('L.Control.Layers.Tree', function() {
         beforeEach(function() {
             map.setView([0, 0], 1);
         });
+
         it('Show only selected', function() {
             var ctrl = L.control.layers.tree(baseTree1(), null, {collapsed: false}).addTo(map);
             map.addLayer(layerB);
@@ -275,6 +276,50 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, false, 0);
             ctrl.collapseTree().expandSelected(false);
             checkHidden(headers, [0, 0, 0, 0, 1, 1, 0], 0);
+        });
+
+        it('Collapse', function() {
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false}).addTo(map);
+            map.addLayer(layerB);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(14);
+            checkHidden(headers, false, 0);
+            ctrl.collapseTree();
+            checkHidden(headers, [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0], 0);
+            ctrl.collapseTree(true);
+            checkHidden(headers, [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1], 0);
+        });
+
+        it('Expand', function() {
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false}).addTo(map);
+            map.addLayer(layerB);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(14);
+            checkHidden(headers, false, 0);
+            ctrl.collapseTree().collapseTree(true);
+            ctrl.expandTree();
+            checkHidden(headers, [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1], 0);
+            ctrl.expandTree(true);
+            checkHidden(headers, 0, 0);
+        });
+    });
+
+    describe('Names', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 1);
+        });
+        it('Named Toogle', function() {
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {namedToggle: true}).addTo(map);
+            map.addLayer(layerB);
+            var toggle = map._container.querySelector('.leaflet-control-layers-toggle');
+            toggle.innerHTML.should.be.equal('Name Leaf three');
+            var inputs = map._container.querySelectorAll('.leaflet-control-layers-list input');
+            happen.click(inputs[0]);
+            toggle.innerHTML.should.be.equal('Name Leaf one');
+            happen.click(inputs[2]);
+            toggle.innerHTML.should.be.equal('Name Leaf 11');
+            happen.click(inputs[8]);
+            toggle.innerHTML.should.be.equal('Name Leaf 11');
         });
     });
 });
