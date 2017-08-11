@@ -58,14 +58,23 @@
                 return output;
             }
 
+            // We accept arrays, but convert into an object with children
+            function forArrays(input) {
+                if (Array.isArray(input)) {
+                    return {noShow: true, children: input};
+                } else {
+                    return input
+                }
+            }
+
             this._initClassesNames();
-            this._baseTree = baseTree;
-            this._overlaysTree = overlaysTree;
+            this._baseTree = forArrays(baseTree);
+            this._overlaysTree = forArrays(overlaysTree);
             L.Util.setOptions(this, options);
             L.Control.Layers.prototype.initialize.call(
                 this,
-                iterate(baseTree, {}),
-                iterate(overlaysTree, {}, true),
+                iterate(forArrays(baseTree), {}),
+                iterate(forArrays(overlaysTree), {}, true),
                 options);
 
         },

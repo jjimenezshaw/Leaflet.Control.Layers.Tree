@@ -3,22 +3,26 @@
 var layerA = L.tileLayer('');
 var layerB = L.tileLayer('');
 
+function baseArray1() {
+    return [
+        {label: 'Leaf one', name: 'Name Leaf one', layer: L.tileLayer('')},
+        {label: 'Leaf two', name: 'Name Leaf two', layer: L.tileLayer('', {idx: 'two'})},
+        {
+            label: 'Node 1',
+            children: [
+                {label: 'Leaf 11', name: 'Name Leaf 11', layer: layerA},
+                {label: 'Leaf 12', layer: L.tileLayer('')}
+            ]
+        },
+        {label: 'Leaf three', name: 'Name Leaf three', layer: layerB}
+    ];
+}
+
 function baseTree1() {
     return {
         noShow: false,
         label: 'Root node',
-        children: [
-            {label: 'Leaf one', name: 'Name Leaf one', layer: L.tileLayer('')},
-            {label: 'Leaf two', name: 'Name Leaf two', layer: L.tileLayer('', {idx: 'two'})},
-            {
-                label: 'Node 1',
-                children: [
-                    {label: 'Leaf 11', name: 'Name Leaf 11', layer: layerA},
-                    {label: 'Leaf 12', layer: L.tileLayer('')}
-                ]
-            },
-            {label: 'Leaf three', name: 'Name Leaf three', layer: layerB}
-        ]
+        children: baseArray1()
     };
 }
 
@@ -26,22 +30,26 @@ var markerO = L.marker([0, 0]);
 var markerA = L.marker([40, 0]);
 var markerB = L.marker([0, 30]);
 
+function overlaysArray1() {
+    return [
+        {label: 'Over one', name: 'Name Over one', layer: markerO},
+        {label: 'Over two', name: 'Name Over two', layer: L.layerGroup([])},
+        {
+            label: 'O Node 1',
+            children: [
+                {label: 'Over 11', name: 'Name Over 11', layer: markerA},
+                {label: 'Over 12', layer: L.layerGroup([])}
+            ]
+        },
+        {label: 'Over three', name: 'Name Over three', layer: markerB}
+    ]
+}
+
 function overlaysTree1() {
     return {
         noShow: false,
         label: 'Root O node',
-        children: [
-            {label: 'Over one', name: 'Name Over one', layer: markerO},
-            {label: 'Over two', name: 'Name Over two', layer: L.layerGroup([])},
-            {
-                label: 'O Node 1',
-                children: [
-                    {label: 'Over 11', name: 'Name Over 11', layer: markerA},
-                    {label: 'Over 12', layer: L.layerGroup([])}
-                ]
-            },
-            {label: 'Over three', name: 'Name Over three', layer: markerB}
-        ]
+        children: overlaysArray1()
     };
 }
 
@@ -126,6 +134,32 @@ describe('L.Control.Layers.Tree', function() {
         });
     });
 
+    describe('Simple base tests with array', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 14);
+        });
+
+        it('they are accesible on mouseover', function() {
+            var ctrl = L.control.layers.tree(baseArray1()).addTo(map);
+            var inputs = map._container.querySelectorAll('.leaflet-control-layers-base input');
+            inputs.length.should.be.equal(5);
+            var headers = map._container.querySelectorAll('.leaflet-control-layers-base .leaflet-layerstree-header');
+            headers.length.should.be.equal(7); // The root is hidden, but it is there
+
+            // Nothing visible because the contrl is collapsed
+            checkHidden(inputs, true, 0);
+            checkHidden(headers, true, 0);
+
+            // mouse over the control to show it.
+            happen.once(ctrl._container, {type: 'mouseover'});
+            checkHidden(inputs, false, 0);
+            checkHidden(headers, false, 1);
+            checkHidden(headers, [1, 0, 0, 0, 0, 0, 0], 0); // see, root is hidden!
+            // Hi, let it as you found it.
+            happen.once(ctrl._container, {type: 'mouseout'});
+        });
+    });
+
     describe('Simple overlays tests', function() {
         beforeEach(function() {
             map.setView([0, 0], 1);
@@ -157,6 +191,32 @@ describe('L.Control.Layers.Tree', function() {
             happen.once(ctrl._container, {type: 'mouseover'});
             checkHidden(inputs, false, 0);
             checkHidden(headers, false, 0);
+            // Hi, let it as you found it.
+            happen.once(ctrl._container, {type: 'mouseout'});
+        });
+    });
+
+    describe('Simple overlays array tests', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 1);
+        });
+
+        it('they are accesible on mouseover', function() {
+            var ctrl = L.control.layers.tree(null, overlaysArray1()).addTo(map);
+            var inputs = map._container.querySelectorAll('.leaflet-control-layers-overlays input');
+            inputs.length.should.be.equal(5);
+            var headers = map._container.querySelectorAll('.leaflet-control-layers-overlays .leaflet-layerstree-header');
+            headers.length.should.be.equal(7);
+
+            // Nothing visible because the contrl is collapsed
+            checkHidden(inputs, true, 0);
+            checkHidden(headers, true, 0);
+
+            // mouse over the control to show it.
+            happen.once(ctrl._container, {type: 'mouseover'});
+            checkHidden(inputs, false, 0);
+            checkHidden(headers, false, 1);
+            checkHidden(headers, [1, 0, 0, 0, 0, 0, 0], 0);
             // Hi, let it as you found it.
             happen.once(ctrl._container, {type: 'mouseout'});
         });
