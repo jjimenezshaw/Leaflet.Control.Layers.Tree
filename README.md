@@ -20,7 +20,6 @@ This plugin has been tested with Leaflet 1.0.3, 1.1.0 and 1.2.0.
 ```javascript
 var baseTree = {
     label: 'Base Layers',
-    noShow: false,
     children: [
         {
             label: 'World &#x1f5fa;',
@@ -71,9 +70,9 @@ var baseTree = {
 The main (and only) 'class' involved in this plugin. It exteds `L.Control.Layers`, so most of its methods are available. `addBaseLayer`, `addOverlay` and `removeLayer` are non usable in `L.Control.Layers.Tree`.
 #### `L.control.layers.tree(baseTree, overlaysTree, options)`
 Creates the control. The arguments are:
-* `baseTree`: Tree defining the base layers (like the one above).
-* `overlaysTree`: Similar than baseTree, but for overlays.
-* `options`: specific options for the tree. See that it includes `L.Control.Layer` [options](http://leafletjs.com/reference-1.2.0.html#control-layers)
+* `baseTree`: `<Object>` or `<Array>` Tree defining the base layers (like the one above). You can also provide an `Array` of nodes, if you want to start with a flat level.
+* `overlaysTree`: `<Object>` or `<Array>` Similar than baseTree, but for overlays.
+* `options`: `<Object>` specific options for the tree. See that it includes `L.Control.Layer` [options](http://leafletjs.com/reference-1.2.0.html#control-layers)
 
 ##### constructor options
 * `closedSymbol`: `<String>` Symbol displayed on a closed node (that you can click to open). Default '+'
@@ -99,13 +98,12 @@ This method expands only the selected item in the tree. When `overlays` is `true
 ## Tricks about the tree
 The layers tree is a normal `Object`s tree like in the example above. The valid elements are:
 * `children`: `<Array>` Array of children nodes for this node. Nothing special.
-* `layer`: `<L.Layer>` The layer itself. You can create with `L.tileLayer`, `L.marker`, or however you want.
 * `label`: `<String>` Text displayed in the tree for this node. It may contain HTML code.
+* `layer`: `<L.Layer>` The layer itself. You can create with `L.tileLayer`, `L.marker`, or however you want.
 * `name`: `<String>` Text displayed in the toggle when control is minimized. If not present, `label` is used. It makes sense only when `namedToggle` is `true`, and with base layers,
-* `noShow`: `<Boolean>` Flag to disable the first node. Allows you having not a 'pure tree', with a root node, in the layout. It makes sense only in the root node. Default `false`.
 * `radioGroup`: `<String>` Text to identify different radio button groups. It is used in the `name` attribute in the [radio button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio). It is used only in the overlays layers (ignored in the base layers), allowing you to have radio buttons instead of checkboxes. See that radio groups cannot be unselected, so create a 'fake' layer (like `L.layersGroup([])`) if you want to disable it. Deafult `''` (that means checkbox).
 
-You can see an example of a baselayers tree (the javascript code) above. As every tree, you need a root node. If you don't want the root node to be displayed, but directly show its nodes in the control, add the attribute `noShow: true`. That makes sense only in the root node.
+You can see an example of a baselayers tree (the javascript code) above. You can provide a tree, or an array of trees.
 
 Non leaf nodes (that is, those with `children`) can also have a layer. In this case you will be able to select the layer, and only the icon will collapse or expand this branch.
 
