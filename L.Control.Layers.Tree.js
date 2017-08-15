@@ -95,7 +95,7 @@
             if (container) {
                 this._applyOnTree(container, false);
             }
-            return this;
+            return this._localExpand();
         },
 
         // Collapses the whole tree (base other overlays)
@@ -104,7 +104,7 @@
             if (container) {
                 this._applyOnTree(container, true);
             }
-            return this;
+            return this._localExpand();
         },
 
         // Expands the tree, only to show the selected inputs
@@ -141,7 +141,7 @@
                     iter(input.parentElement.parentElement.parentElement.parentElement);
                 }
             }
-            return this;
+            return this._localExpand();
         },
 
         // "private" methods, not exposed in the API
@@ -188,8 +188,15 @@
             for (i in oflat) {
                 this._addLayer(oflat[i], i, true);
             }
-
             return (this._map) ? this._update() : this;
+        },
+
+        // Used to update the vertical scrollbar
+        _localExpand: function() {
+            if (this._map && L.DomUtil.hasClass(this._container, 'leaflet-control-layers-expanded')) {
+                this.expand();
+            }
+            return this;
         },
 
         // collapses or expands the tree in the containter.
@@ -221,10 +228,10 @@
         // overwrite _update function in Control.Layers
         _update: function() {
             if (!this._container) { return this; }
-            var ret = L.Control.Layers.prototype._update.call(this);
+            L.Control.Layers.prototype._update.call(this);
             this._addTreeLayout(this._baseTree, false);
             this._addTreeLayout(this._overlaysTree, true);
-            return ret;
+            return this._localExpand();
         },
 
         // Create the DOM objects for the tree
@@ -254,8 +261,9 @@
                     if (e.type !== 'keydown' || e.keyCode === 32) {
                         o.blur()
                         fn.call(ctx, overlay);
+                        this._localExpand();
                     }
-                });
+                }, this);
             }
         },
 
@@ -309,7 +317,8 @@
                         L.DomUtil.addClass(opened, hide);
                         L.DomUtil.addClass(children, hide);
                     }
-                });
+                    this._localExpand();
+                }, this);
                 tree.children.forEach(function(child) {
                     var node = creator('div', this.cls.node, children)
                     this._iterateTreeLayout(child, node, overlay);
