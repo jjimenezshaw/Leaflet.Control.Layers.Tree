@@ -322,4 +322,59 @@ describe('L.Control.Layers.Tree', function() {
             toggle.innerHTML.should.be.equal('Name Leaf 11');
         });
     });
+
+    describe('Symbols', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 1);
+        });
+        it('Defaults', function() {
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false}).addTo(map);
+            map.addLayer(layerB);
+            var items = map._container.querySelectorAll('.leaflet-layerstree-closed');
+            items.length.should.be.equal(14);
+            for (var i = 0; i < items.length; i++) {
+                items[i].innerHTML.should.be.equal('+');
+            }
+            items = map._container.querySelectorAll('.leaflet-layerstree-opened');
+            items.length.should.be.equal(14);
+            for (var i = 0; i < items.length; i++) {
+                items[i].innerHTML.should.be.equal('−');
+            }
+            items = map._container.querySelectorAll('.leaflet-layerstree-header-space');
+            items.length.should.be.equal(14);
+            for (var i = 0; i < items.length; i++) {
+                items[i].innerHTML.should.be.equal(' ');
+            }
+        });
+        it('Closed', function() {
+            var symbol = '^';
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, closedSymbol: symbol}).addTo(map);
+            map.addLayer(layerB);
+            var items = map._container.querySelectorAll('.leaflet-layerstree-closed');
+            items.length.should.be.equal(14);
+            for (var i = 0; i < items.length; i++) {
+                items[i].innerHTML.should.be.equal(symbol);
+            }
+        });
+        it('Opened', function() {
+            var symbol = 'v';
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, openedSymbol: symbol}).addTo(map);
+            map.addLayer(layerB);
+            var items = map._container.querySelectorAll('.leaflet-layerstree-opened');
+            items.length.should.be.equal(14);
+            for (var i = 0; i < items.length; i++) {
+                items[i].innerHTML.should.be.equal(symbol);
+            }
+        });
+        it('Space', function() {
+            var symbol = '_*_';
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, spaceSymbol: symbol}).addTo(map);
+            map.addLayer(layerB);
+            var items = map._container.querySelectorAll('.leaflet-layerstree-header-space');
+            items.length.should.be.equal(14);
+            for (var i = 0; i < items.length; i++) {
+                items[i].innerHTML.should.be.equal(symbol);
+            }
+        });
+    });
 });
