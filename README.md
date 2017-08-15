@@ -68,10 +68,10 @@ var baseTree = {
 ## API
 ### `L.Control.Layers.Tree`
 The main (and only) 'class' involved in this plugin. It exteds `L.Control.Layers`, so most of its methods are available. `addBaseLayer`, `addOverlay` and `removeLayer` are non usable in `L.Control.Layers.Tree`.
-#### `L.control.layers.tree(baseTree, overlaysTree, options)`
+#### `L.control.layers.tree(baseTree, overlayTree, options)`
 Creates the control. The arguments are:
 * `baseTree`: `<Object>` or `<Array>` Tree defining the base layers (like the one above). You can also provide an `Array` of nodes, if you want to start with a flat level.
-* `overlaysTree`: `<Object>` or `<Array>` Similar than baseTree, but for overlays.
+* `overlayTree`: `<Object>` or `<Array>` Similar than baseTree, but for overlays.
 * `options`: `<Object>` specific options for the tree. See that it includes `L.Control.Layer` [options](http://leafletjs.com/reference-1.2.0.html#control-layers)
 
 ##### constructor options
@@ -85,9 +85,14 @@ Creates the control. The arguments are:
 
 See that those strings can be html code, with unicode, images or whatever you want.
 
+#### `setBaseTree(tree)`
+Resets the base layers tree (like in constructor, an `<Object>` or `<Array>`). Internally removes and adds all the layers, so you may be notified if you registered those events. Returns `this`.
+
+#### `setOverlayTree(tree)`
+Resets the overlay layers tree (like in constructor, an `<Object>` or `<Array>`). Internally removes and adds all the layers, so you may be notified if you registered those events. Returns `this`.
+
 #### `expandTree(overlays)`
 This method expands the tree. When `overlays` is `true` expands the overlays tree. Otherwise expands the baselayers tree. Returns `this`.
-
 
 #### `collapseTree(overlays)`
 This method collapses the tree. When `overlays` is `true` collapses the overlays tree. Otherwise collapses the baselayers tree. Returns `this`.
