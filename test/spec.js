@@ -450,15 +450,28 @@ describe('L.Control.Layers.Tree', function() {
             happen.click(ct[1]);
             checkHidden(headers, [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1], 0);
         });
-        it('empties', function() {
+        it('Empties', function() {
             var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, collapseAll: '', expandAll: ''}).addTo(map);
             var ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
             ct.length.should.be.equal(0);
         });
-        it('all', function() {
+        it('All', function() {
             var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, collapseAll: 'col', expandAll: 'exp'}).addTo(map);
             var ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
             ct.length.should.be.equal(4);
+        });
+        it('Arrays', function() {
+            var ctrl = L.control.layers.tree(baseArray1(), overlaysArray1(), {collapsed: false, collapseAll: 'col'}).addTo(map);
+            var ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(14);
+            checkHidden(headers, [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], 0);
+            var ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
+            ct.length.should.be.equal(2);
+            happen.click(ct[0]);
+            checkHidden(headers, [1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0], 0);
+            happen.click(ct[1]);
+            checkHidden(headers, [1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0], 0);
         });
     });
 });
