@@ -329,7 +329,6 @@ describe('L.Control.Layers.Tree', function() {
         });
         it('Defaults', function() {
             var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false}).addTo(map);
-            map.addLayer(layerB);
             var items = map._container.querySelectorAll('.leaflet-layerstree-closed');
             items.length.should.be.equal(14);
             for (var i = 0; i < items.length; i++) {
@@ -359,7 +358,6 @@ describe('L.Control.Layers.Tree', function() {
         it('Opened', function() {
             var symbol = 'v';
             var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, openedSymbol: symbol}).addTo(map);
-            map.addLayer(layerB);
             var items = map._container.querySelectorAll('.leaflet-layerstree-opened');
             items.length.should.be.equal(14);
             for (var i = 0; i < items.length; i++) {
@@ -369,12 +367,98 @@ describe('L.Control.Layers.Tree', function() {
         it('Space', function() {
             var symbol = '_*_';
             var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, spaceSymbol: symbol}).addTo(map);
-            map.addLayer(layerB);
             var items = map._container.querySelectorAll('.leaflet-layerstree-header-space');
             items.length.should.be.equal(14);
             for (var i = 0; i < items.length; i++) {
                 items[i].innerHTML.should.be.equal(symbol);
             }
+        });
+    });
+
+    describe('Selector back', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 1);
+        });
+        it('Default', function() {
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(14);
+            for (var h = 0; h < headers.length; h++) {
+                var things = [];
+                var keys = ['closed', 'opened', 'space', 'label']
+                var items = headers[h].querySelectorAll('span, label, div');
+                for (var i = 0; i < items.length; i++) {
+                    keys.forEach(function(key) {
+                        if (items[i].className.indexOf(key) > 0) {
+                            things.push(key);
+                        }
+                    });
+                }
+                things[2].should.be.equal('space');
+                things[3].should.be.equal('label');
+            }
+        });
+
+        it('Back', function() {
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, selectorBack: true}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(14);
+            for (var h = 0; h < headers.length; h++) {
+                var things = [];
+                var keys = ['closed', 'opened', 'space', 'label']
+                var items = headers[h].querySelectorAll('span, label, div');
+                for (var i = 0; i < items.length; i++) {
+                    keys.forEach(function(key) {
+                        if (items[i].className.indexOf(key) > 0) {
+                            things.push(key);
+                        }
+                    });
+                }
+                things[1].should.be.equal('space');
+                things[0].should.be.equal('label');
+            }
+        });
+    });
+
+    describe('Expand and collapse all', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 1);
+        });
+        it('expandAll', function() {
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, expandAll: 'exp'}).addTo(map);
+            ctrl.collapseTree().collapseTree(true);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(14);
+            checkHidden(headers, [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1], 0);
+            var ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
+            ct.length.should.be.equal(2);
+            happen.click(ct[0]);
+            checkHidden(headers, [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1], 0);
+            happen.click(ct[1]);
+            checkHidden(headers, false, 0);
+        });
+        it('collapseAll', function() {
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, collapseAll: 'col'}).addTo(map);
+            ctrl.expandTree().expandTree(true);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(14);
+            checkHidden(headers, false, 0);
+            var ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
+            ct.length.should.be.equal(2);
+            happen.click(ct[0]);
+            checkHidden(headers, [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0], 0);
+            happen.click(ct[1]);
+            checkHidden(headers, [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1], 0);
+        });
+        it('empties', function() {
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, collapseAll: '', expandAll: ''}).addTo(map);
+            var ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
+            ct.length.should.be.equal(0);
+        });
+        it('all', function() {
+            var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false, collapseAll: 'col', expandAll: 'exp'}).addTo(map);
+            var ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
+            ct.length.should.be.equal(4);
         });
     });
 });
