@@ -18,6 +18,13 @@ function baseArray1() {
     ];
 }
 
+function baseArray2() {
+    return [
+        {label: 'Leaf one', name: 'Name Leaf one', layer: layerA},
+        {label: 'Leaf two', name: 'Name Leaf two', layer: layerB},
+    ];
+}
+
 function baseTree1() {
     return {
         noShow: false,
@@ -53,6 +60,13 @@ function overlaysTree1() {
     };
 }
 
+function overlaysArray2() {
+    return [
+        {label: 'Over A', name: 'Name Over A', layer: markerA},
+        {label: 'Over B', name: 'Name Over B', layer: markerB},
+    ];
+}
+
 function isHidden(el) {
     // https://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
     return (el.offsetParent === null)
@@ -72,7 +86,7 @@ function checkHidden(list, value, first) {
 
 describe('L.Control.Layers.Tree', function() {
     chai.should();
-    //this.timeout(500000);
+    this.timeout(5000);
     var map;
 
     beforeEach(function() {
@@ -472,6 +486,89 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, [1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0], 0);
             happen.click(ct[1]);
             checkHidden(headers, [1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0], 0);
+        });
+    });
+
+    describe('Reset trees', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 1);
+        });
+        it('case 1', function() {
+            var ctl = L.control.layers.tree(baseArray2(), null, {collapsed: false}).addTo(map);
+            map.addLayer(layerB);
+            map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+            var headers = map._container.querySelectorAll('.leaflet-control-layers-base .leaflet-layerstree-header');
+            headers.length.should.be.equal(3); // including the hidden root
+            ctl.setBaseTree(baseTree1());
+            map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+
+            headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(7)
+            happen.click(headers[4].querySelector('label'));
+            map._layers[L.Util.stamp(layerA)].should.be.equal(layerA);
+        });
+        it('case 2', function() {
+            var ctl = L.control.layers.tree(baseArray2(), overlaysTree1(), {collapsed: false}).addTo(map);
+            map.addLayer(layerB);
+            map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+            var headers = map._container.querySelectorAll('.leaflet-control-layers-base .leaflet-layerstree-header');
+            headers.length.should.be.equal(3); // including the hidden root
+            ctl.setBaseTree(baseTree1());
+            map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+
+            headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(14)
+        });
+        it('case 3', function() {
+            var ctl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false}).addTo(map);
+            map.addLayer(layerB);
+            map.addLayer(markerA);
+            map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+            map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(14);
+            var inputs = map._container.querySelectorAll('.leaflet-layerstree-header input');
+            inputs.length.should.be.equal(10);
+            inputs[4].checked.should.be.true;
+            inputs[7].checked.should.be.true;
+
+            ctl.setBaseTree(baseArray2());
+            map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+            map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
+
+            headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(10)
+            inputs = map._container.querySelectorAll('.leaflet-layerstree-header input');
+            inputs.length.should.be.equal(7);
+            inputs[1].checked.should.be.true;
+            inputs[4].checked.should.be.true;
+
+            ctl.setOverlayTree(overlaysArray2());
+            map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+            map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
+
+            headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(6)
+            inputs = map._container.querySelectorAll('.leaflet-layerstree-header input');
+            inputs.length.should.be.equal(4);
+            inputs[1].checked.should.be.true;
+            inputs[2].checked.should.be.true;
+        });
+        it('case 4', function() {
+            var ctl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false}).addTo(map);
+            map.addLayer(layerB);
+            map.addLayer(markerO);
+            map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+            map._layers[L.Util.stamp(markerO)].should.be.equal(markerO);
+
+            ctl.setOverlayTree(overlaysArray2());
+            map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+            map._layers[L.Util.stamp(markerO)].should.be.equal(markerO);
+
+            var inputs = map._container.querySelectorAll('.leaflet-layerstree-header input');
+            inputs.length.should.be.equal(7);
+            inputs[5].checked.should.be.false;
+            inputs[6].checked.should.be.false;
         });
     });
 });

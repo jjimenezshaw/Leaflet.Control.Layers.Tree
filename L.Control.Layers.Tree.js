@@ -42,41 +42,20 @@
         },
 
         initialize: function(baseTree, overlaysTree, options) {
-            var id = 0; // to keep unique id
-            function iterate(tree, output, overlays) {
-                if (tree && tree.layer) {
-                    if (!overlays) {
-                        tree.layer._layersTreeName = tree.name || tree.label;
-                    }
-                    output[id++] = tree.layer;
-                }
-                if (tree && tree.children && tree.children.length) {
-                    tree.children.forEach(function(child) {
-                        iterate(child, output, overlays);
-                    });
-                }
-                return output;
-            }
-
-            // We accept arrays, but convert into an object with children
-            function forArrays(input) {
-                if (Array.isArray(input)) {
-                    return {noShow: true, children: input};
-                } else {
-                    return input
-                }
-            }
-
             this._initClassesNames();
-            this._baseTree = forArrays(baseTree);
-            this._overlaysTree = forArrays(overlaysTree);
+            this._baseTree = null;
+            this._overlaysTree = null;
             L.Util.setOptions(this, options);
-            L.Control.Layers.prototype.initialize.call(
-                this,
-                iterate(forArrays(baseTree), {}),
-                iterate(forArrays(overlaysTree), {}, true),
-                options);
+            L.Control.Layers.prototype.initialize.call(this, null, null, options);
+            this._setTrees(baseTree, overlaysTree);
+        },
 
+        setBaseTree: function(tree) {
+            return this._setTrees(tree);
+        },
+
+        setOverlayTree: function(tree) {
+            return this._setTrees(undefined, tree);
         },
 
         addBaseLayer: function(layer, name) {
@@ -163,6 +142,54 @@
                 }
             }
             return this;
+        },
+
+        // "private" methods, not exposed in the API
+        _setTrees: function(base, overlays) {
+            var id = 0; // to keep unique id
+            function iterate(tree, output, overlays) {
+                if (tree && tree.layer) {
+                    if (!overlays) {
+                        tree.layer._layersTreeName = tree.name || tree.label;
+                    }
+                    output[id++] = tree.layer;
+                }
+                if (tree && tree.children && tree.children.length) {
+                    tree.children.forEach(function(child) {
+                        iterate(child, output, overlays);
+                    });
+                }
+                return output;
+            }
+
+            // We accept arrays, but convert into an object with children
+            function forArrays(input) {
+                if (Array.isArray(input)) {
+                    return {noShow: true, children: input};
+                } else {
+                    return input
+                }
+            }
+
+            // Clean everything, and start again.
+            var auxLayers = this._layers.slice();
+            for (var i = 0; i < auxLayers; ++i) {
+                this.removeLayer(auxLayers[i].layer);
+            }
+            if (base !== undefined) this._baseTree = forArrays(base);
+            if (overlays !== undefined) this._overlaysTree = forArrays(overlays);
+
+            var bflat = iterate(this._baseTree, {});
+            for (var i in bflat) {
+                this._addLayer(bflat[i], i);
+            }
+
+            var oflat = iterate(this._overlaysTree, {}, true);
+            for (i in oflat) {
+                this._addLayer(oflat[i], i, true);
+            }
+
+            return (this._map) ? this._update() : this;
         },
 
         // collapses or expands the tree in the containter.
