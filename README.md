@@ -75,13 +75,13 @@ Creates the control. The arguments are:
 * `options`: `<Object>` specific options for the tree. See that it includes `L.Control.Layer` [options](http://leafletjs.com/reference-1.2.0.html#control-layers)
 
 ##### constructor options
-* `closedSymbol`: `<String>` Symbol displayed on a closed node (that you can click to open). Default '+'
-* `openedSymbol`: `<String>` Symbol displayed on a opened node (that you can click to close). Default '&minus;' (`&minus;`)
-* `spaceSymbol`: `<String>` Symbol between the closed or opened symbol, and the text. Default ' ' (a normal space)
-* `selectorBack`: `<Boolean>` Flag to indicate if the selector (+ or &minus;) is _after_ the text. Default 'false'
-* `namedToggle`: `<Boolean>` Flag to replace the toggle image (box with the layers image) with the 'name' of the selected base layer. If the `name` field is not present in the tree for this layer, `label` is used. See that you can show a different name when control is collapsed than the one that appears in the tree when it is expanded. Your node in the tree can be `{ label: 'OSM', name: 'OpenStreetMap', layer: layer }`. Default 'false'
-* `collapseAll`: `<String>` Text for an entry in control that collapses the tree (baselayers or overlays). If empty, no entry is created. Default ''
-* `expandAll`: `<String>` Text for an entry in control that expands the tree. If empty, no entry is created. Default ''
+* `closedSymbol`: `<String>` Symbol displayed on a closed node (that you can click to open). Default '+'.
+* `openedSymbol`: `<String>` Symbol displayed on a opened node (that you can click to close). Default '&minus;' (`&minus;`).
+* `spaceSymbol`: `<String>` Symbol between the closed or opened symbol, and the text. Default ' ' (a normal space).
+* `selectorBack`: `<Boolean>` Flag to indicate if the selector (+ or &minus;) is _after_ the text. Default 'false'.
+* `namedToggle`: `<Boolean>` Flag to replace the toggle image (box with the layers image) with the 'name' of the selected base layer. If the `name` field is not present in the tree for this layer, `label` is used. See that you can show a different name when control is collapsed than the one that appears in the tree when it is expanded. Your node in the tree can be `{ label: 'OSM', name: 'OpenStreetMap', layer: layer }`. Default 'false'.
+* `collapseAll`: `<String>` Text for an entry in control that collapses the tree (baselayers or overlays). If empty, no entry is created. Default ''.
+* `expandAll`: `<String>` Text for an entry in control that expands the tree. If empty, no entry is created. Default ''.
 
 See that those strings can be html code, with unicode, images or whatever you want.
 
@@ -105,7 +105,7 @@ The layers tree is a normal `Object`s tree like in the example above. The valid 
 * `children`: `<Array>` Array of children nodes for this node. Nothing special.
 * `label`: `<String>` Text displayed in the tree for this node. It may contain HTML code.
 * `layer`: `<L.Layer>` The layer itself. You can create with `L.tileLayer`, `L.marker`, or however you want.
-* `name`: `<String>` Text displayed in the toggle when control is minimized. If not present, `label` is used. It makes sense only when `namedToggle` is `true`, and with base layers,
+* `name`: `<String>` Text displayed in the toggle when control is minimized. If not present, `label` is used. It makes sense only when `namedToggle` is `true`, and with base layers.
 * `radioGroup`: `<String>` Text to identify different radio button groups. It is used in the `name` attribute in the [radio button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio). It is used only in the overlays layers (ignored in the base layers), allowing you to have radio buttons instead of checkboxes. See that radio groups cannot be unselected, so create a 'fake' layer (like `L.layersGroup([])`) if you want to disable it. Deafult `''` (that means checkbox).
 
 You can see an example of a baselayers tree (the javascript code) above. You can provide a tree, or an array of trees.
