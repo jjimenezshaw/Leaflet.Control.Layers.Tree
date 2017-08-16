@@ -183,10 +183,14 @@
             }
 
             // Clean everything, and start again.
-            var auxLayers = this._layers.slice();
-            for (var i = 0; i < auxLayers; ++i) {
-                this.removeLayer(auxLayers[i].layer);
+            if (this._layerControlInputs) {
+                this._layerControlInputs = [];
             }
+            for (var i = 0; i < this._layers.length; ++i) {
+                this._layers[i].layer.off('add remove', this._onLayerChange, this);
+            }
+            this._layers = [];
+
             if (base !== undefined) this._baseTree = forArrays(base);
             if (overlays !== undefined) this._overlaysTree = forArrays(overlays);
 
