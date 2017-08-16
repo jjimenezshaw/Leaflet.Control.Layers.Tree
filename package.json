@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jjimenezshaw/Leaflet.ControlLayersTree.git"
+    "url": "git+https://github.com/jjimenezshaw/Leaflet.Control.Layers.Tree.git"
   },
   "keywords": [
     "Leaflet",
@@ -33,17 +33,14 @@
     "eslint": "^4.3.0",
     "eslint-plugin-html": "^3.1.1",
     "happen": "~0.3.1",
+    "leaflet": "^1.1.0",
     "mocha": "^3.5.0",
     "mocha-phantomjs-core": "^2.1.2",
     "phantomjs-prebuilt": "^2.1.1"
   },
-  "dependencies": {
-    "leaflet": "^1.0.3"
+  "peerDependencies": {
+    "leaflet": "^1.1.0"
   },
   "author": "Javier Jimenez Shaw",
-  "contributors": [
-    {
-    }
-  ],
   "readmeFilename": "README.md"
 }
