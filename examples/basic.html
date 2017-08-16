@@ -2,10 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Leaflet Layers Tree Demo</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js" crossorigin=""></script>
-    <!--script src="../../Leaflet/dist/leaflet-src.js" crossorigin=""></script-->
+    <title>Leaflet Layers Tree Basic Demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet-src.js" crossorigin=""></script>
 
     <style type="text/css">
         html, body { width: 100%; height: 100%; margin: 0; }
@@ -21,6 +20,7 @@
     <script type="text/javascript">
         var center = [40, 0];
 
+        // Define some base layers
         var osm = L.tileLayer(
             '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors'}
@@ -31,9 +31,9 @@
             {attribution: '© OpenStreetMap contributors'}
         );
 
-        var humanitarian = L.tileLayer(
-            'http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-            {attribution: '© OpenStreetMap contributors. Tiles courtesy of Humanitarian OpenStreetMap Team'}
+        var topomap = L.tileLayer(
+            '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+            {attribution: '© OpenStreetMap contributors. topomap.org'}
         );
 
         var thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'}
@@ -47,105 +47,33 @@
             thunderAttr
         );
 
-        var andalucia = L.layerGroup([
-            L.marker([36.722, -4.432]).bindPopup('Malaga'),
-            L.marker([37.375, -5.955]).bindPopup('Sevilla'),
-        ]);
+        // The tree containing the layers
+        var baseTree = [
+            {
+                label: 'OpenStreeMap',
+                children: [
+                    {label: 'OSM', layer: osm, name: 'OpenStreeMap'},
+                    {label: 'B&W', layer: osmBw, name: 'OpenStreeMap <b>B&W</b>'},
+                    {label: 'TopoMap', layer: topomap, name: 'Topographic - OSM'},
+                ]
+            },
+            {
+                label: 'Thunder',
+                children: [
+                    {label: 'Cycle', layer: cycle},
+                    {label: 'Transport', layer: transport},
+                ]
+            },
+        ];
 
-
-        var spain = L.layerGroup([
-            L.marker([40.377, -3.580]).bindPopup('Madrid'),
-            L.marker([41.396, 2.173]).bindPopup('Barcelona'),
-            andalucia,
-        ]);
-        var france = L.layerGroup ([
-            L.marker([48.858, 2.347]).bindPopup('Paris')
-        ]);
-
+        // The map
         var map = L.map('map', {
-            layers: [cycle],
+            layers: [osm],
             center: center,
             zoom: 5
         });
 
-        var baseLayers = {
-            'OpenStreeMap': osm,
-            'OpenStreeMap B&W': osmBw,
-            'Humanitarian this is muchlonger than expected': humanitarian,
-            'Transport': transport,
-            'OSM': osm,
-            'Cycle': cycle,
-        };
-
-        var overlays = {
-            'Spain': spain,
-            'Andalucía': andalucia,
-            'España': spain,
-            'France': france,
-            'Francia': france,
-        }
-
-        var baseTree = {
-            label: 'BaseLayers',
-            noShow: true,
-            children: [
-                {label: '<label onclick="lay.collapse()" tabindex="0">Close</label>'},
-                {
-                    label: 'OpenStreeMap',
-                    name: 'pues otra cosa, <b>mariposa</b>',
-                    layer: osm,
-                    children: [
-                        {label: 'B&W', layer: osmBw},
-                    ]
-                },
-                {
-                    label: 'Thunder',
-                    children: [
-                        {label: 'Cycle', layer: cycle},
-                        {label: 'Transport', layer: transport},
-                        {label: 'Mas', children: [
-                            {label: 'Humanitarian', layer: humanitarian},
-                        ]}
-                    ]
-                },
-                {label: 'Humanitarian', layer: humanitarian},
-            ]
-        };
-
-        var overlaysTree = {
-            label: 'Overlays',
-            noShoe: false,
-            children: [
-                {
-                    label: 'Spain',
-                    layer: spain,
-                    children: [
-                        {label: 'Andalucía', layer: andalucia}
-                    ]
-                },
-                {label: 'France', layer: france},
-            ]
-        }
-
-
-        L.control.layers(baseLayers, overlays, {position: 'topleft'}).addTo(map);
-        var lay = L.control.layers.tree(baseTree, overlaysTree,
-            {
-                collapsed: false,
-                namedToggle: true,
-                selectorBack: false,
-                closedSymbol: '&#8862; &#x1f5c0;',
-                openedSymbol: '&#8863; &#x1f5c1;',
-                spaceSymbol: ' ',
-                collapseAll: 'Collapse all',
-                expandAll: 'Expand all',
-            });
-
-        lay.addTo(map).collapseTree().expandSelected();
-        //setTimeout(function(){ lay.collapseTree(); }, 5000);
-        //setTimeout(function(){ lay.expandSelected(); }, 10000);
-        //setTimeout(function(){ lay.expandTree(); }, 10000);
-
+        L.control.layers.tree(baseTree).addTo(map);
     </script>
 </body>
 </html>
