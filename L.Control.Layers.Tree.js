@@ -42,6 +42,7 @@
         },
 
         initialize: function(baseTree, overlaysTree, options) {
+            this._scrollTop = 0;
             this._initClassesNames();
             this._baseTree = null;
             this._overlaysTree = null;
@@ -68,6 +69,16 @@
 
         removeLayer: function(layer) {
             throw 'removeLayer is disabled';
+        },
+
+        collapse: function() {
+            this._scrollTop = this._form.scrollTop;
+            return L.Control.Layers.prototype.collapse.call(this);
+        },
+
+        expand: function() {
+            var ret = L.Control.Layers.prototype.expand.call(this);
+            this._form.scrollTop = this._scrollTop;
         },
 
         onAdd: function(map) {
@@ -197,6 +208,7 @@
                 var top = this._form.scrollTop;
                 this.expand();
                 this._form.scrollTop = top; // to keep the scroll location
+                this._scrollTop = top;
             }
             return this;
         },
