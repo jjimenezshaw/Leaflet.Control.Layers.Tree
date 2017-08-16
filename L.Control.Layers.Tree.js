@@ -14,7 +14,6 @@
      */
     L.Control.Layers.Tree = L.Control.Layers.extend({
         options: {
-            wheelScroll: 1,
             closedSymbol: '+',
             openedSymbol: '&minus;',
             spaceSymbol: ' ',
@@ -86,9 +85,6 @@
                 map.eachLayer(function(layer) {changeName(layer);});
                 // ... and change it whenever the baselayer is changed.
                 map.on('baselayerchange', function(e) {changeName(e.layer);}, this);
-            }
-            if (this.options.wheelScroll) {
-                L.DomEvent.on(this._container, 'mousewheel', this._onWheelScroll, this);
             }
             return ret;
         },
@@ -201,12 +197,6 @@
                 this.expand();
             }
             return this;
-        },
-
-        _onWheelScroll: function(e) {
-            var delta = L.DomEvent.getWheelDelta(e);
-            L.DomEvent.stop(e);
-            this._form.scrollTop -= delta * this.options.wheelScroll;
         },
 
         // collapses or expands the tree in the containter.

@@ -75,7 +75,6 @@ Creates the control. The arguments are:
 * `options`: `<Object>` specific options for the tree. See that it includes `L.Control.Layer` [options](http://leafletjs.com/reference-1.2.0.html#control-layers)
 
 ##### constructor options
-* `wheelScroll`: `<Number>` Factor for the mousewheel event. To disable the wheel, set to 0. Default '1'.
 * `closedSymbol`: `<String>` Symbol displayed on a closed node (that you can click to open). Default '+'.
 * `openedSymbol`: `<String>` Symbol displayed on a opened node (that you can click to close). Default '&minus;' (`&minus;`).
 * `spaceSymbol`: `<String>` Symbol between the closed or opened symbol, and the text. Default ' ' (a normal space).
