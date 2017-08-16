@@ -194,7 +194,9 @@
         // Used to update the vertical scrollbar
         _localExpand: function() {
             if (this._map && L.DomUtil.hasClass(this._container, 'leaflet-control-layers-expanded')) {
+                var top = this._form.scrollTop;
                 this.expand();
+                this._form.scrollTop = top; // to keep the scroll location
             }
             return this;
         },
