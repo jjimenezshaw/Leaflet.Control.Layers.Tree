@@ -1,0 +1,25 @@
+{
+  "name": "leaflet.control.layers.tree",
+  "version": "0.0.1",
+  "description": "Control Layers in a Tree structure",
+  "homepage": "https://github.com/jjimenezshaw/Leaflet.Control.Layers.Tree",
+  "authors": [
+    "Javier Jimenez Shaw"
+  ],
+  "main": "L.Control.Layers.Tree.js",
+  "style": "L.Control.Layers.Tree.css",
+  "keywords": [
+    "Leaflet",
+    "map",
+    "geo",
+    "tree",
+    "control",
+    "layers"
+  ],
+  "license": "BSD-3-Clause",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test"
+  ]
+}
