@@ -31,9 +31,9 @@
             {attribution: '© OpenStreetMap contributors'}
         );
 
-        var topomap = L.tileLayer(
+        var otopomap = L.tileLayer(
             '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-            {attribution: '© OpenStreetMap contributors. topomap.org'}
+            {attribution: '© OpenStreetMap contributors. OpenTopoMap.org'}
         );
 
         var thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'}
@@ -54,7 +54,7 @@
                 children: [
                     {label: 'OSM', layer: osm, name: 'OpenStreeMap'},
                     {label: 'B&W', layer: osmBw, name: 'OpenStreeMap <b>B&W</b>'},
-                    {label: 'TopoMap', layer: topomap, name: 'Topographic - OSM'},
+                    {label: 'OpenTopoMap', layer: otopomap, name: 'Topographic - OSM'},
                 ]
             },
             {
