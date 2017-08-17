@@ -6,6 +6,8 @@ A Tree Layers Control for Leaflet.
 ## Description
 This plugin extends [`Control.Layers`](http://leafletjs.com/reference-1.2.0.html#control-layers) allowing a tree structure for the layers layout. In `Control.Layers` you can only display a flat list of layers (baselayers and overlays), that is usually enough for small sets. If you have a long list of baselayers or overlays, and you want to organize them in a tree (allowing the user collapse and expand branches), this is a good option.
 
+[Some live examples here](https://jjimenezshaw.github.io/Leaflet.Control.Layers.Tree/examples/)
+
 ## Installation
 Using npm for browserify `npm install leaflet.control.layers.tree` (and `require('leaflet.control.layers.tree')`), or just download `L.Control.Layers.Tree.js` and `L.Control.Layers.Tree.css` and add a script and link tag for it in your html.
 
