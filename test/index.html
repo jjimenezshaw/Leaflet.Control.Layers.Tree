@@ -1,0 +1,53 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Leaflet.Control.Layers.Tree Tests</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+    <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../L.Control.Layers.Tree.css" />
+
+    <style>
+        .map, .label {
+            width: 400px;
+            height: 400px;
+            float: left;
+        }
+        .label {
+            width: 40px;
+            text-align: left;
+            font-size: 40px;
+            padding: 20px 30px;
+        }
+        #mocha {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div id="maps">
+        <div id="mapA" class="map"></div>
+    </div>
+    <div id="mocha"></div>
+
+    <script src="../node_modules/leaflet/dist/leaflet.js"></script>
+
+    <script src="../L.Control.Layers.Tree.js" data-cover></script>
+
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/happen/happen.js"></script>
+    <script src="../node_modules/chai-leaflet/chai-leaflet.js"></script>
+    <!--script src="../node_modules/blanket/dist/mocha/blanket_mocha.js"></script-->
+
+    <script>
+        mocha.setup('bdd');
+    </script>
+
+    <script src="spec.js"></script>
+
+    <script>
+        mocha.globals(['L']);
+        (window.mochaPhantomJS || mocha).run();
+    </script>
+</body>
+</html>
