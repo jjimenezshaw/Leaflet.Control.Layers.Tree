@@ -1,5 +1,6 @@
 # Leaflet.Control.Layers.Tree
 [![Build Status](https://travis-ci.org/jjimenezshaw/Leaflet.Control.Layers.Tree.png)](https://travis-ci.org/jjimenezshaw/Leaflet.Control.Layers.Tree)
+[![NPM version](https://img.shields.io/npm/v/leaflet.control.layers.tree.svg)](https://www.npmjs.com/package/leaflet.control.layers.tree) ![Leaflet 1.x compatible!](https://img.shields.io/badge/Leaflet%201.x-%E2%9C%93-1EB300.svg?style=flat)
 
 A Tree Layers Control for Leaflet.
 
