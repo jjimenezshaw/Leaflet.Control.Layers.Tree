@@ -1,6 +1,6 @@
 {
   "name": "leaflet.control.layers.tree",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Control Layers in a Tree structure",
   "main": "L.Control.Layers.Tree.js",
   "style": "L.Control.Layers.Tree.css",
@@ -28,15 +28,15 @@
   ],
   "devDependencies": {
     "blanket": "^1.2.3",
-    "chai": "~4.1.0",
+    "chai": "~4.1.2",
     "chai-leaflet": "^0.0.13",
-    "eslint": "^4.3.0",
-    "eslint-plugin-html": "^3.1.1",
-    "happen": "~0.3.1",
-    "leaflet": "^1.1.0",
-    "mocha": "^3.5.0",
+    "eslint": "^4.16.0",
+    "eslint-plugin-html": "^4.0.1",
+    "happen": "^0.3.2",
+    "leaflet": "^1.3.1",
+    "mocha": "^5.0.0",
     "mocha-phantomjs-core": "^2.1.2",
-    "phantomjs-prebuilt": "^2.1.1"
+    "phantomjs-prebuilt": "^2.1.16"
   },
   "peerDependencies": {
     "leaflet": "^1.1.0"

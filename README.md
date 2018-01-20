@@ -7,7 +7,7 @@
 A Tree Layers Control for Leaflet.
 
 ## Description
-This plugin extends [`Control.Layers`](http://leafletjs.com/reference-1.2.0.html#control-layers) allowing a tree structure for the layers layout. In `Control.Layers` you can only display a flat list of layers (baselayers and overlays), that is usually enough for small sets. If you have a long list of baselayers or overlays, and you want to organize them in a tree (allowing the user collapse and expand branches), this is a good option.
+This plugin extends [`Control.Layers`](http://leafletjs.com/reference-1.3.0.html#control-layers) allowing a tree structure for the layers layout. In `Control.Layers` you can only display a flat list of layers (baselayers and overlays), that is usually enough for small sets. If you have a long list of baselayers or overlays, and you want to organize them in a tree (allowing the user collapse and expand branches), this is a good option.
 
 [Some live examples here](https://jjimenezshaw.github.io/Leaflet.Control.Layers.Tree/examples/)
 
@@ -15,7 +15,7 @@ This plugin extends [`Control.Layers`](http://leafletjs.com/reference-1.2.0.html
 Using npm for browserify `npm install leaflet.control.layers.tree` (and `require('leaflet.control.layers.tree')`), or just download `L.Control.Layers.Tree.js` and `L.Control.Layers.Tree.css` and add a script and link tag for it in your html.
 
 ## Compatibility
-This plugin has been tested with Leaflet 1.0.3, 1.1.0 and 1.2.0.
+This plugin has been tested with Leaflet 1.0.3, 1.1.0, 1.2.0 and 1.3.1.
 
 ## Usage
 1. Create your layers. Do this as usual.
@@ -77,7 +77,7 @@ The main (and only) 'class' involved in this plugin. It exteds `L.Control.Layers
 Creates the control. The arguments are:
 * `baseTree`: `<Object>` or `<Array>` Tree defining the base layers (like the one above). You can also provide an `Array` of nodes, if you want to start with a flat level.
 * `overlayTree`: `<Object>` or `<Array>` Similar than baseTree, but for overlays.
-* `options`: `<Object>` specific options for the tree. See that it includes `L.Control.Layer` [options](http://leafletjs.com/reference-1.2.0.html#control-layers)
+* `options`: `<Object>` specific options for the tree. See that it includes `L.Control.Layer` [options](http://leafletjs.com/reference-1.3.0.html#control-layers)
 
 ##### constructor options
 * `closedSymbol`: `<String>` Symbol displayed on a closed node (that you can click to open). Default '+'.
