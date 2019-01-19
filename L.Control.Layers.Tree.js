@@ -72,13 +72,13 @@
         },
 
         collapse: function() {
-            this._scrollTop = this._form.scrollTop;
+            this._scrollTop = this._sect().scrollTop;
             return L.Control.Layers.prototype.collapse.call(this);
         },
 
         expand: function() {
             var ret = L.Control.Layers.prototype.expand.call(this);
-            this._form.scrollTop = this._scrollTop;
+            this._sect().scrollTop = this._scrollTop;
         },
 
         onAdd: function(map) {
@@ -156,6 +156,11 @@
         },
 
         // "private" methods, not exposed in the API
+        _sect: function() {
+            // to keep compatibility after 1.3 https://github.com/Leaflet/Leaflet/pull/6380
+            return this._section || this._form;
+        },
+
         _setTrees: function(base, overlays) {
             var id = 0; // to keep unique id
             function iterate(tree, output, overlays) {
@@ -209,9 +214,9 @@
         // Used to update the vertical scrollbar
         _localExpand: function() {
             if (this._map && L.DomUtil.hasClass(this._container, 'leaflet-control-layers-expanded')) {
-                var top = this._form.scrollTop;
+                var top = this._sect().scrollTop;
                 this.expand();
-                this._form.scrollTop = top; // to keep the scroll location
+                this._sect().scrollTop = top; // to keep the scroll location
                 this._scrollTop = top;
             }
             return this;
