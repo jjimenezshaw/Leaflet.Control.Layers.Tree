@@ -357,11 +357,12 @@
                 // now create the element like in _addItem
                 var checked = this._map.hasLayer(tree.layer)
                 var input;
+                var id = tree.id;
                 var radioGroup = overlay ? tree.radioGroup : 'leaflet-base-layers_' + L.Util.stamp(this);
                 if (radioGroup) {
                     input = this._createRadioElement(radioGroup, checked);
                 } else {
-                    input = this._createCheckboxElement(checked);
+                    input = this._createCheckboxElement(checked, id);
                 }
                 if (this._layerControlInputs) {
                     // to keep compatibility with 1.0.3
@@ -372,6 +373,7 @@
                 label.appendChild(input);
             }
             var name = creator('span', this.cls.name, label, tree.label);
+
             L.DomUtil.addClass(closed, hide);
             if (noShow) {
                 L.DomUtil.addClass(header, this.cls.neverShow);
@@ -379,8 +381,9 @@
             }
         },
 
-        _createCheckboxElement: function(checked) {
+        _createCheckboxElement: function (checked, id) {
             var input = document.createElement('input');
+            if (id) { input.id = id };
             input.type = 'checkbox';
             input.className = 'leaflet-control-layers-selector';
             input.defaultChecked = checked;
