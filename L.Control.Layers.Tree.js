@@ -372,7 +372,11 @@
                 label.appendChild(input);
             }
             var name = creator('span', this.cls.name, label, tree.label);
-            L.DomUtil.addClass(closed, hide);
+
+            // hide the button which doesn't fit the collapsed state, then hide children conditionally
+            L.DomUtil.addClass(tree.collapsed ? opened : closed, hide);
+            tree.collapsed && children && L.DomUtil.addClass(children, hide);
+
             if (noShow) {
                 L.DomUtil.addClass(header, this.cls.neverShow);
                 L.DomUtil.addClass(children, this.cls.childrenNopad);
