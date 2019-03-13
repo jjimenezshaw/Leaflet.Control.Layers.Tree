@@ -112,7 +112,7 @@ The layers tree is a normal `Object`s tree like in the example above. The valid 
 * `layer`: `<L.Layer>` The layer itself. You can create with `L.tileLayer`, `L.marker`, or however you want.
 * `name`: `<String>` Text displayed in the toggle when control is minimized. If not present, `label` is used. It makes sense only when `namedToggle` is `true`, and with base layers.
 * `radioGroup`: `<String>` Text to identify different radio button groups. It is used in the `name` attribute in the [radio button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio). It is used only in the overlays layers (ignored in the base layers), allowing you to have radio buttons instead of checkboxes. See that radio groups cannot be unselected, so create a 'fake' layer (like `L.layersGroup([])`) if you want to disable it. Deafult `''` (that means checkbox).
-* `collapsed`: `<Boolean>` Indicate whether this tree node should be collapsed initially, useful for opening large trees partially based on user input or context. Disabled by default..
+* `collapsed`: `<Boolean>` Indicate whether this tree node should be collapsed initially, useful for opening large trees partially based on user input or context. Disabled by default.
 
 You can see an example of a baselayers tree (the javascript code) above. You can provide a tree, or an array of trees.
 
