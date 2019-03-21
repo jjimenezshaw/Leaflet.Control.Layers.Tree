@@ -21,6 +21,7 @@
             namedToggle: false,
             collapseAll: '',
             expandAll: '',
+            labelIsSelector: 'both',
         },
 
         // Class names are error prone texts, so write them once here
@@ -351,8 +352,21 @@
                 L.DomUtil.addClass(sel, this.cls.neverShow);
             }
 
-            // create the input and label, as in Control.Layers
-            var label = creator(tree.layer ? 'label' : 'span', this.cls.label, entry);
+            // make (or not) the label clickable to toggle the layer
+            var labelType;
+            if (tree.layer) {
+                if ((this.options.labelIsSelector === 'both') || // if option is set to both
+                    (overlay && this.options.labelIsSelector === 'overlay') || // if an overlay layer and options is set to overlay
+                    (!overlay && this.options.labelIsSelector === 'base')) { // if a base layer and option is set to base
+                    labelType = 'label'
+                } else { // if option is set to something else
+                    labelType = 'span'
+                }
+            } else {
+                labelType = 'span';
+            }
+            // create the input and label
+            var label = creator(labelType, this.cls.label, entry);
             if (tree.layer) {
                 // now create the element like in _addItem
                 var checked = this._map.hasLayer(tree.layer)
