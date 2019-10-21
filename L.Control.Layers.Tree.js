@@ -21,6 +21,8 @@
             namedToggle: false,
             collapseAll: '',
             expandAll: '',
+            uncheckAll: '',
+            checkAll: '',
         },
 
         // Class names are error prone texts, so write them once here
@@ -98,6 +100,28 @@
                 map.on('baselayerchange', function(e) {changeName(e.layer);}, this);
             }
             return ret;
+        },
+
+        // Check the whole tree (base other overlays)
+        checkTree: function(overlay) {
+            for (var i in this._layers) {
+                if (this._layers[i].overlay) {
+                    if (!this._map.hasLayer(this._layers[i].layer)) {
+                        this._map.addLayer(this._layers[i].layer);
+                    }
+                }
+            }
+        },
+
+        // Uncheck the whole tree (base other overlays)
+        uncheckTree: function(overlay) {
+            for (var i in this._layers) {
+                if (this._layers[i].overlay) {
+                    if (this._map.hasLayer(this._layers[i].layer)) {
+                        this._map.removeLayer(this._layers[i].layer);
+                    }
+                }
+            }
         },
 
         // Expands the whole tree (base other overlays)
@@ -263,10 +287,31 @@
             var container = overlay ? this._overlaysList : this._baseLayersList;
             this._expandCollapseAll(overlay, this.options.collapseAll, this.collapseTree);
             this._expandCollapseAll(overlay, this.options.expandAll, this.expandTree);
+            this._checkUncheckAll(overlay, this.options.uncheckAll, this.uncheckTree);
+            this._checkUncheckAll(overlay, this.options.checkAll, this.checkTree);
             this._iterateTreeLayout(tree, container, overlay, tree.noShow)
             if (this._checkDisabledLayers) {
                 // to keep compatibility
                 this._checkDisabledLayers();
+            }
+        },
+
+        // Create the "Uncheck all" or check, if needed.
+        _checkUncheckAll: function(overlay, text, fn, ctx) {
+            var container = overlay ? this._overlaysList : false;
+            ctx = ctx ? ctx : this;
+            if (text && container) {
+                var o = document.createElement('div');
+                o.className = 'leaflet-layerstree-check-uncheck';
+                container.appendChild(o);
+                o.innerHTML = text;
+                o.tabIndex = 0;
+                L.DomEvent.on(o, 'click keydown', function(e) {
+                    if (e.type !== 'keydown' || e.keyCode === 32) {
+                        o.blur()
+                        fn.call(ctx, overlay);
+                    }
+                }, this);
             }
         },
 
