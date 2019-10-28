@@ -377,6 +377,44 @@
                 L.DomUtil.addClass(header, this.cls.neverShow);
                 L.DomUtil.addClass(children, this.cls.childrenNopad);
             }
+
+            var eventeds = tree.eventedClasses;
+            if (!(eventeds instanceof Array)) {
+                eventeds = [eventeds];
+            }
+
+            function selectAllCheckboxes(select, ctx) {
+                var inputs = container.getElementsByTagName('input');
+                for (var i = 0; i < inputs.length; i++) {
+                    var input = inputs[i];
+                    if (ctx._getLayer && !ctx._getLayer(input.layerId).overlay) continue;
+                    if (input.type === 'radio') continue;
+                    input.checked = select;
+                }
+                ctx._onInputClick();
+            }
+
+            function isFunction(functionToCheck) {
+                return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+            }
+
+            for (var e = 0; e < eventeds.length; e++) {
+                var evented = eventeds[e];
+                if (evented && evented.className) {
+                    var obj = container.querySelector('.' + evented.className);
+                    if (obj) {
+                        L.DomEvent.on(obj, evented.event || 'click', (function(selectAll) {
+                            return function(ev) {
+                                ev.stopPropagation();
+                                var select = isFunction(selectAll) ? selectAll(ev, container, tree, this._map) : selectAll;
+                                if (select !== undefined && select !== null) {
+                                    selectAllCheckboxes(select, this);
+                                }
+                            }
+                        })(evented.selectAll), this);
+                    }
+                }
+            }
         },
 
         _createCheckboxElement: function(checked) {
