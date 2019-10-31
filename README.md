@@ -112,6 +112,14 @@ The layers tree is a normal `Object`s tree like in the example above. The valid 
 * `layer`: `<L.Layer>` The layer itself. You can create with `L.tileLayer`, `L.marker`, or however you want.
 * `name`: `<String>` Text displayed in the toggle when control is minimized. If not present, `label` is used. It makes sense only when `namedToggle` is `true`, and with base layers.
 * `radioGroup`: `<String>` Text to identify different radio button groups. It is used in the `name` attribute in the [radio button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio). It is used only in the overlays layers (ignored in the base layers), allowing you to have radio buttons instead of checkboxes. See that radio groups cannot be unselected, so create a 'fake' layer (like `L.layersGroup([])`) if you want to disable it. Deafult `''` (that means checkbox).
+* `eventedClasses`: `<Array>` or `<Object>` Object (or array of objects) to define events on the `label`. Now you can specify a way to select all the sub-nodes in the overaly tree (you can see it in example airport.html or tests). The object contains:
+  * `className`: `<String>`. Will add an event on the first element with this class name in this node.
+  * `event`: `<String>` (optional). Event to trigger. By default is `click`.
+  * `selectAll`: `<Boolean>` or `<Function>`. `true` selects all the checkboxes in the subnodes. `false` unselects all. In case of using a `<Function>` (that should return a `Boolean` or `undefined`), it will be called with `(ev, domNode, treeNode, map)`, where:
+    * `ev`: event triggered.
+    * `domNode`: DOM node that includes the label and all the children.
+    * `treeNode`: node of this tree affected. Be careful. Modifying it may produce undefined behaviours.
+    * `map`: map associated with the control.
 
 You can see an example of a baselayers tree (the javascript code) above. You can provide a tree, or an array of trees.
 
