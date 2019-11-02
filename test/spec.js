@@ -53,19 +53,21 @@ function overlaysArray1() {
     ]
 }
 
-function overlaysArraySelectAll() {
+function overlaysArraySelectAll(collapsed1, collapsed2) {
     return [
         {label: 'Over one', name: 'Name Over one', layer: markerO},
         {label: 'Over two', name: 'Name Over two', layer: L.layerGroup([])},
         {
             label: 'O Node 1',
             selectAllCheckbox: true,
+            collapsed: collapsed1,
             children: [
                 {label: 'Over 11', name: 'Name Over 11', layer: markerA},
                 {label: 'Over 12', layer: L.layerGroup([])},
                 {
                     label: '1 Node 1',
                     selectAllCheckbox: 'my title',
+                    collapsed: collapsed2,
                     children: [
                         {label: 'Over 21', name: 'Name Over 21', layer: markerC},
                         {label: 'Over 22', layer: L.layerGroup([])},
@@ -294,6 +296,48 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, [1, 0, 0, 0, 0, 0, 0], 0);
             // Hi, let it as you found it.
             happen.once(ctrl._container, {type: 'mouseout'});
+        });
+    });
+
+    describe('Collapsed nodes', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 14);
+        });
+
+        it('all collapsed', function() {
+            var ctrl = L.control.layers.tree(null, overlaysArraySelectAll(true, true), {collapsed: false}).addTo(map);
+            var inputs = map._container.querySelectorAll('.leaflet-control-layers-overlays input');
+            inputs.length.should.be.equal(9);
+            var headers = map._container.querySelectorAll('.leaflet-control-layers-overlays .leaflet-layerstree-header');
+            headers.length.should.be.equal(10); // The root is hidden, but it is there
+
+            checkHidden(inputs, [0, 0, 0, 1, 1, 1, 1, 1, 0], 0);
+            checkHidden(headers, [1, 0, 0, 0, 1, 1, 1, 1, 1, 0], 0);
+
+            happen.click(headers[3]);
+            checkHidden(headers, [1, 0, 0, 0, 0, 0, 0, 1, 1, 0], 0);
+        });
+        it('inner collapsed', function() {
+            var ctrl = L.control.layers.tree(null, overlaysArraySelectAll(false, true), {collapsed: false}).addTo(map);
+            var inputs = map._container.querySelectorAll('.leaflet-control-layers-overlays input');
+            inputs.length.should.be.equal(9);
+            var headers = map._container.querySelectorAll('.leaflet-control-layers-overlays .leaflet-layerstree-header');
+            headers.length.should.be.equal(10); // The root is hidden, but it is there
+
+            checkHidden(headers, [1, 0, 0, 0, 0, 0, 0, 1, 1, 0], 0);
+        });
+        it('outer collapsed', function() {
+            var ctrl = L.control.layers.tree(null, overlaysArraySelectAll(true, false), {collapsed: false}).addTo(map);
+            var inputs = map._container.querySelectorAll('.leaflet-control-layers-overlays input');
+            inputs.length.should.be.equal(9);
+            var headers = map._container.querySelectorAll('.leaflet-control-layers-overlays .leaflet-layerstree-header');
+            headers.length.should.be.equal(10); // The root is hidden, but it is there
+
+            checkHidden(inputs, [0, 0, 0, 1, 1, 1, 1, 1, 0], 0);
+            checkHidden(headers, [1, 0, 0, 0, 1, 1, 1, 1, 1, 0], 0);
+
+            happen.click(headers[3]);
+            checkHidden(headers, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0);
         });
     });
 
