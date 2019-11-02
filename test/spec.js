@@ -85,7 +85,7 @@ function checkHidden(list, value, first) {
 }
 
 describe('L.Control.Layers.Tree', function() {
-    chai.should();
+    var should = chai.should();
     this.timeout(5000);
     var map;
 
@@ -261,6 +261,42 @@ describe('L.Control.Layers.Tree', function() {
             map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
             happen.click(headers[4].querySelector('label'));
             map._layers[L.Util.stamp(layerA)].should.be.equal(layerA);
+        });
+
+        it('labelIsSelector', function() {
+            var ctl;
+            var counter = [0, 0, 0, 0];
+            ['both', 'base', 'overlay', 'none'].forEach(function(labelIsSelector) {
+                ctl && map.removeControl(ctl);
+                ctl = L.control.layers.tree(baseTree1(), overlaysArray1(), {collapsed: false, labelIsSelector: labelIsSelector}).addTo(map);
+                var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+                headers.length.should.be.equal(14);
+
+                if (labelIsSelector === 'both' || labelIsSelector === 'base') {
+                    happen.click(headers[6].querySelector('label'));
+                    map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+                    counter[0]++;
+                } else {
+                    should.not.exist(headers[6].querySelector('label'));
+                    happen.click(headers[6].querySelector('input'));
+                    map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
+                    counter[1]++;
+                }
+
+                if (labelIsSelector === 'both' || labelIsSelector === 'overlay') {
+                    happen.click(headers[11].querySelector('label'));
+                    map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
+                    counter[2]++;
+                } else {
+                    should.not.exist(headers[11].querySelector('label'));
+                    happen.click(headers[11].querySelector('input'));
+                    map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
+                    counter[3]++;
+                }
+                map.removeLayer(layerB);
+                map.removeLayer(markerA);
+            });
+            chai.expect(counter).to.eql([2, 2, 2, 2]);
         });
     });
 
