@@ -15,7 +15,7 @@ This plugin extends [`Control.Layers`](http://leafletjs.com/reference-1.4.0.html
 Using npm for browserify `npm install leaflet.control.layers.tree` (and `require('leaflet.control.layers.tree')`), or just download `L.Control.Layers.Tree.js` and `L.Control.Layers.Tree.css` and add a script and link tag for it in your html.
 
 ## Compatibility
-This plugin has been tested with Leaflet 1.0.3, 1.1.0, 1.2.0, 1.3.1. and 1.4.0
+This plugin has been tested with Leaflet 1.0.3, 1.1.0, 1.2.0, 1.3.1., 1.4.0 and 1.5.1
 
 ## Usage
 1. Create your layers. Do this as usual.
@@ -112,7 +112,8 @@ The layers tree is a normal `Object`s tree like in the example above. The valid 
 * `layer`: `<L.Layer>` The layer itself. You can create with `L.tileLayer`, `L.marker`, or however you want.
 * `name`: `<String>` Text displayed in the toggle when control is minimized. If not present, `label` is used. It makes sense only when `namedToggle` is `true`, and with base layers.
 * `radioGroup`: `<String>` Text to identify different radio button groups. It is used in the `name` attribute in the [radio button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio). It is used only in the overlays layers (ignored in the base layers), allowing you to have radio buttons instead of checkboxes. See that radio groups cannot be unselected, so create a 'fake' layer (like `L.layersGroup([])`) if you want to disable it. Deafult `''` (that means checkbox).
-* `eventedClasses`: `<Array>` or `<Object>` Object (or array of objects) to define events on the `label`. Now you can specify a way to select all the sub-nodes in the overaly tree (you can see it in example airport.html or tests). The object contains:
+* `selectAllCheckbox`: `<Boolean>` or `<String>` Displays a checkbox to select/unselect all overlays in the sub-tree. In case of being a `<String>`, that text will be the title (tooltip). When any overlay in the sub-tree is clicked, the checkbox goes into `indeterminate` state (a dash in the box).
+* `eventedClasses`: `<Array>` or `<Object>`. [Advanced functionality to access nodes of the tree. Use carefully] Object (or array of objects) to define events on the `label`. Now you can specify a way to select all the sub-nodes in the overlay tree inspecting the tree. The object contains:
   * `className`: `<String>`. Will add an event on the first element with this class name in this node.
   * `event`: `<String>` (optional). Event to trigger. By default is `click`.
   * `selectAll`: `<Boolean>` or `<Function>`. `true` selects all the checkboxes in the subnodes. `false` unselects all. In case of using a `<Function>` (that should return a `Boolean` or `undefined`), it will be called with `(ev, domNode, treeNode, map)`, where:
@@ -127,7 +128,7 @@ Non leaf nodes (that is, those with `children`) can also have a layer. In this c
 
 You can include HTML code, not only ascii chars, in the `label` attribute. It will be included as `innerHTML`. Be carefull with unicodes, because not every browser supports them all.
 
-A leaf node without `layer` attribute is also posible. Only with `label`. This can be used to include special commands calling a javascript function, or a separator, or whatever you like. An example of separator node is 
+A leaf node without `layer` attribute is also posible. Only with `label`. This can be used to include special commands calling a javascript function, or a separator, or whatever you like. An example of separator node is
 ```javascript
 {label: '<div class="leaflet-control-layers-separator"></div>'}
 ```

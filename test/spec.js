@@ -53,7 +53,31 @@ function overlaysArray1() {
     ]
 }
 
-function overlaysArraySelect(callbackSel, callbackUnsel) {
+function overlaysArraySelectAll() {
+    return [
+        {label: 'Over one', name: 'Name Over one', layer: markerO},
+        {label: 'Over two', name: 'Name Over two', layer: L.layerGroup([])},
+        {
+            label: 'O Node 1',
+            selectAllCheckbox: true,
+            children: [
+                {label: 'Over 11', name: 'Name Over 11', layer: markerA},
+                {label: 'Over 12', layer: L.layerGroup([])},
+                {
+                    label: '1 Node 1',
+                    selectAllCheckbox: 'my title',
+                    children: [
+                        {label: 'Over 21', name: 'Name Over 21', layer: markerC},
+                        {label: 'Over 22', layer: L.layerGroup([])},
+                    ]
+                },
+            ]
+        },
+        {label: 'Over three', name: 'Name Over three', layer: markerB}
+    ]
+}
+
+function overlaysArrayEventedClasses(callbackSel, callbackUnsel) {
     return [
         {label: 'Over one', name: 'Name Over one', layer: markerO},
         {label: 'Over two', name: 'Name Over two', layer: L.layerGroup([])},
@@ -273,13 +297,13 @@ describe('L.Control.Layers.Tree', function() {
         });
     });
 
-    describe('SelectAll', function() {
+    describe('EventedClasses', function() {
         beforeEach(function() {
             map.setView([0, 0], 14);
         });
 
         it('select all 1', function() {
-            var ctl = L.control.layers.tree(null, overlaysArraySelect(), {collapsed: false}).addTo(map);
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(), {collapsed: false}).addTo(map);
             var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
 
             headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
@@ -294,7 +318,7 @@ describe('L.Control.Layers.Tree', function() {
         });
 
         it('deselect all 1', function() {
-            var ctl = L.control.layers.tree(null, overlaysArraySelect(), {collapsed: false}).addTo(map);
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(), {collapsed: false}).addTo(map);
             var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
 
             headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
@@ -312,7 +336,7 @@ describe('L.Control.Layers.Tree', function() {
         });
 
         it('select all 2', function() {
-            var ctl = L.control.layers.tree(null, overlaysArraySelect(), {collapsed: false}).addTo(map);
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(), {collapsed: false}).addTo(map);
             var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
 
             headers[6].parentElement.querySelectorAll('input').length.should.be.equal(2);
@@ -327,7 +351,7 @@ describe('L.Control.Layers.Tree', function() {
         });
 
         it('deselect all 2', function() {
-            var ctl = L.control.layers.tree(null, overlaysArraySelect(), {collapsed: false}).addTo(map);
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(), {collapsed: false}).addTo(map);
             var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
 
             headers[6].parentElement.querySelectorAll('input').length.should.be.equal(2);
@@ -361,7 +385,7 @@ describe('L.Control.Layers.Tree', function() {
                 return false;
             }
 
-            var ctl = L.control.layers.tree(null, overlaysArraySelect(callbackSel, callbackUnsel), {collapsed: false}).addTo(map);
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(callbackSel, callbackUnsel), {collapsed: false}).addTo(map);
             var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
 
             headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
@@ -380,7 +404,7 @@ describe('L.Control.Layers.Tree', function() {
                 return noneSelected;
             }
 
-            var ctl = L.control.layers.tree(null, overlaysArraySelect(callback, callback), {collapsed: false}).addTo(map);
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(callback, callback), {collapsed: false}).addTo(map);
             var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
 
             headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
@@ -401,6 +425,68 @@ describe('L.Control.Layers.Tree', function() {
         });
     });
 
+    describe('SelectAll', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 2);
+        });
+
+        it('selector toggle', function() {
+            function shouldbe(mA, mB, mC) {
+                function checkit(layer, present) {
+                    if (present) {
+                        map._layers[L.Util.stamp(layer)].should.be.equal(layer);
+                    } else {
+                        should.not.exist(map._layers[L.Util.stamp(layer)]);
+                    }
+                }
+                checkit(markerA, mA);
+                checkit(markerB, mB);
+                checkit(markerC, mC);
+            }
+
+            var ctl = L.control.layers.tree(null, overlaysArraySelectAll(), {collapsed: false}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(10);
+
+            headers[6].querySelector('input').title.should.be.equal('my title');
+
+            happen.click(headers[9].querySelector('input'));
+
+            headers[3].parentElement.querySelectorAll('input').length.should.be.equal(6);
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
+            shouldbe(true, true, true);
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+            shouldbe(false, true, false);
+
+            happen.click(headers[9].querySelector('input'));
+            shouldbe(false, false, false);
+
+            happen.click(headers[4].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(1);
+            shouldbe(true, false, false);
+            headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(1);
+
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
+            shouldbe(true, false, true);
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+            shouldbe(false, false, false);
+
+            happen.click(headers[6].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(3);
+            headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(3);
+            headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(1);
+            shouldbe(false, false, true);
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
+            shouldbe(true, false, true);
+        });
+    });
 
     describe('Select', function() {
         beforeEach(function() {

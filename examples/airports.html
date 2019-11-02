@@ -98,16 +98,12 @@
         };
 
         var airportsEurope = {
-            label: 'Airports <span class="toggle"> [Toggle selection]</span>',
-            eventedClasses:
-            {
-                className: 'toggle',
-                selectAll: hasAllUnSelected()
-            },
+            label: 'Airports',
+            selectAllCheckbox: true,
             children: [
                 /* start aiports from http://www.partow.net/miscellaneous/airportdatabase/#Download */
-                {label: 'GERMANY <span class="sel">&#9745; Select all</span> <span class="unsel">&#9746; Unselect all</span>',
-                    eventedClasses: [{className: 'sel', selectAll: true}, {className: 'unsel', selectAll: false}],
+                {label: 'GERMANY',
+                    selectAllCheckbox: true,
                     children: [
                         {label: 'AACHEN - AAH', layer: L.marker([50.823000, 6.187000])},
                         {label: 'ALTENBURG - AOC', layer: L.marker([50.982000, 12.506000])},
@@ -173,8 +169,8 @@
                         {label: 'WILHELMSHAVEN - WVN', layer: L.marker([53.505000, 8.053000])},
                     ]
                 },
-                {label: 'SPAIN <span class="sel">&#9745; Select all</span> <span class="unsel">&#9746; Unselect all</span>',
-                    eventedClasses: [{className: 'sel', selectAll: true}, {className: 'unsel', selectAll: false}],
+                {label: 'SPAIN',
+                    selectAllCheckbox: true,
                     children: [
                         {label: 'ALICANTE - ALC', layer: L.marker([38.282000, -0.558000])},
                         {label: 'ALMERIA - LEI', layer: L.marker([36.844000, -2.370000])},
@@ -212,8 +208,8 @@
                         {label: 'ZARAGOZA - ZAZ', layer: L.marker([41.666000, -1.041000])},
                     ]
                 },
-                {label: 'FRANCE <span class="sel">&#9745; Select all</span> <span class="unsel">&#9746; Unselect all</span>',
-                    eventedClasses: [{className: 'sel', selectAll: true}, {className: 'unsel', selectAll: false}],
+                {label: 'FRANCE',
+                    selectAllCheckbox: true,
                     children: [
                         {label: 'AGEN - AGF', layer: L.marker([44.175000, 0.591000])},
                         {label: 'AIX-LES-MILLES - QXB', layer: L.marker([43.505000, 5.368000])},

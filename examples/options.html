@@ -70,8 +70,17 @@
             },
         ];
 
+        var granada = L.marker([37.133, -3.636]);
+        var malaga = L.marker([36.674, -4.499]);
+        var sevilla = L.marker([37.418, -5.893]);
+
+        malaga.addTo(map);
+        granada.addTo(map);
+        sevilla.addTo(map);
+
         var overlaysTree = {
             label: 'Some cities',
+            selectAllCheckbox: 'Un/select all',
             children: [
                 {label: '<div id="onlysel">-Show only selected-</div>'},
                 {label: 'France', children: [
@@ -79,28 +88,20 @@
                     {label: 'Paris', layer: L.marker([48.725, 2.359])},
                     {label: 'Toulouse', layer: L.marker([43.629, 1.364])},
                 ]},
-                {label: 'Germany', children: [
+                {label: 'Germany', selectAllCheckbox: true, children: [
                     {label: 'Berlin', layer: L.marker([52.559, 13.287])},
                     {label: 'Cologne', layer: L.marker([50.866, 7.143])},
                     {label: 'Hamburg', layer: L.marker([53.630, 9.988])},
                     {label: 'Munich', layer: L.marker([48.354, 11.786])},
                 ]},
-                {label: '<span class="sel">&#9745;</span> <span class="unsel">&#9746;</span> Spain',
-                    eventedClasses: [
-                        {
-                            className: 'sel',
-                            selectAll: true
-                        }, {
-                            className: 'unsel',
-                            selectAll: false
-                        },
-                    ],
+                {label: 'Spain',
+                    selectAllCheckbox: 'De/seleccionar todo',
                     children: [
                         {label: 'Madrid', layer: L.marker([40.472, -3.561])},
-                        {label: 'Andalucia', children: [
-                            {label: 'Granada', layer: L.marker([37.133, -3.636])},
-                            {label: 'Málaga', layer: L.marker([36.674, -4.499])},
-                            {label: 'Sevilla', layer: L.marker([37.418, -5.893])},
+                        {label: 'Andalucia', selectAllCheckbox: true, children: [
+                            {label: 'Granada', layer: granada},
+                            {label: 'Málaga', layer: malaga},
+                            {label: 'Sevilla', layer: sevilla},
                         ]},
                         {label: 'Bask Country', children: [
                             {label: '---', layer: L.layerGroup([]), radioGroup: 'bc'},
@@ -112,11 +113,10 @@
                             {label: 'Barcelona', layer: L.marker([41.297, 2.078])},
                             {label: 'Gerona', layer: L.marker([41.901, 2.760])},
                         ]},
-                    ]
+                    ],
                 },
             ]
         }
-
 
         var lay = L.control.layers.tree(baseTree, overlaysTree,
             {
