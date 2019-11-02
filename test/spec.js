@@ -36,6 +36,7 @@ function baseTree1() {
 var markerO = L.marker([0, 0]);
 var markerA = L.marker([40, 0]);
 var markerB = L.marker([0, 30]);
+var markerC = L.marker([0, 20]);
 
 function overlaysArray1() {
     return [
@@ -46,6 +47,54 @@ function overlaysArray1() {
             children: [
                 {label: 'Over 11', name: 'Name Over 11', layer: markerA},
                 {label: 'Over 12', layer: L.layerGroup([])}
+            ]
+        },
+        {label: 'Over three', name: 'Name Over three', layer: markerB}
+    ]
+}
+
+function overlaysArraySelectAll() {
+    return [
+        {label: 'Over one', name: 'Name Over one', layer: markerO},
+        {label: 'Over two', name: 'Name Over two', layer: L.layerGroup([])},
+        {
+            label: 'O Node 1',
+            selectAllCheckbox: true,
+            children: [
+                {label: 'Over 11', name: 'Name Over 11', layer: markerA},
+                {label: 'Over 12', layer: L.layerGroup([])},
+                {
+                    label: '1 Node 1',
+                    selectAllCheckbox: 'my title',
+                    children: [
+                        {label: 'Over 21', name: 'Name Over 21', layer: markerC},
+                        {label: 'Over 22', layer: L.layerGroup([])},
+                    ]
+                },
+            ]
+        },
+        {label: 'Over three', name: 'Name Over three', layer: markerB}
+    ]
+}
+
+function overlaysArrayEventedClasses(callbackSel, callbackUnsel) {
+    return [
+        {label: 'Over one', name: 'Name Over one', layer: markerO},
+        {label: 'Over two', name: 'Name Over two', layer: L.layerGroup([])},
+        {
+            label: '<span class="sel">Sel</span> <span class="unsel">Unsel</span> O Node 1',
+            eventedClasses: [{className: 'sel', selectAll: callbackSel ? callbackSel : true}, {className: 'unsel', selectAll: callbackUnsel ? callbackUnsel : false}],
+            children: [
+                {label: 'Over 11', name: 'Name Over 11', layer: markerA},
+                {label: 'Over 12', layer: L.layerGroup([])},
+                {
+                    label: '<span class="sel">Sel</span> <span class="unsel">Unsel</span> 1 Node 1',
+                    eventedClasses: [{className: 'sel', selectAll: callbackSel ? callbackSel : true}, {className: 'unsel', selectAll: callbackUnsel ? callbackUnsel : false}],
+                    children: [
+                        {label: 'Over 21', name: 'Name Over 21', layer: markerC},
+                        {label: 'Over 22', layer: L.layerGroup([])},
+                    ]
+                },
             ]
         },
         {label: 'Over three', name: 'Name Over three', layer: markerB}
@@ -85,7 +134,7 @@ function checkHidden(list, value, first) {
 }
 
 describe('L.Control.Layers.Tree', function() {
-    chai.should();
+    var should = chai.should();
     this.timeout(5000);
     var map;
 
@@ -245,6 +294,197 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, [1, 0, 0, 0, 0, 0, 0], 0);
             // Hi, let it as you found it.
             happen.once(ctrl._container, {type: 'mouseout'});
+        });
+    });
+
+    describe('EventedClasses', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 14);
+        });
+
+        it('select all 1', function() {
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(), {collapsed: false}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+
+            headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+
+            happen.click(headers[3].querySelector('.sel'));
+            map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
+            map._layers[L.Util.stamp(markerC)].should.be.equal(markerC);
+            should.not.exist(map._layers[L.Util.stamp(markerB)]);
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(4);
+            ctl.getContainer().parentElement.querySelectorAll('input:checked').length.should.be.equal(4);
+        });
+
+        it('deselect all 1', function() {
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(), {collapsed: false}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+
+            headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+
+            happen.click(headers[3].querySelector('.sel'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(4);
+
+            happen.click(headers[3].querySelector('.unsel'));
+            should.not.exist(map._layers[L.Util.stamp(markerA)]);
+            should.not.exist(map._layers[L.Util.stamp(markerC)]);
+            should.not.exist(map._layers[L.Util.stamp(markerB)]);
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+            ctl.getContainer().parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+        });
+
+        it('select all 2', function() {
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(), {collapsed: false}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+
+            headers[6].parentElement.querySelectorAll('input').length.should.be.equal(2);
+            headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+
+            happen.click(headers[6].querySelector('.sel'));
+            map._layers[L.Util.stamp(markerC)].should.be.equal(markerC);
+            should.not.exist(map._layers[L.Util.stamp(markerA)]);
+            should.not.exist(map._layers[L.Util.stamp(markerB)]);
+            headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(2);
+            ctl.getContainer().parentElement.querySelectorAll('input:checked').length.should.be.equal(2);
+        });
+
+        it('deselect all 2', function() {
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(), {collapsed: false}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+
+            headers[6].parentElement.querySelectorAll('input').length.should.be.equal(2);
+            headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+
+            happen.click(headers[6].querySelector('.sel'));
+            headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(2);
+
+            happen.click(headers[6].querySelector('.unsel'));
+            should.not.exist(map._layers[L.Util.stamp(markerA)]);
+            should.not.exist(map._layers[L.Util.stamp(markerC)]);
+            should.not.exist(map._layers[L.Util.stamp(markerB)]);
+            headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+            ctl.getContainer().parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+        });
+
+        it('select unselect callbacks', function() {
+            function callbackSel(ev, domNode, treeNode, map) {
+                ev.type.should.be.equal('click');
+                domNode.querySelectorAll('input').length.should.be.equal(4);
+                treeNode.children.length.should.be.equal(3);
+                should.exist(map);
+                return true;
+            }
+
+            function callbackUnsel(ev, domNode, treeNode, map) {
+                ev.type.should.be.equal('click');
+                domNode.querySelectorAll('input').length.should.be.equal(4);
+                treeNode.children.length.should.be.equal(3);
+                should.exist(map);
+                return false;
+            }
+
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(callbackSel, callbackUnsel), {collapsed: false}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+
+            headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+
+            happen.click(headers[3].querySelector('.sel'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(4);
+
+            happen.click(headers[3].querySelector('.unsel'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+        });
+
+        it('selector toggle', function() {
+            function callback(ev, domNode, treeNode, map) {
+                var noneSelected = domNode.querySelectorAll('input:checked').length === 0;
+                return noneSelected;
+            }
+
+            var ctl = L.control.layers.tree(null, overlaysArrayEventedClasses(callback, callback), {collapsed: false}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+
+            headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+
+            happen.click(headers[3].querySelector('.sel'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(4);
+            happen.click(headers[3].querySelector('.sel'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+
+            happen.click(headers[5].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(1);
+
+            happen.click(headers[3].querySelector('.sel'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+            happen.click(headers[3].querySelector('.sel'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(4);
+        });
+    });
+
+    describe('SelectAll', function() {
+        beforeEach(function() {
+            map.setView([0, 0], 2);
+        });
+
+        it('selector toggle', function() {
+            function shouldbe(mA, mB, mC) {
+                function checkit(layer, present) {
+                    if (present) {
+                        map._layers[L.Util.stamp(layer)].should.be.equal(layer);
+                    } else {
+                        should.not.exist(map._layers[L.Util.stamp(layer)]);
+                    }
+                }
+                checkit(markerA, mA);
+                checkit(markerB, mB);
+                checkit(markerC, mC);
+            }
+
+            var ctl = L.control.layers.tree(null, overlaysArraySelectAll(), {collapsed: false}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(10);
+
+            headers[6].querySelector('input').title.should.be.equal('my title');
+
+            happen.click(headers[9].querySelector('input'));
+
+            headers[3].parentElement.querySelectorAll('input').length.should.be.equal(6);
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
+            shouldbe(true, true, true);
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+            shouldbe(false, true, false);
+
+            happen.click(headers[9].querySelector('input'));
+            shouldbe(false, false, false);
+
+            happen.click(headers[4].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(1);
+            shouldbe(true, false, false);
+            headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(1);
+
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
+            shouldbe(true, false, true);
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+            shouldbe(false, false, false);
+
+            happen.click(headers[6].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(3);
+            headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(3);
+            headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(1);
+            shouldbe(false, false, true);
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
+            shouldbe(true, false, true);
         });
     });
 
