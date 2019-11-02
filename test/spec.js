@@ -486,6 +486,44 @@ describe('L.Control.Layers.Tree', function() {
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
             shouldbe(true, false, true);
         });
+        it('show if all selected or deselected', function() {
+            var ctl = L.control.layers.tree(null, overlaysArraySelectAll(), {collapsed: false}).addTo(map);
+            var headers = map._container.querySelectorAll('.leaflet-layerstree-header');
+            headers.length.should.be.equal(10);
+
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
+            headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(0);
+            happen.click(headers[3].querySelector('input'));
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
+            headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(0);
+
+            happen.click(headers[7].querySelector('input'));
+            headers[3].parentElement.querySelector('input').checked.should.be.false;
+            headers[3].parentElement.querySelector('input').indeterminate.should.be.true;
+            headers[6].parentElement.querySelector('input').checked.should.be.false;
+            headers[6].parentElement.querySelector('input').indeterminate.should.be.true;
+
+            happen.click(headers[7].querySelector('input'));
+            headers[3].parentElement.querySelector('input').checked.should.be.true;
+            headers[3].parentElement.querySelector('input').indeterminate.should.be.false;
+            headers[6].parentElement.querySelector('input').checked.should.be.true;
+            headers[6].parentElement.querySelector('input').indeterminate.should.be.false;
+
+            happen.click(headers[6].querySelector('input'));
+            headers[3].parentElement.querySelector('input').checked.should.be.false;
+            headers[3].parentElement.querySelector('input').indeterminate.should.be.true;
+            headers[6].parentElement.querySelector('input').checked.should.be.false;
+            headers[6].parentElement.querySelector('input').indeterminate.should.be.false;
+
+            happen.click(headers[6].querySelector('input'));
+            headers[3].parentElement.querySelector('input').checked.should.be.true;
+            headers[3].parentElement.querySelector('input').indeterminate.should.be.false;
+            headers[6].parentElement.querySelector('input').checked.should.be.true;
+            headers[6].parentElement.querySelector('input').indeterminate.should.be.false;
+
+            headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
+            headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(0);
+        });
     });
 
     describe('Select', function() {

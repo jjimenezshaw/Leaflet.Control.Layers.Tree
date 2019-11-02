@@ -264,7 +264,7 @@
             var container = overlay ? this._overlaysList : this._baseLayersList;
             this._expandCollapseAll(overlay, this.options.collapseAll, this.collapseTree);
             this._expandCollapseAll(overlay, this.options.expandAll, this.expandTree);
-            this._iterateTreeLayout(tree, container, overlay, tree.noShow)
+            this._iterateTreeLayout(tree, container, overlay, [], tree.noShow)
             if (this._checkDisabledLayers) {
                 // to keep compatibility
                 this._checkDisabledLayers();
@@ -292,7 +292,7 @@
         },
 
         // recursive funtion to create the DOM children
-        _iterateTreeLayout: function(tree, container, overlay, noShow) {
+        _iterateTreeLayout: function(tree, container, overlay, selAllNodes, noShow) {
             if (!tree) return;
             function creator(type, cls, append, innerHTML) {
                 var obj = L.DomUtil.create(type, cls, append);
@@ -315,6 +315,49 @@
                 sel.appendChild(space);
                 header.appendChild(sel);
                 header.appendChild(entry);
+            }
+
+            function updateSelAllCheckbox(ancestor) {
+                var selector = ancestor.querySelector('input[type=checkbox]')
+                var selectedAll = true;
+                var selectedNone = true;
+                var inputs = ancestor.querySelectorAll('input[type=checkbox]');
+                [].forEach.call(inputs, function(inp) { // to work in node for tests
+                    if (inp === selector) {
+                        // ignore
+                    } else if (inp.indeterminate) {
+                        selectedAll = false;
+                        selectedNone = false;
+                    } else if (inp.checked) {
+                        selectedNone = false;
+                    } else if (!inp.checked) {
+                        selectedAll = false;
+                    }
+                });
+                if (selectedAll) {
+                    selector.indeterminate = false
+                    selector.checked = true;
+                } else if (selectedNone) {
+                    selector.indeterminate = false
+                    selector.checked = false;
+                } else {
+                    selector.indeterminate = true;
+                    selector.checked = false;
+                }
+            }
+
+            function manageSelectorsAll(input, ctx) {
+                selAllNodes.forEach(function(ancestor) {
+                    L.DomEvent.on(input, 'click', function(ev) {
+                        updateSelAllCheckbox(ancestor)
+                    }, ctx)
+                }, ctx);
+            }
+
+            var selAll;
+            if (tree.selectAllCheckbox) {
+                selAll = this._createCheckboxElement(false);
+                selAll.className += ' ' + this.cls.selAllCheckbox;
             }
 
             var hide = this.cls.hide; // To toggle state
@@ -343,10 +386,16 @@
                     }
                     this._localExpand();
                 }, this);
+                if (selAll) {
+                    selAllNodes.splice(0, 0, container);
+                }
                 tree.children.forEach(function(child) {
                     var node = creator('div', this.cls.node, children)
-                    this._iterateTreeLayout(child, node, overlay);
+                    this._iterateTreeLayout(child, node, overlay, selAllNodes);
                 }, this);
+                if (selAll) {
+                    selAllNodes.splice(0, 1);
+                }
             } else {
                 // no children, so the selector makes no sense.
                 L.DomUtil.addClass(sel, this.cls.neverShow);
@@ -363,6 +412,7 @@
                     input = this._createRadioElement(radioGroup, checked);
                 } else {
                     input = this._createCheckboxElement(checked);
+                    manageSelectorsAll(input, this);
                 }
                 if (this._layerControlInputs) {
                     // to keep compatibility with 1.0.3
@@ -392,8 +442,8 @@
                 ctx._onInputClick();
             }
             if (tree.selectAllCheckbox) {
-                var selAll = creator('input', this.cls.selAllCheckbox + ' leaflet-control-layers-selector', label);
-                selAll.type = 'checkbox';
+                // selAll is already created
+                label.appendChild(selAll);
                 if (isText(tree.selectAllCheckbox)) {
                     selAll.title = tree.selectAllCheckbox;
                 }
@@ -401,30 +451,8 @@
                     ev.stopPropagation();
                     selectAllCheckboxes(selAll.checked, this);
                 }, this);
-                var inputs = container.getElementsByTagName('input');
-                var allChecked = true;
-                var noneChecked = true;
-                for (var i = 0; i < inputs.length; i++) {
-                    var input = inputs[i];
-                    if (input === selAll || input.type !== 'checkbox') continue;
-                    if (input.checked) {
-                        noneChecked = false;
-                    } else {
-                        allChecked = false;
-                    }
-                    L.DomEvent.on(input, 'click', function(ev) {
-                        selAll.indeterminate = true;
-                        selAll.checked = false;
-                    }, this);
-                }
-                if (allChecked) {
-                    selAll.checked = true;
-                } else if (noneChecked) {
-                    selAll.checked = false;
-                } else {
-                    selAll.indeterminate = true;
-                    selAll.checked = false;
-                }
+                updateSelAllCheckbox(container);
+                manageSelectorsAll(selAll, this);
             }
 
             var name = creator('span', this.cls.name, label, tree.label);
