@@ -38,6 +38,7 @@
                 node: 'leaflet-layerstree-node',
                 name: 'leaflet-layerstree-header-name',
                 label: 'leaflet-layerstree-header-label',
+                selAllCheckbox: 'leaflet-layerstree-sel-all-checkbox',
             };
         },
 
@@ -371,11 +372,89 @@
                 L.DomEvent.on(input, 'click', this._onInputClick, this);
                 label.appendChild(input);
             }
+
+            function isText(variable) {
+                return (typeof variable === 'string' || variable instanceof String);
+            }
+
+            function isFunction(functionToCheck) {
+                return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+            }
+
+            function selectAllCheckboxes(select, ctx) {
+                var inputs = container.getElementsByTagName('input');
+                for (var i = 0; i < inputs.length; i++) {
+                    var input = inputs[i];
+                    if (input.type !== 'checkbox') continue;
+                    input.checked = select;
+                    input.indeterminate = false;
+                }
+                ctx._onInputClick();
+            }
+            if (tree.selectAllCheckbox) {
+                var selAll = creator('input', this.cls.selAllCheckbox + ' leaflet-control-layers-selector', label);
+                selAll.type = 'checkbox';
+                if (isText(tree.selectAllCheckbox)) {
+                    selAll.title = tree.selectAllCheckbox;
+                }
+                L.DomEvent.on(selAll, 'click', function(ev) {
+                    ev.stopPropagation();
+                    selectAllCheckboxes(selAll.checked, this);
+                }, this);
+                var inputs = container.getElementsByTagName('input');
+                var allChecked = true;
+                var noneChecked = true;
+                for (var i = 0; i < inputs.length; i++) {
+                    var input = inputs[i];
+                    if (input === selAll || input.type !== 'checkbox') continue;
+                    if (input.checked) {
+                        noneChecked = false;
+                    } else {
+                        allChecked = false;
+                    }
+                    L.DomEvent.on(input, 'click', function(ev) {
+                        selAll.indeterminate = true;
+                        selAll.checked = false;
+                    }, this);
+                }
+                if (allChecked) {
+                    selAll.checked = true;
+                } else if (noneChecked) {
+                    selAll.checked = false;
+                } else {
+                    selAll.indeterminate = true;
+                    selAll.checked = false;
+                }
+            }
+
             var name = creator('span', this.cls.name, label, tree.label);
             L.DomUtil.addClass(closed, hide);
             if (noShow) {
                 L.DomUtil.addClass(header, this.cls.neverShow);
                 L.DomUtil.addClass(children, this.cls.childrenNopad);
+            }
+
+            var eventeds = tree.eventedClasses;
+            if (!(eventeds instanceof Array)) {
+                eventeds = [eventeds];
+            }
+
+            for (var e = 0; e < eventeds.length; e++) {
+                var evented = eventeds[e];
+                if (evented && evented.className) {
+                    var obj = container.querySelector('.' + evented.className);
+                    if (obj) {
+                        L.DomEvent.on(obj, evented.event || 'click', (function(selectAll) {
+                            return function(ev) {
+                                ev.stopPropagation();
+                                var select = isFunction(selectAll) ? selectAll(ev, container, tree, this._map) : selectAll;
+                                if (select !== undefined && select !== null) {
+                                    selectAllCheckboxes(select, this);
+                                }
+                            }
+                        })(evented.selectAll), this);
+                    }
+                }
             }
         },
 
