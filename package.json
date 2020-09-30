@@ -1,6 +1,6 @@
 {
   "name": "leaflet.control.layers.tree",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Control Layers in a Tree structure",
   "main": "L.Control.Layers.Tree.js",
   "style": "L.Control.Layers.Tree.css",
@@ -33,7 +33,7 @@
     "eslint": "^4.19.1",
     "eslint-plugin-html": "^4.0.6",
     "happen": "^0.3.2",
-    "leaflet": "^1.6.0",
+    "leaflet": "^1.7.1",
     "mocha": "^5.2.0",
     "mocha-phantomjs-core": "^2.1.2",
     "phantomjs-prebuilt": "^2.1.16"
