@@ -1,6 +1,6 @@
 {
   "name": "leaflet.control.layers.tree",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Control Layers in a Tree structure",
   "main": "L.Control.Layers.Tree.js",
   "style": "L.Control.Layers.Tree.css",
