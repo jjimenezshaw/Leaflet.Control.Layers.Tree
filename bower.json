@@ -1,6 +1,6 @@
 {
   "name": "leaflet.control.layers.tree",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Control Layers in a Tree structure",
   "homepage": "https://github.com/jjimenezshaw/Leaflet.Control.Layers.Tree",
   "authors": [
