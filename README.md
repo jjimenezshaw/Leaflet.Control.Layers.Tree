@@ -20,7 +20,7 @@ This plugin has been tested with Leaflet 1.0.3, 1.1.0, 1.2.0, 1.3.1., 1.4.0, 1.5
 ## Usage
 1. Create your layers. Do this as usual.
 2. Create your layers tree, like the one just below.
-3. Create the control and add to the map: `L.control.layers.tree(baseTree, overalysTree, options).addTo(map);`
+3. Create the control and add to the map: `L.control.layers.tree(baseTree, overlaysTree, options).addTo(map);`
 4. Voilà!
 ```javascript
 var baseTree = {
@@ -140,7 +140,7 @@ Creates the control. The arguments are:
 * `namedToggle`: `<Boolean>` Flag to replace the toggle image (box with the layers image) with the 'name' of the selected base layer. If the `name` field is not present in the tree for this layer, `label` is used. See that you can show a different name when control is collapsed than the one that appears in the tree when it is expanded. Your node in the tree can be `{ label: 'OSM', name: 'OpenStreetMap', layer: layer }`. Default 'false'.
 * `collapseAll`: `<String>` Text for an entry in control that collapses the tree (baselayers or overlays). If empty, no entry is created. Default ''.
 * `expandAll`: `<String>` Text for an entry in control that expands the tree. If empty, no entry is created. Default ''.
-* `labelIsSelector`: `<String>` Controls if a label or only the checkbox/radiobutton can toggle layers. If set to both, overlay or base those labels can be clicked on to toggle the layer. Default 'both'.
+* `labelIsSelector`: `<String>` Controls if a label or only the checkbox/radiobutton can toggle layers. If set to `both`, `overlay` or `base` those labels can be clicked on to toggle the layer. Default 'both'.
 
 See that those strings can be html code, with unicode, images or whatever you want.
 

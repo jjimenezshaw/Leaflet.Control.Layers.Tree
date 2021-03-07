@@ -191,14 +191,14 @@ describe('L.Control.Layers.Tree', function() {
             ctl.collapseTree();
             checkHidden(headers, true, 1);
         });
-        it('they are accesible on mouseover', function() {
+        it('they are accessible on mouseover', function() {
             var ctrl = L.control.layers.tree(baseTree1()).addTo(map);
             var inputs = map._container.querySelectorAll('.leaflet-control-layers-base input');
             inputs.length.should.be.equal(5);
             var headers = map._container.querySelectorAll('.leaflet-control-layers-base .leaflet-layerstree-header');
             headers.length.should.be.equal(7);
 
-            // Nothing visible because the contrl is collapsed
+            // Nothing visible because the control is collapsed
             checkHidden(inputs, true, 0);
             checkHidden(headers, true, 0);
 
@@ -216,14 +216,14 @@ describe('L.Control.Layers.Tree', function() {
             map.setView([0, 0], 14);
         });
 
-        it('they are accesible on mouseover', function() {
+        it('they are accessible on mouseover', function() {
             var ctrl = L.control.layers.tree(baseArray1()).addTo(map);
             var inputs = map._container.querySelectorAll('.leaflet-control-layers-base input');
             inputs.length.should.be.equal(5);
             var headers = map._container.querySelectorAll('.leaflet-control-layers-base .leaflet-layerstree-header');
             headers.length.should.be.equal(7); // The root is hidden, but it is there
 
-            // Nothing visible because the contrl is collapsed
+            // Nothing visible because the control is collapsed
             checkHidden(inputs, true, 0);
             checkHidden(headers, true, 0);
 
@@ -253,14 +253,14 @@ describe('L.Control.Layers.Tree', function() {
             ctl.collapseTree(true);
             checkHidden(headers, true, 1);
         });
-        it('they are accesible on mouseover', function() {
+        it('they are accessible on mouseover', function() {
             var ctrl = L.control.layers.tree(null, overlaysTree1()).addTo(map);
             var inputs = map._container.querySelectorAll('.leaflet-control-layers-overlays input');
             inputs.length.should.be.equal(5);
             var headers = map._container.querySelectorAll('.leaflet-control-layers-overlays .leaflet-layerstree-header');
             headers.length.should.be.equal(7);
 
-            // Nothing visible because the contrl is collapsed
+            // Nothing visible because the control is collapsed
             checkHidden(inputs, true, 0);
             checkHidden(headers, true, 0);
 
@@ -278,14 +278,14 @@ describe('L.Control.Layers.Tree', function() {
             map.setView([0, 0], 1);
         });
 
-        it('they are accesible on mouseover', function() {
+        it('they are accessible on mouseover', function() {
             var ctrl = L.control.layers.tree(null, overlaysArray1()).addTo(map);
             var inputs = map._container.querySelectorAll('.leaflet-control-layers-overlays input');
             inputs.length.should.be.equal(5);
             var headers = map._container.querySelectorAll('.leaflet-control-layers-overlays .leaflet-layerstree-header');
             headers.length.should.be.equal(7);
 
-            // Nothing visible because the contrl is collapsed
+            // Nothing visible because the control is collapsed
             checkHidden(inputs, true, 0);
             checkHidden(headers, true, 0);
 
@@ -680,7 +680,7 @@ describe('L.Control.Layers.Tree', function() {
         beforeEach(function() {
             map.setView([0, 0], 1);
         });
-        it('Named Toogle', function() {
+        it('Named Toggle', function() {
             var ctrl = L.control.layers.tree(baseTree1(), overlaysTree1(), {namedToggle: true}).addTo(map);
             map.addLayer(layerB);
             var toggle = map._container.querySelector('.leaflet-control-layers-toggle');
