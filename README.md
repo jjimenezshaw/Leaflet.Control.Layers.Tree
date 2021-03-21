@@ -20,7 +20,7 @@ This plugin has been tested with Leaflet 1.0.3, 1.1.0, 1.2.0, 1.3.1., 1.4.0, 1.5
 ## Usage
 1. Create your layers. Do this as usual.
 2. Create your layers tree, like the one just below.
-3. Create the control and add to the map: `L.control.layers.tree(baseTree, overalysTree, options).addTo(map);`
+3. Create the control and add to the map: `L.control.layers.tree(baseTree, overlaysTree, options).addTo(map);`
 4. Voilà!
 ```javascript
 var baseTree = {
