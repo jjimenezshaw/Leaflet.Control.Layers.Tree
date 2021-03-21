@@ -8,3 +8,15 @@ node_js:
 branches:
   only:
     - master
+
+jobs:
+  include:
+    - name: module
+      install: npm ci
+      script: npm run test
+
+    - name: typescript
+      script: |
+        cd test-types
+        npm ci
+        npm run test

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es6"
+    ],
+    "module": "commonjs",
+    "noEmit": true
+  },
+  "files": [
+    "./node_modules/leaflet.control.layers.tree/L.Control.Layers.Tree.d.ts"
+  ],
+  "include": [
+    "**/*.ts"
+  ]
+}

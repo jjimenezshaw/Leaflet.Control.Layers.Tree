@@ -4,6 +4,7 @@
   "description": "Control Layers in a Tree structure",
   "main": "L.Control.Layers.Tree.js",
   "style": "L.Control.Layers.Tree.css",
+  "types": "L.Control.Layers.Tree.d.ts",
   "directories": {
     "test": "test"
   },

@@ -1,5 +1,6 @@
-.vscode
 .travis.yml
+.vscode
 bower.json
 examples
 test
+test-types
