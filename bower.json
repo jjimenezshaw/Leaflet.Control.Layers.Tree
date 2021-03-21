@@ -19,6 +19,8 @@
   "license": "BSD-3-Clause",
   "ignore": [
     "**/.*",
+    ".travis.yml",
+    "examples",
     "node_modules",
     "test"
   ]

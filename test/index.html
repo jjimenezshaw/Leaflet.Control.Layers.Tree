@@ -39,15 +39,15 @@
     <script src="../node_modules/chai-leaflet/chai-leaflet.js"></script>
     <!--script src="../node_modules/blanket/dist/mocha/blanket_mocha.js"></script-->
 
-    <script>
+    <script class="mocha-init">
         mocha.setup('bdd');
+        mocha.globals(['L']);
     </script>
 
     <script src="spec.js"></script>
 
-    <script>
-        mocha.globals(['L']);
-        (window.mochaPhantomJS || mocha).run();
+    <script class="mocha-exec">
+        mocha.run();
     </script>
 </body>
 </html>

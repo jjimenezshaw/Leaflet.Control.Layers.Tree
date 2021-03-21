@@ -1,0 +1,5 @@
+.vscode
+.travis.yml
+bower.json
+examples
+test

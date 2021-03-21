@@ -292,7 +292,7 @@
             }
         },
 
-        // recursive funtion to create the DOM children
+        // recursive function to create the DOM children
         _iterateTreeLayout: function(tree, container, overlay, selAllNodes, noShow) {
             if (!tree) return;
             function creator(type, cls, append, innerHTML) {

@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "eslint L.*.js test/* examples/*",
     "lintfix": "eslint L.*.js test/* examples/* --fix",
-    "spec": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html",
+    "spec": "mocha-chrome test/index.html --ignore-exceptions",
     "test": "npm run lint && npm run spec"
   },
   "repository": {
@@ -28,15 +28,14 @@
   ],
   "devDependencies": {
     "blanket": "^1.2.3",
-    "chai": "~4.1.2",
+    "chai": "~4.3.4",
     "chai-leaflet": "^0.0.13",
-    "eslint": "^4.19.1",
-    "eslint-plugin-html": "^4.0.6",
+    "eslint": "^7.22.0",
+    "eslint-plugin-html": "^6.1.2",
     "happen": "^0.3.2",
     "leaflet": "^1.7.1",
-    "mocha": "^5.2.0",
-    "mocha-phantomjs-core": "^2.1.2",
-    "phantomjs-prebuilt": "^2.1.16"
+    "mocha": "^8.3.2",
+    "mocha-chrome": "^2.2.0"
   },
   "peerDependencies": {
     "leaflet": "^1.1.0"
