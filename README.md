@@ -17,6 +17,8 @@ Using npm for browserify `npm install leaflet.control.layers.tree` (and `require
 ## Compatibility
 This plugin has been tested with Leaflet 1.0.3, 1.1.0, 1.2.0, 1.3.1., 1.4.0, 1.5.1, 1.6.0 and 1.7.1
 
+This plugin supports TypeScript. See file [L.Control.Layers.Tree.d.ts](L.Control.Layers.Tree.d.ts)
+
 ## Usage
 1. Create your layers. Do this as usual.
 2. Create your layers tree, like the one just below.
