@@ -3,5 +3,7 @@
 .vscode
 bower.json
 examples
+package-lock.json
 test
 test-types
+*.png
