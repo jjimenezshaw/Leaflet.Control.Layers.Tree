@@ -1,6 +1,5 @@
 # Leaflet.Control.Layers.Tree
 [![CI](https://github.com/jjimenezshaw/Leaflet.Control.Layers.Tree/actions/workflows/main.yml/badge.svg)](https://github.com/jjimenezshaw/Leaflet.Control.Layers.Tree/actions/workflows/main.yml)
-[![Build Status](https://travis-ci.org/jjimenezshaw/Leaflet.Control.Layers.Tree.svg)](https://travis-ci.org/jjimenezshaw/Leaflet.Control.Layers.Tree)
 [![NPM version](https://img.shields.io/npm/v/leaflet.control.layers.tree.svg)](https://www.npmjs.com/package/leaflet.control.layers.tree)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg?style=flat)](LICENSE)
 [![Leaflet 1.x compatible!](https://img.shields.io/badge/Leaflet%201.x-%E2%9C%93-1EB300.svg?style=flat)](http://leafletjs.com/reference.html)
