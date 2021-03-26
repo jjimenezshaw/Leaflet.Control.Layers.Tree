@@ -49,4 +49,4 @@ jobs:
       - name: Run tests
         run: npm run test
         working-directory: ${{ matrix.working-directory }}
-        timeout-minutes: 1
+        timeout-minutes: 2
