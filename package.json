@@ -28,10 +28,9 @@
     "layers"
   ],
   "devDependencies": {
-    "blanket": "^1.2.3",
     "chai": "~4.3.4",
     "chai-leaflet": "^0.0.13",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "eslint-plugin-html": "^6.1.2",
     "happen": "^0.3.2",
     "leaflet": "^1.7.1",
