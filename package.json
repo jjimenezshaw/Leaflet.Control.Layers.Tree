@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "eslint L.*.js test/* examples/*",
     "lintfix": "eslint L.*.js test/* examples/* --fix",
-    "spec": "mocha-chrome test/index.html --ignore-exceptions",
+    "spec": "mocha-headless-chrome -f test/index.html",
     "test": "npm run lint && npm run spec"
   },
   "repository": {
@@ -35,9 +35,8 @@
     "eslint-plugin-html": "^6.1.2",
     "happen": "^0.3.2",
     "leaflet": "^1.7.1",
-    "minimist": ">=0.2.1",
     "mocha": "^8.3.2",
-    "mocha-chrome": "^2.2.0"
+    "mocha-headless-chrome": "^3.1.0"
   },
   "peerDependencies": {
     "leaflet": "^1.1.0"
