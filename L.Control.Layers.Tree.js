@@ -369,6 +369,10 @@
                 L.DomUtil.addClass(sensible, this.cls.pointer);
                 sensible.tabIndex = 0;
                 L.DomEvent.on(sensible, 'click keydown', function(e) {
+                    // leaflet internal flag to prevent click propagation and collapsing tree on mobile browsers
+                    if (this._preventClick) {
+                        return;
+                    }
                     if (e.type === 'keydown' && e.keyCode !== 32) {
                         return
                     }
