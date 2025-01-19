@@ -17,8 +17,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 14.x ]
-        working-directory: [ '.', './test-types' ]
+        node-version: [ 22.x ]
+        working-directory: [ '.' ]
 
     steps:
       - name: Checkout branch
