@@ -55,10 +55,10 @@
             noShow: true,
             children: [
                 {
-                    label: 'OpenStreeMap',
+                    label: 'OpenStreetMap',
                     layer: osm,
                     children: [
-                        {label: 'B&W', layer: osmBw, name: 'OpenStreeMap B&W'},
+                        {label: 'B&W', layer: osmBw, name: 'OpenStreetMap B&W'},
                     ]
                 },
                 {
@@ -102,7 +102,7 @@
             label: 'Airports',
             selectAllCheckbox: true,
             children: [
-                /* start aiports from http://www.partow.net/miscellaneous/airportdatabase/#Download */
+                /* start airports from http://www.partow.net/miscellaneous/airportdatabase/#Download */
                 {label: 'GERMANY',
                     selectAllCheckbox: true,
                     children: [
@@ -318,7 +318,7 @@
                 }
             ]
         };
-        /* ends aiports */
+        /* ends airports */
         var makePopups = function(node) {
             if (node.layer) {
                 node.layer.bindPopup(node.label);
