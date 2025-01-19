@@ -10,9 +10,13 @@
   },
   "license": "BSD-3-Clause",
   "scripts": {
-    "lint": "eslint L.*.js test/* examples/*",
-    "lintfix": "eslint L.*.js test/* examples/* --fix",
-    "spec": "mocha-headless-chrome -f test/index.html",
+    "lint:js": "eslint .",
+    "lint:ts": "eslint --config eslint.config-ts.mjs *.ts",
+    "lint": "npm run lint:js && npm run lint:ts",
+    "lint:fix": "npm run lint:js -- --fix",
+    "spec:js": "mocha-headless-chrome -f test/index.html",
+    "spec:ts": "tsc",
+    "spec": "npm run spec:js && npm run spec:ts",
     "test": "npm run lint && npm run spec"
   },
   "repository": {
@@ -28,14 +32,20 @@
     "layers"
   ],
   "devDependencies": {
+    "@types/leaflet": "^1.9.16",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
     "chai": "~4.3.4",
     "chai-leaflet": "^0.0.13",
-    "eslint": "^7.23.0",
-    "eslint-plugin-html": "^6.1.2",
+    "eslint": "^9.18.0",
+    "eslint-plugin-html": "^8.1.2",
     "happen": "^0.3.2",
-    "leaflet": "^1.7.1",
-    "mocha": "^8.3.2",
-    "mocha-headless-chrome": "^3.1.0"
+    "leaflet": "^1.9.4",
+    "mocha": "^11.0.1",
+    "mocha-headless-chrome": "^4.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
   },
   "peerDependencies": {
     "leaflet": "^1.1.0"
