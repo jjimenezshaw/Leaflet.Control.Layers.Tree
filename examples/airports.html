@@ -81,7 +81,7 @@
 
         ctl.addTo(map).collapseTree().expandSelected();
 
-        var hasAllUnSelected = function() {
+        var _hasAllUnSelected = function() {
             return function(ev, domNode, treeNode, map) {
                 var anySelected = false;
                 function iterate(node)

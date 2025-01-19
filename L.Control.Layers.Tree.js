@@ -61,15 +61,15 @@
             return this._setTrees(undefined, tree);
         },
 
-        addBaseLayer: function(layer, name) {
+        addBaseLayer: function(_layer, _name) {
             throw 'addBaseLayer is disabled';
         },
 
-        addOverlay: function(layer, name) {
+        addOverlay: function(_layer, _name) {
             throw 'addOverlay is disabled';
         },
 
-        removeLayer: function(layer) {
+        removeLayer: function(_layer) {
             throw 'removeLayer is disabled';
         },
 
@@ -79,7 +79,7 @@
         },
 
         expand: function() {
-            var ret = L.Control.Layers.prototype.expand.call(this);
+            L.Control.Layers.prototype.expand.call(this);
             this._sect().scrollTop = this._scrollTop;
         },
 
@@ -202,13 +202,13 @@
             if (overlays !== undefined) this._overlaysTree = forArrays(overlays);
 
             var bflat = iterate(this._baseTree, {});
-            for (var i in bflat) {
-                this._addLayer(bflat[i], i);
+            for (var j in bflat) {
+                this._addLayer(bflat[j], j);
             }
 
             var oflat = iterate(this._overlaysTree, {}, true);
-            for (i in oflat) {
-                this._addLayer(oflat[i], i, true);
+            for (var k in oflat) {
+                this._addLayer(oflat[k], k, true);
             }
             return (this._map) ? this._update() : this;
         },
@@ -224,7 +224,7 @@
             return this;
         },
 
-        // collapses or expands the tree in the containter.
+        // collapses or expands the tree in the container.
         _applyOnTree: function(container, collapse) {
             var iters = [
                 {cls: this.cls.children, hide: collapse},
@@ -247,7 +247,7 @@
         },
 
         // it is called in the original _update, and shouldn't do anything.
-        _addItem: function(obj) {
+        _addItem: function(_obj) {
         },
 
         // overwrite _update function in Control.Layers
@@ -349,7 +349,7 @@
 
             function manageSelectorsAll(input, ctx) {
                 selAllNodes.forEach(function(ancestor) {
-                    L.DomEvent.on(input, 'click', function(ev) {
+                    L.DomEvent.on(input, 'click', function(_ev) {
                         updateSelAllCheckbox(ancestor)
                     }, ctx)
                 }, ctx);
@@ -473,7 +473,7 @@
                 manageSelectorsAll(selAll, this);
             }
 
-            var name = creator('span', this.cls.name, label, tree.label);
+            creator('span', this.cls.name, label, tree.label);
 
             // hide the button which doesn't fit the collapsed state, then hide children conditionally
             L.DomUtil.addClass(tree.collapsed ? opened : closed, hide);
