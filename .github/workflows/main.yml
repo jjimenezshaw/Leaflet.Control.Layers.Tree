@@ -20,9 +20,6 @@ jobs:
         node-version: [ 22.x ]
 
     steps:
-      - name: Set up Google Chrome
-        uses: browser-actions/setup-chrome@v1
-
       - name: Checkout branch
         uses: actions/checkout@v4
 
