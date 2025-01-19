@@ -18,21 +18,23 @@ jobs:
     strategy:
       matrix:
         node-version: [ 22.x ]
-        working-directory: [ '.' ]
 
     steps:
+      - name: Set up Google Chrome
+        uses: browser-actions/setup-chrome@v1
+
       - name: Checkout branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         env:
-          cache-name: cache-node-modules-${{ matrix.working-directory }}
+          cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
@@ -44,9 +46,7 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        working-directory: ${{ matrix.working-directory }}
 
       - name: Run tests
         run: npm run test
-        working-directory: ${{ matrix.working-directory }}
         timeout-minutes: 2
