@@ -147,10 +147,10 @@
             for (var i = 0; i < inputs.length; i++) {
                 // Loop over every (valid) input.
                 var input = inputs[i];
-                if (this._getLayer && !!this._getLayer(input.layerId).overlay != !!overlay) continue
+                if (this._getLayer && !!this._getLayer(input.layerId).overlay != !!overlay) continue;
                 if (input.checked) {
                     // Get out of the header,
-                    // to not open the posible (but rare) children
+                    // to not open the possible (but rare) children
                     iter(input.parentElement.parentElement.parentElement.parentElement);
                 }
             }
@@ -185,7 +185,7 @@
                 if (Array.isArray(input)) {
                     return {noShow: true, children: input};
                 } else {
-                    return input
+                    return input;
                 }
             }
 
@@ -265,7 +265,7 @@
             var container = overlay ? this._overlaysList : this._baseLayersList;
             this._expandCollapseAll(overlay, this.options.collapseAll, this.collapseTree);
             this._expandCollapseAll(overlay, this.options.expandAll, this.expandTree);
-            this._iterateTreeLayout(tree, container, overlay, [], tree.noShow)
+            this._iterateTreeLayout(tree, container, overlay, [], tree.noShow);
             if (this._checkDisabledLayers) {
                 // to keep compatibility
                 this._checkDisabledLayers();
@@ -284,7 +284,7 @@
                 o.tabIndex = 0;
                 L.DomEvent.on(o, 'click keydown', function(e) {
                     if (e.type !== 'keydown' || e.keyCode === 32) {
-                        o.blur()
+                        o.blur();
                         fn.call(ctx, overlay);
                         this._localExpand();
                     }
@@ -319,7 +319,7 @@
             }
 
             function updateSelAllCheckbox(ancestor) {
-                var selector = ancestor.querySelector('input[type=checkbox]')
+                var selector = ancestor.querySelector('input[type=checkbox]');
                 var selectedAll = true;
                 var selectedNone = true;
                 var inputs = ancestor.querySelectorAll('input[type=checkbox]');
@@ -336,10 +336,10 @@
                     }
                 });
                 if (selectedAll) {
-                    selector.indeterminate = false
+                    selector.indeterminate = false;
                     selector.checked = true;
                 } else if (selectedNone) {
-                    selector.indeterminate = false
+                    selector.indeterminate = false;
                     selector.checked = false;
                 } else {
                     selector.indeterminate = true;
@@ -350,8 +350,8 @@
             function manageSelectorsAll(input, ctx) {
                 selAllNodes.forEach(function(ancestor) {
                     L.DomEvent.on(input, 'click', function(_ev) {
-                        updateSelAllCheckbox(ancestor)
-                    }, ctx)
+                        updateSelAllCheckbox(ancestor);
+                    }, ctx);
                 }, ctx);
             }
 
@@ -374,7 +374,7 @@
                         return;
                     }
                     if (e.type === 'keydown' && e.keyCode !== 32) {
-                        return
+                        return;
                     }
                     sensible.blur();
 
@@ -395,7 +395,7 @@
                     selAllNodes.splice(0, 0, container);
                 }
                 tree.children.forEach(function(child) {
-                    var node = creator('div', this.cls.node, children)
+                    var node = creator('div', this.cls.node, children);
                     this._iterateTreeLayout(child, node, overlay, selAllNodes);
                 }, this);
                 if (selAll) {
@@ -412,9 +412,9 @@
                 if ((this.options.labelIsSelector === 'both') || // if option is set to both
                     (overlay && this.options.labelIsSelector === 'overlay') || // if an overlay layer and options is set to overlay
                     (!overlay && this.options.labelIsSelector === 'base')) { // if a base layer and option is set to base
-                    labelType = 'label'
+                    labelType = 'label';
                 } else { // if option is set to something else
-                    labelType = 'span'
+                    labelType = 'span';
                 }
             } else {
                 labelType = 'span';
@@ -423,7 +423,7 @@
             var label = creator(labelType, this.cls.label, entry);
             if (tree.layer) {
                 // now create the element like in _addItem
-                var checked = this._map.hasLayer(tree.layer)
+                var checked = this._map.hasLayer(tree.layer);
                 var input;
                 var radioGroup = overlay ? tree.radioGroup : 'leaflet-base-layers_' + L.Util.stamp(this);
                 if (radioGroup) {
@@ -501,7 +501,7 @@
                                 if (select !== undefined && select !== null) {
                                     selectAllCheckboxes(select, this);
                                 }
-                            }
+                            };
                         })(evented.selectAll), this);
                     }
                 }
@@ -520,6 +520,6 @@
 
     L.control.layers.tree = function(base, overlays, options) {
         return new L.Control.Layers.Tree(base, overlays, options);
-    }
+    };
 
 })(L);

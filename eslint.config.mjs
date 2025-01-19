@@ -33,10 +33,10 @@ export default [
             'html/report-bad-indent': 2
         },
         rules: {
-            'camelcase': 'error',
+            camelcase: 'error',
             'comma-spacing': ['error', {after: true}],
             'comma-style': 'error',
-            'indent': 'error',
+            indent: ['error', 4],
             'key-spacing': 'error',
             'keyword-spacing': 'error',
             'no-console': 'error',
@@ -55,11 +55,12 @@ export default [
                 },
             ],
             'object-curly-spacing': 'error',
-            'quotes': ['error', 'single', 'avoid-escape'],
+            quotes: ['error', 'single', 'avoid-escape'],
             'space-before-blocks': 'error',
             'space-before-function-paren': ['error', 'never'],
             'space-in-parens': 'error',
-            'strict': 'off'
+            semi: ['error', 'always'],
+            strict: 'off'
         },
     },
 ];

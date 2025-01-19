@@ -50,7 +50,7 @@ function overlaysArray1() {
             ]
         },
         {label: 'Over three', name: 'Name Over three', layer: markerB}
-    ]
+    ];
 }
 
 function overlaysArraySelectAll(collapsed1, collapsed2) {
@@ -76,7 +76,7 @@ function overlaysArraySelectAll(collapsed1, collapsed2) {
             ]
         },
         {label: 'Over three', name: 'Name Over three', layer: markerB}
-    ]
+    ];
 }
 
 function overlaysArrayEventedClasses(callbackSel, callbackUnsel) {
@@ -100,7 +100,7 @@ function overlaysArrayEventedClasses(callbackSel, callbackUnsel) {
             ]
         },
         {label: 'Over three', name: 'Name Over three', layer: markerB}
-    ]
+    ];
 }
 
 function overlaysTree1() {
@@ -120,7 +120,7 @@ function overlaysArray2() {
 
 function isHidden(el) {
     // https://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
-    return (el.offsetParent === null)
+    return (el.offsetParent === null);
 }
 
 function checkHidden(list, value, first) {
@@ -757,7 +757,7 @@ describe('L.Control.Layers.Tree', function() {
             headers.length.should.be.equal(14);
             for (var h = 0; h < headers.length; h++) {
                 var things = [];
-                var keys = ['closed', 'opened', 'space', 'label']
+                var keys = ['closed', 'opened', 'space', 'label'];
                 var items = headers[h].querySelectorAll('span, label, div');
                 for (var i = 0; i < items.length; i++) {
                     keys.forEach(function(key) {
@@ -777,7 +777,7 @@ describe('L.Control.Layers.Tree', function() {
             headers.length.should.be.equal(14);
             for (var h = 0; h < headers.length; h++) {
                 var things = [];
-                var keys = ['closed', 'opened', 'space', 'label']
+                var keys = ['closed', 'opened', 'space', 'label'];
                 var items = headers[h].querySelectorAll('span, label, div');
                 for (var i = 0; i < items.length; i++) {
                     keys.forEach(function(key) {
@@ -861,7 +861,7 @@ describe('L.Control.Layers.Tree', function() {
             map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
 
             headers = map._container.querySelectorAll('.leaflet-layerstree-header');
-            headers.length.should.be.equal(7)
+            headers.length.should.be.equal(7);
             happen.click(headers[4].querySelector('label'));
             map._layers[L.Util.stamp(layerA)].should.be.equal(layerA);
         });
@@ -875,7 +875,7 @@ describe('L.Control.Layers.Tree', function() {
             map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
 
             headers = map._container.querySelectorAll('.leaflet-layerstree-header');
-            headers.length.should.be.equal(14)
+            headers.length.should.be.equal(14);
         });
         it('case 3', function() {
             var ctl = L.control.layers.tree(baseTree1(), overlaysTree1(), {collapsed: false}).addTo(map);
@@ -895,7 +895,7 @@ describe('L.Control.Layers.Tree', function() {
             map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
 
             headers = map._container.querySelectorAll('.leaflet-layerstree-header');
-            headers.length.should.be.equal(10)
+            headers.length.should.be.equal(10);
             inputs = map._container.querySelectorAll('.leaflet-layerstree-header input');
             inputs.length.should.be.equal(7);
             inputs[1].checked.should.be.true;
@@ -906,7 +906,7 @@ describe('L.Control.Layers.Tree', function() {
             map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
 
             headers = map._container.querySelectorAll('.leaflet-layerstree-header');
-            headers.length.should.be.equal(6)
+            headers.length.should.be.equal(6);
             inputs = map._container.querySelectorAll('.leaflet-layerstree-header input');
             inputs.length.should.be.equal(4);
             inputs[1].checked.should.be.true;
