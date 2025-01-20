@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Leaflet Layers Tree Demo: Airports in Europe</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet-src.js" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js" crossorigin=""></script>
     <!--link rel="stylesheet" href="../../Leaflet/dist/leaflet.css" crossorigin=""/>
     <script src="../../Leaflet/dist/leaflet-src.js" crossorigin=""></script-->
 
@@ -28,7 +28,7 @@
             {attribution: '© OpenStreetMap contributors'}
         );
 
-        var osmBw = L.tileLayer(
+        var osmDe = L.tileLayer(
             'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors'}
         );
@@ -58,7 +58,7 @@
                     label: 'OpenStreetMap',
                     layer: osm,
                     children: [
-                        {label: 'B&W', layer: osmBw, name: 'OpenStreetMap B&W'},
+                        {label: 'OSM.de', layer: osmDe, name: 'OpenStreetMap DE'},
                     ]
                 },
                 {
@@ -102,7 +102,7 @@
             label: 'Airports',
             selectAllCheckbox: true,
             children: [
-                /* start airports from http://www.partow.net/miscellaneous/airportdatabase/#Download */
+                /* start airports from https://www.partow.net/miscellaneous/airportdatabase/#Download */
                 {label: 'GERMANY',
                     selectAllCheckbox: true,
                     children: [
