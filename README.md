@@ -3,13 +3,13 @@
 [![CI](https://github.com/jjimenezshaw/Leaflet.Control.Layers.Tree/actions/workflows/main.yml/badge.svg)](https://github.com/jjimenezshaw/Leaflet.Control.Layers.Tree/actions/workflows/main.yml)
 [![NPM version](https://img.shields.io/npm/v/leaflet.control.layers.tree.svg)](https://www.npmjs.com/package/leaflet.control.layers.tree)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg?style=flat)](LICENSE)
-[![Leaflet 1.x compatible!](https://img.shields.io/badge/Leaflet%201.x-%E2%9C%93-1EB300.svg?style=flat)](http://leafletjs.com/reference.html)
+[![Leaflet 1.x compatible!](https://img.shields.io/badge/Leaflet%201.x-%E2%9C%93-1EB300.svg?style=flat)](https://leafletjs.com/reference.html)
 
 A Tree Layers Control for Leaflet.
 
 ## Description
 
-This plugin extends [`Control.Layers`](http://leafletjs.com/reference-1.7.1.html#control-layers) allowing a tree structure for the layers layout. In `Control.Layers` you can only display a flat list of layers (baselayers and overlays), that is usually enough for small sets. If you have a long list of baselayers or overlays, and you want to organize them in a tree (allowing the user collapse and expand branches), this is a good option.
+This plugin extends [`Control.Layers`](https://leafletjs.com/reference.html#control-layers) allowing a tree structure for the layers layout. In `Control.Layers` you can only display a flat list of layers (baselayers and overlays), that is usually enough for small sets. If you have a long list of baselayers or overlays, and you want to organize them in a tree (allowing the user collapse and expand branches), this is a good option.
 
 [Some live examples here](https://jjimenezshaw.github.io/Leaflet.Control.Layers.Tree/examples/)
 
@@ -19,7 +19,7 @@ Using npm for browserify `npm install leaflet.control.layers.tree` (and `require
 
 ## Compatibility
 
-This plugin has been tested with Leaflet 1.0.3, 1.1.0, 1.2.0, 1.3.1., 1.4.0, 1.5.1, 1.6.0 and 1.7.1
+This plugin is tested with Leaflet 1.9.4 (previously with 1.0.3, 1.1.0, 1.2.0, 1.3.1, 1.4.0, 1.5.1, 1.6.0, 1.7.1)
 
 This plugin supports TypeScript. See file [L.Control.Layers.Tree.d.ts](L.Control.Layers.Tree.d.ts)
 
@@ -145,7 +145,7 @@ Creates the control. The arguments are:
 
 * `baseTree`: `<Object>` or `<Array>` Tree defining the base layers (like the one above). You can also provide an `Array` of nodes, if you want to start with a flat level.
 * `overlayTree`: `<Object>` or `<Array>` Similar than baseTree, but for overlays.
-* `options`: `<Object>` specific options for the tree. See that it includes `L.Control.Layer` [options](http://leafletjs.com/reference-1.4.0.html#control-layers)
+* `options`: `<Object>` specific options for the tree. See that it includes `L.Control.Layer` [options](https://leafletjs.com/reference.html#control-layers)
 
 ##### constructor options
 
