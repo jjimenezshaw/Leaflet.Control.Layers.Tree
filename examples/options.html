@@ -3,9 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leaflet Layers Tree Demo</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js" crossorigin=""></script>
+    <title>Leaflet Layers Tree Control: Advanced Options</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" crossorigin=""/>
+    <link rel="stylesheet" href="../L.Control.Layers.Tree.css"/>
+
+    <script src="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet-global.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
+                "LayersTree": "../LayersTree.js"
+            }
+        }
+    </script>
 
     <style type="text/css">
         html, body { width: 100%; height: 100%; margin: 0; }
@@ -15,45 +26,46 @@
 
 <body>
     <div id="map"></div>
-    <link rel="stylesheet" href="../L.Control.Layers.Tree.css" crossorigin=""/>
-    <script src="../L.Control.Layers.Tree.js"></script>
 
-    <script type="text/javascript">
-        var center = [40, 0];
+    <script type="module">
+        import L from 'leaflet';
+        import {LayersTree} from 'LayersTree';
 
-        var osm = L.tileLayer(
+        const center = [40, 0];
+
+        const osm = new L.TileLayer(
             '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors'}
         );
 
-        var osmDe = L.tileLayer(
+        const osmDe = new L.TileLayer(
             'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors'}
         );
 
-        var otopomap = L.tileLayer(
+        const otopomap = new L.TileLayer(
             '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors. OpenTopoMap.org'}
         );
 
-        var thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'};
-        var transport = L.tileLayer(
+        const thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'};
+        const transport = new L.TileLayer(
             '//{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
             thunderAttr
         );
 
-        var cycle = L.tileLayer(
+        const cycle = new L.TileLayer(
             '//{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
             thunderAttr
         );
 
-        var map = L.map('map', {
+        const map = new L.Map('map', {
             layers: [osm],
             center: center,
             zoom: 5
         });
 
-        var baseTree = [
+        const baseTree = [
             {
                 label: 'OpenStreetMap',
                 layer: osm,
@@ -71,55 +83,55 @@
             },
         ];
 
-        var granada = L.marker([37.133, -3.636]);
-        var malaga = L.marker([36.674, -4.499]);
-        var sevilla = L.marker([37.418, -5.893]);
+        const granada = new L.Marker([37.133, -3.636]);
+        const malaga = new L.Marker([36.674, -4.499]);
+        const sevilla = new L.Marker([37.418, -5.893]);
 
         malaga.addTo(map);
         granada.addTo(map);
         sevilla.addTo(map);
 
-        var overlaysTree = {
+        const overlaysTree = {
             label: 'Some cities',
             selectAllCheckbox: 'Un/select all',
             children: [
                 {label: '<div id="onlysel">-Show only selected-</div>'},
                 {label: 'France', children: [
-                    {label: 'Lyon', layer: L.marker([45.728, 4.945])},
-                    {label: 'Paris', layer: L.marker([48.725, 2.359])},
-                    {label: 'Toulouse', layer: L.marker([43.629, 1.364])},
+                    {label: 'Lyon', layer: new L.Marker([45.728, 4.945])},
+                    {label: 'Paris', layer: new L.Marker([48.725, 2.359])},
+                    {label: 'Toulouse', layer: new L.Marker([43.629, 1.364])},
                 ]},
                 {label: 'Germany', selectAllCheckbox: true, children: [
-                    {label: 'Berlin', layer: L.marker([52.559, 13.287])},
-                    {label: 'Cologne', layer: L.marker([50.866, 7.143])},
-                    {label: 'Hamburg', layer: L.marker([53.630, 9.988])},
-                    {label: 'Munich', layer: L.marker([48.354, 11.786])},
+                    {label: 'Berlin', layer: new L.Marker([52.559, 13.287])},
+                    {label: 'Cologne', layer: new L.Marker([50.866, 7.143])},
+                    {label: 'Hamburg', layer: new L.Marker([53.630, 9.988])},
+                    {label: 'Munich', layer: new L.Marker([48.354, 11.786])},
                 ]},
                 {label: 'Spain',
                     selectAllCheckbox: 'De/seleccionar todo',
                     children: [
-                        {label: 'Madrid', layer: L.marker([40.472, -3.561])},
+                        {label: 'Madrid', layer: new L.Marker([40.472, -3.561])},
                         {label: 'Andalucia', selectAllCheckbox: true, children: [
                             {label: 'Granada', layer: granada},
                             {label: 'Málaga', layer: malaga},
                             {label: 'Sevilla', layer: sevilla},
                         ]},
                         {label: 'Bask Country', children: [
-                            {label: '---', layer: L.layerGroup([]), radioGroup: 'bc'},
-                            {label: 'Bilbao', layer: L.marker([43.301, -2.911]), radioGroup: 'bc'},
-                            {label: 'San Sebastian', layer: L.marker([43.356, -1.791]), radioGroup: 'bc'},
-                            {label: 'Vitoria', layer: L.marker([42.883, -2.724]), radioGroup: 'bc'},
+                            {label: '---', layer: new L.LayerGroup([]), radioGroup: 'bc'},
+                            {label: 'Bilbao', layer: new L.Marker([43.301, -2.911]), radioGroup: 'bc'},
+                            {label: 'San Sebastian', layer: new L.Marker([43.356, -1.791]), radioGroup: 'bc'},
+                            {label: 'Vitoria', layer: new L.Marker([42.883, -2.724]), radioGroup: 'bc'},
                         ]},
                         {label: 'Catalonia', children: [
-                            {label: 'Barcelona', layer: L.marker([41.297, 2.078])},
-                            {label: 'Gerona', layer: L.marker([41.901, 2.760])},
+                            {label: 'Barcelona', layer: new L.Marker([41.297, 2.078])},
+                            {label: 'Gerona', layer: new L.Marker([41.901, 2.760])},
                         ]},
                     ],
                 },
             ]
         };
 
-        var lay = L.control.layers.tree(baseTree, overlaysTree,
+        const lay = new LayersTree(baseTree, overlaysTree,
             {
                 namedToggle: true,
                 selectorBack: false,

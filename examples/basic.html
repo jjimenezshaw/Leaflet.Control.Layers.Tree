@@ -3,9 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leaflet Layers Tree Basic Demo</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js" crossorigin=""></script>
+    <title>Leaflet Tree Layers Control: Basic Demo</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" crossorigin=""/>
+    <link rel="stylesheet" href="../L.Control.Layers.Tree.css" crossorigin=""/>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
+                "LayersTree": "../LayersTree.js"
+            }
+        }
+    </script>
 
     <style type="text/css">
         html, body { width: 100%; height: 100%; margin: 0; }
@@ -15,41 +25,42 @@
 
 <body>
     <div id="map"></div>
-    <link rel="stylesheet" href="../L.Control.Layers.Tree.css" crossorigin=""/>
-    <script src="../L.Control.Layers.Tree.js"></script>
 
-    <script type="text/javascript">
-        var center = [40, 0];
+    <script type="module">
+        import {Map, TileLayer} from 'leaflet';
+        import {LayersTree} from 'LayersTree';
+
+        const center = [40, 0];
 
         // Define some base layers
-        var osm = L.tileLayer(
+        const osm = new TileLayer(
             '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors'}
         );
 
-        var osmDe = L.tileLayer(
+        const osmDe = new TileLayer(
             'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors'}
         );
 
-        var otopomap = L.tileLayer(
+        const otopomap = new TileLayer(
             '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors. OpenTopoMap.org'}
         );
 
-        var thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'};
-        var transport = L.tileLayer(
+        const thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'};
+        const transport = new TileLayer(
             '//{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
             thunderAttr
         );
 
-        var cycle = L.tileLayer(
+        const cycle = new TileLayer(
             '//{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
             thunderAttr
         );
 
         // The tree containing the layers
-        var baseTree = [
+        const baseTree = [
             {
                 label: 'OpenStreetMap',
                 children: [
@@ -68,13 +79,13 @@
         ];
 
         // The map
-        var map = L.map('map', {
+        const map = new Map('map', {
             layers: [osm],
             center: center,
             zoom: 5
         });
 
-        L.control.layers.tree(baseTree).addTo(map);
+        new LayersTree(baseTree).addTo(map);
     </script>
 </body>
 </html>

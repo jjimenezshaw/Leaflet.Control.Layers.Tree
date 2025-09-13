@@ -3,11 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leaflet Layers Tree Demo: Airports in Europe</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js" crossorigin=""></script>
-    <!--link rel="stylesheet" href="../../Leaflet/dist/leaflet.css" crossorigin=""/>
-    <script src="../../Leaflet/dist/leaflet-src.js" crossorigin=""></script-->
+    <title>Leaflet Tree Layers Control: Airports in Europe</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" crossorigin=""/>
+    <link rel="stylesheet" href="../L.Control.Layers.Tree.css"/>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
+                "LayersTree": "../LayersTree.js"
+            }
+        }
+    </script>
 
     <style type="text/css">
         html, body { width: 100%; height: 100%; margin: 0; }
@@ -17,40 +25,41 @@
 
 <body>
     <div id="map"></div>
-    <link rel="stylesheet" href="../L.Control.Layers.Tree.css"/>
-    <script src="../L.Control.Layers.Tree.js"></script>
 
-    <script type="text/javascript">
-        var center = [40, 0];
+    <script type="module">
+        import L from 'leaflet';
+        import {LayersTree} from 'LayersTree';
 
-        var osm = L.tileLayer(
+        const center = [40, 0];
+
+        const osm = new L.TileLayer(
             '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors'}
         );
 
-        var osmDe = L.tileLayer(
+        const osmDe = new L.TileLayer(
             'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
             {attribution: '© OpenStreetMap contributors'}
         );
 
-        var thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'};
-        var transport = L.tileLayer(
+        const thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'};
+        const transport = new L.TileLayer(
             'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
             thunderAttr
         );
 
-        var cycle = L.tileLayer(
+        const cycle = new L.TileLayer(
             'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
             thunderAttr
         );
 
-        var map = L.map('map', {
+        const map = new L.Map('map', {
             layers: [osm],
             center: center,
             zoom: 5
         });
 
-        var baseTree = {
+        const baseTree = {
             label: 'BaseLayers',
             noShow: true,
             children: [
@@ -71,7 +80,7 @@
             ]
         };
 
-        var ctl = L.control.layers.tree(baseTree, null,
+        const ctl = new LayersTree(baseTree, null,
             {
                 namedToggle: true,
                 collapseAll: 'Collapse all',
@@ -81,9 +90,9 @@
 
         ctl.addTo(map).collapseTree().expandSelected();
 
-        var _hasAllUnSelected = function() {
+        const _hasAllUnSelected = function() {
             return function(ev, domNode, treeNode, map) {
-                var anySelected = false;
+                let anySelected = false;
                 function iterate(node)
                 {
                     if (node.layer && !node.radioGroup) {
@@ -98,7 +107,7 @@
             };
         };
 
-        var airportsEurope = {
+        const airportsEurope = {
             label: 'Airports',
             selectAllCheckbox: true,
             children: [
@@ -106,220 +115,221 @@
                 {label: 'GERMANY',
                     selectAllCheckbox: true,
                     children: [
-                        {label: 'AACHEN - AAH', layer: L.marker([50.823000, 6.187000])},
-                        {label: 'ALTENBURG - AOC', layer: L.marker([50.982000, 12.506000])},
-                        {label: 'ARNSBERG - ZCA', layer: L.marker([51.483000, 7.899000])},
-                        {label: 'AUGSBURG - AGB', layer: L.marker([48.425000, 10.932000])},
-                        {label: 'BADEN-BADEN - ZCC', layer: L.marker([48.791000, 8.187000])},
-                        {label: 'BAUTZEN - BBJ', layer: L.marker([51.193000, 14.520000])},
-                        {label: 'BAYREUTH - BYU', layer: L.marker([49.984000, 11.638000])},
-                        {label: 'BERLIN - SXF', layer: L.marker([52.380000, 13.523000])},
-                        {label: 'BERLIN - THF', layer: L.marker([52.473000, 13.404000])},
-                        {label: 'BERLIN - TXL', layer: L.marker([52.559000, 13.287000])},
-                        {label: 'BORKUM - BMK', layer: L.marker([53.595000, 6.709000])},
-                        {label: 'BRAUNSCHWEIG - BWE', layer: L.marker([52.319000, 10.556000])},
-                        {label: 'BREMEN - BRE', layer: L.marker([53.047000, 8.787000])},
-                        {label: 'BREMERHAVEN - BRV', layer: L.marker([53.503000, 8.573000])},
-                        {label: 'BRUEGGEN - BGN', layer: L.marker([51.200000, 6.132000])},
-                        {label: 'CELLE - ZCN', layer: L.marker([52.591000, 10.022000])},
-                        {label: 'COLOGNE - CGN', layer: L.marker([50.866000, 7.143000])},
-                        {label: 'DONAUESCHINGEN - ZQL', layer: L.marker([47.973000, 8.522000])},
-                        {label: 'DORTMUND - DTM', layer: L.marker([51.518000, 7.612000])},
-                        {label: 'DRESDEN - DRS', layer: L.marker([51.133000, 13.767000])},
-                        {label: 'DUESSELDORF - DUS', layer: L.marker([51.289000, 6.767000])},
-                        {label: 'EMDEN - EME', layer: L.marker([53.391000, 7.227000])},
-                        {label: 'ERFURT - ERF', layer: L.marker([50.980000, 10.958000])},
-                        {label: 'ESSEN - ESS', layer: L.marker([51.401000, 6.936000])},
-                        {label: 'FRANKFURT - FRA', layer: L.marker([50.026000, 8.543000])},
-                        {label: 'FRIEDRICHSHAFEN - FDH', layer: L.marker([47.671000, 9.511000])},
-                        {label: 'FUERSTENFELDBRUCK - FEL', layer: L.marker([48.206000, 11.267000])},
-                        {label: 'GEILENKIRCHEN - GKE', layer: L.marker([50.961000, 6.042000])},
-                        {label: 'GIEBELSTADT - GHF', layer: L.marker([49.648000, 9.966000])},
-                        {label: 'GUETERSLOH - GUT', layer: L.marker([51.923000, 8.306000])},
-                        {label: 'HAHN - HHN', layer: L.marker([49.950000, 7.264000])},
-                        {label: 'HAMBURG - HAM', layer: L.marker([53.630000, 9.988000])},
-                        {label: 'HAMBURG - XFW', layer: L.marker([53.535000, 9.835000])},
-                        {label: 'HANAU - ZNF', layer: L.marker([50.169000, 8.961000])},
-                        {label: 'HANNOVER - HAJ', layer: L.marker([52.461000, 9.685000])},
-                        {label: 'HEIDELBERG - QHD', layer: L.marker([49.393000, 8.652000])},
-                        {label: 'HOF - HOQ', layer: L.marker([50.289000, 11.855000])},
-                        {label: 'KASSEL - KSF', layer: L.marker([51.408000, 9.378000])},
-                        {label: 'KIEL - KEL', layer: L.marker([54.379000, 10.145000])},
-                        {label: 'KOBLENZ - ZNV', layer: L.marker([50.325000, 7.531000])},
-                        {label: 'LAAGE - RLG', layer: L.marker([53.918000, 12.279000])},
-                        {label: 'LAARBRUCH - LRC', layer: L.marker([51.602000, 6.143000])},
-                        {label: 'LEIPZIG - LEJ', layer: L.marker([51.424000, 12.236000])},
-                        {label: 'LEMWERDER - LEM', layer: L.marker([53.143000, 8.623000])},
-                        {label: 'LUEBECK - LBC', layer: L.marker([53.805000, 10.719000])},
-                        {label: 'MANNHEIM - MHG', layer: L.marker([49.473000, 8.514000])},
-                        {label: 'MOENCHENGLADBACH - MGL', layer: L.marker([51.230000, 6.504000])},
-                        {label: 'MUENSTER/OSNABRUECK - FMO', layer: L.marker([52.134000, 7.685000])},
-                        {label: 'MUNICH - MUC', layer: L.marker([48.354000, 11.786000])},
-                        {label: 'NORDERNEY - NRD', layer: L.marker([53.707000, 7.230000])},
-                        {label: 'NUERNBERG - NUE', layer: L.marker([49.499000, 11.078000])},
-                        {label: 'OBERPFAFFENHOFEN - OBF', layer: L.marker([48.081000, 11.283000])},
-                        {label: 'PADERBORN - PAD', layer: L.marker([51.614000, 8.616000])},
-                        {label: 'PARCHIM - SZW', layer: L.marker([53.427000, 11.783000])},
-                        {label: 'RAMSTEIN - RMS', layer: L.marker([49.438000, 7.601000])},
-                        {label: 'SAARBRUECKEN - SCN', layer: L.marker([49.214000, 7.109000])},
-                        {label: 'SPANGDAHLEM - SPM', layer: L.marker([49.973000, 6.692000])},
-                        {label: 'SPEYER - ZQC', layer: L.marker([49.302000, 8.451000])},
-                        {label: 'STUTTGART - STR', layer: L.marker([48.690000, 9.222000])},
-                        {label: 'TRIER - ZQF', layer: L.marker([49.863000, 6.789000])},
-                        {label: 'WESTERLAND - GWT', layer: L.marker([54.913000, 8.340000])},
-                        {label: 'WILHELMSHAVEN - WVN', layer: L.marker([53.505000, 8.053000])},
+                        {label: 'AACHEN - AAH', layer: new L.Marker([50.823000, 6.187000])},
+                        {label: 'ALTENBURG - AOC', layer: new L.Marker([50.982000, 12.506000])},
+                        {label: 'ARNSBERG - ZCA', layer: new L.Marker([51.483000, 7.899000])},
+                        {label: 'AUGSBURG - AGB', layer: new L.Marker([48.425000, 10.932000])},
+                        {label: 'BADEN-BADEN - ZCC', layer: new L.Marker([48.791000, 8.187000])},
+                        {label: 'BAUTZEN - BBJ', layer: new L.Marker([51.193000, 14.520000])},
+                        {label: 'BAYREUTH - BYU', layer: new L.Marker([49.984000, 11.638000])},
+                        {label: 'BERLIN - SXF', layer: new L.Marker([52.380000, 13.523000])},
+                        {label: 'BERLIN - THF', layer: new L.Marker([52.473000, 13.404000])},
+                        {label: 'BERLIN - TXL', layer: new L.Marker([52.559000, 13.287000])},
+                        {label: 'BORKUM - BMK', layer: new L.Marker([53.595000, 6.709000])},
+                        {label: 'BRAUNSCHWEIG - BWE', layer: new L.Marker([52.319000, 10.556000])},
+                        {label: 'BREMEN - BRE', layer: new L.Marker([53.047000, 8.787000])},
+                        {label: 'BREMERHAVEN - BRV', layer: new L.Marker([53.503000, 8.573000])},
+                        {label: 'BRUEGGEN - BGN', layer: new L.Marker([51.200000, 6.132000])},
+                        {label: 'CELLE - ZCN', layer: new L.Marker([52.591000, 10.022000])},
+                        {label: 'COLOGNE - CGN', layer: new L.Marker([50.866000, 7.143000])},
+                        {label: 'DONAUESCHINGEN - ZQL', layer: new L.Marker([47.973000, 8.522000])},
+                        {label: 'DORTMUND - DTM', layer: new L.Marker([51.518000, 7.612000])},
+                        {label: 'DRESDEN - DRS', layer: new L.Marker([51.133000, 13.767000])},
+                        {label: 'DUESSELDORF - DUS', layer: new L.Marker([51.289000, 6.767000])},
+                        {label: 'EMDEN - EME', layer: new L.Marker([53.391000, 7.227000])},
+                        {label: 'ERFURT - ERF', layer: new L.Marker([50.980000, 10.958000])},
+                        {label: 'ESSEN - ESS', layer: new L.Marker([51.401000, 6.936000])},
+                        {label: 'FRANKFURT - FRA', layer: new L.Marker([50.026000, 8.543000])},
+                        {label: 'FRIEDRICHSHAFEN - FDH', layer: new L.Marker([47.671000, 9.511000])},
+                        {label: 'FUERSTENFELDBRUCK - FEL', layer: new L.Marker([48.206000, 11.267000])},
+                        {label: 'GEILENKIRCHEN - GKE', layer: new L.Marker([50.961000, 6.042000])},
+                        {label: 'GIEBELSTADT - GHF', layer: new L.Marker([49.648000, 9.966000])},
+                        {label: 'GUETERSLOH - GUT', layer: new L.Marker([51.923000, 8.306000])},
+                        {label: 'HAHN - HHN', layer: new L.Marker([49.950000, 7.264000])},
+                        {label: 'HAMBURG - HAM', layer: new L.Marker([53.630000, 9.988000])},
+                        {label: 'HAMBURG - XFW', layer: new L.Marker([53.535000, 9.835000])},
+                        {label: 'HANAU - ZNF', layer: new L.Marker([50.169000, 8.961000])},
+                        {label: 'HANNOVER - HAJ', layer: new L.Marker([52.461000, 9.685000])},
+                        {label: 'HEIDELBERG - QHD', layer: new L.Marker([49.393000, 8.652000])},
+                        {label: 'HOF - HOQ', layer: new L.Marker([50.289000, 11.855000])},
+                        {label: 'KASSEL - KSF', layer: new L.Marker([51.408000, 9.378000])},
+                        {label: 'KIEL - KEL', layer: new L.Marker([54.379000, 10.145000])},
+                        {label: 'KOBLENZ - ZNV', layer: new L.Marker([50.325000, 7.531000])},
+                        {label: 'LAAGE - RLG', layer: new L.Marker([53.918000, 12.279000])},
+                        {label: 'LAARBRUCH - LRC', layer: new L.Marker([51.602000, 6.143000])},
+                        {label: 'LEIPZIG - LEJ', layer: new L.Marker([51.424000, 12.236000])},
+                        {label: 'LEMWERDER - LEM', layer: new L.Marker([53.143000, 8.623000])},
+                        {label: 'LUEBECK - LBC', layer: new L.Marker([53.805000, 10.719000])},
+                        {label: 'MANNHEIM - MHG', layer: new L.Marker([49.473000, 8.514000])},
+                        {label: 'MOENCHENGLADBACH - MGL', layer: new L.Marker([51.230000, 6.504000])},
+                        {label: 'MUENSTER/OSNABRUECK - FMO', layer: new L.Marker([52.134000, 7.685000])},
+                        {label: 'MUNICH - MUC', layer: new L.Marker([48.354000, 11.786000])},
+                        {label: 'NORDERNEY - NRD', layer: new L.Marker([53.707000, 7.230000])},
+                        {label: 'NUERNBERG - NUE', layer: new L.Marker([49.499000, 11.078000])},
+                        {label: 'OBERPFAFFENHOFEN - OBF', layer: new L.Marker([48.081000, 11.283000])},
+                        {label: 'PADERBORN - PAD', layer: new L.Marker([51.614000, 8.616000])},
+                        {label: 'PARCHIM - SZW', layer: new L.Marker([53.427000, 11.783000])},
+                        {label: 'RAMSTEIN - RMS', layer: new L.Marker([49.438000, 7.601000])},
+                        {label: 'SAARBRUECKEN - SCN', layer: new L.Marker([49.214000, 7.109000])},
+                        {label: 'SPANGDAHLEM - SPM', layer: new L.Marker([49.973000, 6.692000])},
+                        {label: 'SPEYER - ZQC', layer: new L.Marker([49.302000, 8.451000])},
+                        {label: 'STUTTGART - STR', layer: new L.Marker([48.690000, 9.222000])},
+                        {label: 'TRIER - ZQF', layer: new L.Marker([49.863000, 6.789000])},
+                        {label: 'WESTERLAND - GWT', layer: new L.Marker([54.913000, 8.340000])},
+                        {label: 'WILHELMSHAVEN - WVN', layer: new L.Marker([53.505000, 8.053000])},
                     ]
                 },
                 {label: 'SPAIN',
                     selectAllCheckbox: true,
                     children: [
-                        {label: 'ALICANTE - ALC', layer: L.marker([38.282000, -0.558000])},
-                        {label: 'ALMERIA - LEI', layer: L.marker([36.844000, -2.370000])},
-                        {label: 'AVILES - OVD', layer: L.marker([43.563000, -6.034000])},
-                        {label: 'BADAJOZ - BJZ', layer: L.marker([38.891000, -6.821000])},
-                        {label: 'BARCELONA - BCN', layer: L.marker([41.297000, 2.078000])},
-                        {label: 'BILBAO - BIO', layer: L.marker([43.301000, -2.911000])},
-                        {label: 'CORDOBA - ODB', layer: L.marker([37.842000, -4.849000])},
-                        {label: 'GERONA - GRO', layer: L.marker([41.901000, 2.760000])},
-                        {label: 'GRANADA - GRX', layer: L.marker([37.133000, -3.636000])},
-                        {label: 'GRANADA - GRX', layer: L.marker([37.189000, -3.777000])},
-                        {label: 'IBIZA - IBZ', layer: L.marker([38.873000, 1.373000])},
-                        {label: 'JEREZ - XRY', layer: L.marker([36.744000, -6.060000])},
-                        {label: 'LA CORUNA - LCG', layer: L.marker([43.302000, -8.377000])},
-                        {label: 'MADRID - MAD', layer: L.marker([40.472000, -3.561000])},
-                        {label: 'MADRID - TOJ', layer: L.marker([40.487000, -3.458000])},
-                        {label: 'MALAGA - AGP', layer: L.marker([36.674000, -4.499000])},
-                        {label: 'MENORCA - MAH', layer: L.marker([39.863000, 4.219000])},
-                        {label: 'MURCIA - MJV', layer: L.marker([37.775000, -0.812000])},
-                        {label: 'PALMA DE MALLORCA - PMI', layer: L.marker([39.550000, 2.733000])},
-                        {label: 'PAMPLONA - PNA', layer: L.marker([42.770000, -1.646000])},
-                        {label: 'REUS - REU', layer: L.marker([41.147000, 1.167000])},
-                        {label: 'SALAMANCA - SLM', layer: L.marker([40.952000, -5.502000])},
-                        {label: 'SAN SEBASTIAN - EAS', layer: L.marker([43.356000, -1.791000])},
-                        {label: 'SANTA CRUZ DE LA PALMA - SPC', layer: L.marker([28.626000, -17.756000])},
-                        {label: 'SANTANDER - SDR', layer: L.marker([43.427000, -3.820000])},
-                        {label: 'SANTIAGO - SCQ', layer: L.marker([42.896000, -8.415000])},
-                        {label: 'SEO DE URGEL - LEU', layer: L.marker([42.339000, 1.409000])},
-                        {label: 'SEVILLA - OZP', layer: L.marker([37.175000, -5.616000])},
-                        {label: 'SEVILLA - SVQ', layer: L.marker([37.418000, -5.893000])},
-                        {label: 'VALENCIA - VLC', layer: L.marker([39.489000, -0.481000])},
-                        {label: 'VALLADOLID - VLL', layer: L.marker([41.706000, -4.852000])},
-                        {label: 'VIGO - VGO', layer: L.marker([42.232000, -8.627000])},
-                        {label: 'VITORIA - VIT', layer: L.marker([42.883000, -2.724000])},
-                        {label: 'ZARAGOZA - ZAZ', layer: L.marker([41.666000, -1.041000])},
+                        {label: 'ALICANTE - ALC', layer: new L.Marker([38.282000, -0.558000])},
+                        {label: 'ALMERIA - LEI', layer: new L.Marker([36.844000, -2.370000])},
+                        {label: 'AVILES - OVD', layer: new L.Marker([43.563000, -6.034000])},
+                        {label: 'BADAJOZ - BJZ', layer: new L.Marker([38.891000, -6.821000])},
+                        {label: 'BARCELONA - BCN', layer: new L.Marker([41.297000, 2.078000])},
+                        {label: 'BILBAO - BIO', layer: new L.Marker([43.301000, -2.911000])},
+                        {label: 'CORDOBA - ODB', layer: new L.Marker([37.842000, -4.849000])},
+                        {label: 'GERONA - GRO', layer: new L.Marker([41.901000, 2.760000])},
+                        {label: 'GRANADA - GRX', layer: new L.Marker([37.133000, -3.636000])},
+                        {label: 'GRANADA - GRX', layer: new L.Marker([37.189000, -3.777000])},
+                        {label: 'IBIZA - IBZ', layer: new L.Marker([38.873000, 1.373000])},
+                        {label: 'JEREZ - XRY', layer: new L.Marker([36.744000, -6.060000])},
+                        {label: 'LA CORUNA - LCG', layer: new L.Marker([43.302000, -8.377000])},
+                        {label: 'MADRID - MAD', layer: new L.Marker([40.472000, -3.561000])},
+                        {label: 'MADRID - TOJ', layer: new L.Marker([40.487000, -3.458000])},
+                        {label: 'MALAGA - AGP', layer: new L.Marker([36.674000, -4.499000])},
+                        {label: 'MENORCA - MAH', layer: new L.Marker([39.863000, 4.219000])},
+                        {label: 'MURCIA - MJV', layer: new L.Marker([37.775000, -0.812000])},
+                        {label: 'PALMA DE MALLORCA - PMI', layer: new L.Marker([39.550000, 2.733000])},
+                        {label: 'PAMPLONA - PNA', layer: new L.Marker([42.770000, -1.646000])},
+                        {label: 'REUS - REU', layer: new L.Marker([41.147000, 1.167000])},
+                        {label: 'SALAMANCA - SLM', layer: new L.Marker([40.952000, -5.502000])},
+                        {label: 'SAN SEBASTIAN - EAS', layer: new L.Marker([43.356000, -1.791000])},
+                        {label: 'SANTA CRUZ DE LA PALMA - SPC', layer: new L.Marker([28.626000, -17.756000])},
+                        {label: 'SANTANDER - SDR', layer: new L.Marker([43.427000, -3.820000])},
+                        {label: 'SANTIAGO - SCQ', layer: new L.Marker([42.896000, -8.415000])},
+                        {label: 'SEO DE URGEL - LEU', layer: new L.Marker([42.339000, 1.409000])},
+                        {label: 'SEVILLA - OZP', layer: new L.Marker([37.175000, -5.616000])},
+                        {label: 'SEVILLA - SVQ', layer: new L.Marker([37.418000, -5.893000])},
+                        {label: 'VALENCIA - VLC', layer: new L.Marker([39.489000, -0.481000])},
+                        {label: 'VALLADOLID - VLL', layer: new L.Marker([41.706000, -4.852000])},
+                        {label: 'VIGO - VGO', layer: new L.Marker([42.232000, -8.627000])},
+                        {label: 'VITORIA - VIT', layer: new L.Marker([42.883000, -2.724000])},
+                        {label: 'ZARAGOZA - ZAZ', layer: new L.Marker([41.666000, -1.041000])},
                     ]
                 },
                 {label: 'FRANCE',
                     selectAllCheckbox: true,
                     children: [
-                        {label: 'AGEN - AGF', layer: L.marker([44.175000, 0.591000])},
-                        {label: 'AIX-LES-MILLES - QXB', layer: L.marker([43.505000, 5.368000])},
-                        {label: 'ALBI - LBI', layer: L.marker([43.914000, 2.113000])},
-                        {label: 'ANGOULEME - ANG', layer: L.marker([45.729000, 0.221000])},
-                        {label: 'ANNECY - NCY', layer: L.marker([45.929000, 6.099000])},
-                        {label: 'ANNEMASSE - QNJ', layer: L.marker([46.192000, 6.268000])},
-                        {label: 'ARCACHON - XAC', layer: L.marker([44.596000, -1.111000])},
-                        {label: 'AUBENAS-VALS-LANAS - OBS', layer: L.marker([44.544000, 4.372000])},
-                        {label: 'AURILLAC - AUR', layer: L.marker([44.891000, 2.422000])},
-                        {label: 'AUXERRE - AUF', layer: L.marker([47.850000, 3.497000])},
-                        {label: 'AVIGNON - AVN', layer: L.marker([43.907000, 4.902000])},
-                        {label: 'BEAUVAIS - BVA', layer: L.marker([49.454000, 2.113000])},
-                        {label: 'BERGERAC - EGC', layer: L.marker([44.825000, 0.519000])},
-                        {label: 'BEZIERS - BZR', layer: L.marker([43.324000, 3.356000])},
-                        {label: 'BIARRITZ-BAYONNE - BIQ', layer: L.marker([43.468000, -1.523000])},
-                        {label: 'BORDEAUX - BOD', layer: L.marker([44.828000, -0.716000])},
-                        {label: 'BOURG - XBK', layer: L.marker([46.201000, 5.292000])},
-                        {label: 'BOURGES - BOU', layer: L.marker([47.058000, 2.370000])},
-                        {label: 'BREST - BES', layer: L.marker([48.448000, -4.418000])},
-                        {label: 'BRIVE - BVE', layer: L.marker([45.151000, 1.469000])},
-                        {label: 'CAEN - CFR', layer: L.marker([49.173000, -0.450000])},
-                        {label: 'CALAIS - CQF', layer: L.marker([50.962000, 1.955000])},
-                        {label: 'CANNES - CEQ', layer: L.marker([43.542000, 6.953000])},
-                        {label: 'CARCASSONNE - CCF', layer: L.marker([43.216000, 2.306000])},
-                        {label: 'CASTRES - DCM', layer: L.marker([43.556000, 2.289000])},
-                        {label: 'CHALON - XCD', layer: L.marker([46.826000, 4.817000])},
-                        {label: 'CHAMBERY - CMF', layer: L.marker([45.638000, 5.880000])},
-                        {label: 'CHATEAUROUX - CHR', layer: L.marker([46.862000, 1.731000])},
-                        {label: 'CHERBOURG - CER', layer: L.marker([49.650000, -1.470000])},
-                        {label: 'CHOLET - CET', layer: L.marker([47.082000, -0.877000])},
-                        {label: 'CLERMONT FERRAND - CFE', layer: L.marker([45.786000, 3.169000])},
-                        {label: 'COGNAC - CNG', layer: L.marker([45.658000, -0.318000])},
-                        {label: 'COLMAR - CMR', layer: L.marker([48.110000, 7.359000])},
-                        {label: 'CREIL - CSF', layer: L.marker([49.253000, 2.519000])},
-                        {label: 'DEAUVILLE - DOL', layer: L.marker([49.365000, 0.154000])},
-                        {label: 'DIJON - DIJ', layer: L.marker([47.269000, 5.090000])},
-                        {label: 'DINARD - DNR', layer: L.marker([48.588000, -2.080000])},
-                        {label: 'DOLE - DLE', layer: L.marker([47.039000, 5.427000])},
-                        {label: 'EPINAL - EPL', layer: L.marker([48.325000, 6.070000])},
-                        {label: 'GRENOBLE - GNB', layer: L.marker([45.363000, 5.329000])},
-                        {label: 'HYERES - TLN', layer: L.marker([43.097000, 6.146000])},
-                        {label: 'LA ROCHE-SUR-YON - EDM', layer: L.marker([46.702000, -1.379000])},
-                        {label: 'LA ROCHELLE - LRH', layer: L.marker([43.449000, 1.263000])},
-                        {label: 'LANNION - LAI', layer: L.marker([48.754000, -3.471000])},
-                        {label: 'LAVAL - LVA', layer: L.marker([48.031000, -0.743000])},
-                        {label: 'LE CASTELLET - CTT', layer: L.marker([43.252000, 5.785000])},
-                        {label: 'LE HAVRE - LEH', layer: L.marker([49.534000, 0.088000])},
-                        {label: 'LE MANS - LME', layer: L.marker([47.949000, 0.202000])},
-                        {label: 'LE PUY - LPY', layer: L.marker([45.079000, 3.765000])},
-                        {label: 'LE TOURQUET - LTQ', layer: L.marker([50.515000, 1.627000])},
-                        {label: 'LILLE - LIL', layer: L.marker([50.562000, 3.089000])},
-                        {label: 'LIMOGES - LIG', layer: L.marker([45.863000, 1.179000])},
-                        {label: 'LORIENT - LRT', layer: L.marker([47.761000, -3.440000])},
-                        {label: 'LYON - LYN', layer: L.marker([45.728000, 4.945000])},
-                        {label: 'LYON - LYS', layer: L.marker([45.726000, 5.091000])},
-                        {label: 'MACON - QNX', layer: L.marker([46.295000, 4.796000])},
-                        {label: 'MARSEILLE - MRS', layer: L.marker([43.436000, 5.214000])},
-                        {label: 'MENDE - MEN', layer: L.marker([44.502000, 3.533000])},
-                        {label: 'METZ - ETZ', layer: L.marker([48.982000, 6.254000])},
-                        {label: 'METZ - MZM', layer: L.marker([49.072000, 6.132000])},
-                        {label: 'MONTLUCON-GUERET - MCU', layer: L.marker([46.224000, 2.363000])},
-                        {label: 'MONTLUCON - MCU', layer: L.marker([46.352000, 2.570000])},
-                        {label: 'MONTPELLIER - MPL', layer: L.marker([43.576000, 3.963000])},
-                        {label: 'MORLAIX - MXN', layer: L.marker([48.603000, -3.816000])},
-                        {label: 'MOULINS - XMU', layer: L.marker([46.534000, 3.424000])},
-                        {label: 'MULHOUSE - MLH', layer: L.marker([47.589000, 7.530000])},
-                        {label: 'NANCY - ENC', layer: L.marker([48.692000, 6.230000])},
-                        {label: 'NANTES - NTE', layer: L.marker([47.153000, -1.611000])},
-                        {label: 'NEVERS - NVS', layer: L.marker([47.001000, 3.114000])},
-                        {label: 'NICE - NCE', layer: L.marker([43.661000, 7.218000])},
-                        {label: 'NIMES - FNI', layer: L.marker([43.757000, 4.416000])},
-                        {label: 'NIORT - NIT', layer: L.marker([46.311000, -0.401000])},
-                        {label: 'ORLEANS - ORE', layer: L.marker([47.988000, 1.761000])},
-                        {label: 'PARIS - CDG', layer: L.marker([49.013000, 2.550000])},
-                        {label: 'PARIS - LBG', layer: L.marker([48.969000, 2.441000])},
-                        {label: 'PARIS - ORY', layer: L.marker([48.725000, 2.359000])},
-                        {label: 'PAU - PUF', layer: L.marker([43.380000, -0.419000])},
-                        {label: 'PERIGUEUX - PGX', layer: L.marker([45.198000, 0.816000])},
-                        {label: 'PERPIGNAN - PGF', layer: L.marker([42.740000, 2.871000])},
-                        {label: 'POITIERS - PIS', layer: L.marker([46.588000, 0.307000])},
-                        {label: 'PONTOISE - POX', layer: L.marker([49.096000, 2.041000])},
-                        {label: 'QUIMPER - UIP', layer: L.marker([47.975000, -4.168000])},
-                        {label: 'REIMS - RHE', layer: L.marker([49.310000, 4.050000])},
-                        {label: 'RENNES - RNS', layer: L.marker([48.069000, -1.735000])},
-                        {label: 'ROANNE - RNE', layer: L.marker([46.058000, 4.001000])},
-                        {label: 'ROCHEFORT - RCO', layer: L.marker([45.888000, -0.983000])},
-                        {label: 'RODEZ - RDZ', layer: L.marker([44.408000, 2.482000])},
-                        {label: 'ROUEN - URO', layer: L.marker([49.384000, 1.175000])},
-                        {label: 'ROYAN - RYN', layer: L.marker([45.628000, -0.973000])},
-                        {label: 'ST.-BRIEUC ARMOR - SBK', layer: L.marker([48.538000, -2.854000])},
-                        {label: 'ST.-ETIENNE - EBU', layer: L.marker([45.540000, 4.296000])},
-                        {label: 'ST.-NAZAIRE - SNR', layer: L.marker([47.312000, -2.149000])},
-                        {label: 'STRASSBOURG - SXB', layer: L.marker([48.538000, 7.628000])},
-                        {label: 'TARBES - LDE', layer: L.marker([43.179000, -0.006000])},
-                        {label: 'TOULOUSE - TLS', layer: L.marker([43.629000, 1.364000])},
-                        {label: 'TOURS - TUF', layer: L.marker([47.432000, 0.728000])},
-                        {label: 'TOUSSOUS-LE-NOBLE - TNF', layer: L.marker([48.752000, 2.106000])},
-                        {label: 'TROYES - QYR', layer: L.marker([48.323000, 4.018000])},
-                        {label: 'VALENCE - VAF', layer: L.marker([44.921000, 4.970000])},
-                        {label: 'VANNES - VNE', layer: L.marker([47.723000, -2.718000])},
-                        {label: 'VICHY - VHY', layer: L.marker([46.169000, 3.404000])},
-                        {label: 'VILEFRANCE - XVF', layer: L.marker([45.916000, 4.641000])},
+                        {label: 'AGEN - AGF', layer: new L.Marker([44.175000, 0.591000])},
+                        {label: 'AIX-LES-MILLES - QXB', layer: new L.Marker([43.505000, 5.368000])},
+                        {label: 'ALBI - LBI', layer: new L.Marker([43.914000, 2.113000])},
+                        {label: 'ANGOULEME - ANG', layer: new L.Marker([45.729000, 0.221000])},
+                        {label: 'ANNECY - NCY', layer: new L.Marker([45.929000, 6.099000])},
+                        {label: 'ANNEMASSE - QNJ', layer: new L.Marker([46.192000, 6.268000])},
+                        {label: 'ARCACHON - XAC', layer: new L.Marker([44.596000, -1.111000])},
+                        {label: 'AUBENAS-VALS-LANAS - OBS', layer: new L.Marker([44.544000, 4.372000])},
+                        {label: 'AURILLAC - AUR', layer: new L.Marker([44.891000, 2.422000])},
+                        {label: 'AUXERRE - AUF', layer: new L.Marker([47.850000, 3.497000])},
+                        {label: 'AVIGNON - AVN', layer: new L.Marker([43.907000, 4.902000])},
+                        {label: 'BEAUVAIS - BVA', layer: new L.Marker([49.454000, 2.113000])},
+                        {label: 'BERGERAC - EGC', layer: new L.Marker([44.825000, 0.519000])},
+                        {label: 'BEZIERS - BZR', layer: new L.Marker([43.324000, 3.356000])},
+                        {label: 'BIARRITZ-BAYONNE - BIQ', layer: new L.Marker([43.468000, -1.523000])},
+                        {label: 'BORDEAUX - BOD', layer: new L.Marker([44.828000, -0.716000])},
+                        {label: 'BOURG - XBK', layer: new L.Marker([46.201000, 5.292000])},
+                        {label: 'BOURGES - BOU', layer: new L.Marker([47.058000, 2.370000])},
+                        {label: 'BREST - BES', layer: new L.Marker([48.448000, -4.418000])},
+                        {label: 'BRIVE - BVE', layer: new L.Marker([45.151000, 1.469000])},
+                        {label: 'CAEN - CFR', layer: new L.Marker([49.173000, -0.450000])},
+                        {label: 'CALAIS - CQF', layer: new L.Marker([50.962000, 1.955000])},
+                        {label: 'CANNES - CEQ', layer: new L.Marker([43.542000, 6.953000])},
+                        {label: 'CARCASSONNE - CCF', layer: new L.Marker([43.216000, 2.306000])},
+                        {label: 'CASTRES - DCM', layer: new L.Marker([43.556000, 2.289000])},
+                        {label: 'CHALON - XCD', layer: new L.Marker([46.826000, 4.817000])},
+                        {label: 'CHAMBERY - CMF', layer: new L.Marker([45.638000, 5.880000])},
+                        {label: 'CHATEAUROUX - CHR', layer: new L.Marker([46.862000, 1.731000])},
+                        {label: 'CHERBOURG - CER', layer: new L.Marker([49.650000, -1.470000])},
+                        {label: 'CHOLET - CET', layer: new L.Marker([47.082000, -0.877000])},
+                        {label: 'CLERMONT FERRAND - CFE', layer: new L.Marker([45.786000, 3.169000])},
+                        {label: 'COGNAC - CNG', layer: new L.Marker([45.658000, -0.318000])},
+                        {label: 'COLMAR - CMR', layer: new L.Marker([48.110000, 7.359000])},
+                        {label: 'CREIL - CSF', layer: new L.Marker([49.253000, 2.519000])},
+                        {label: 'DEAUVILLE - DOL', layer: new L.Marker([49.365000, 0.154000])},
+                        {label: 'DIJON - DIJ', layer: new L.Marker([47.269000, 5.090000])},
+                        {label: 'DINARD - DNR', layer: new L.Marker([48.588000, -2.080000])},
+                        {label: 'DOLE - DLE', layer: new L.Marker([47.039000, 5.427000])},
+                        {label: 'EPINAL - EPL', layer: new L.Marker([48.325000, 6.070000])},
+                        {label: 'GRENOBLE - GNB', layer: new L.Marker([45.363000, 5.329000])},
+                        {label: 'HYERES - TLN', layer: new L.Marker([43.097000, 6.146000])},
+                        {label: 'LA ROCHE-SUR-YON - EDM', layer: new L.Marker([46.702000, -1.379000])},
+                        {label: 'LA ROCHELLE - LRH', layer: new L.Marker([43.449000, 1.263000])},
+                        {label: 'LANNION - LAI', layer: new L.Marker([48.754000, -3.471000])},
+                        {label: 'LAVAL - LVA', layer: new L.Marker([48.031000, -0.743000])},
+                        {label: 'LE CASTELLET - CTT', layer: new L.Marker([43.252000, 5.785000])},
+                        {label: 'LE HAVRE - LEH', layer: new L.Marker([49.534000, 0.088000])},
+                        {label: 'LE MANS - LME', layer: new L.Marker([47.949000, 0.202000])},
+                        {label: 'LE PUY - LPY', layer: new L.Marker([45.079000, 3.765000])},
+                        {label: 'LE TOURQUET - LTQ', layer: new L.Marker([50.515000, 1.627000])},
+                        {label: 'LILLE - LIL', layer: new L.Marker([50.562000, 3.089000])},
+                        {label: 'LIMOGES - LIG', layer: new L.Marker([45.863000, 1.179000])},
+                        {label: 'LORIENT - LRT', layer: new L.Marker([47.761000, -3.440000])},
+                        {label: 'LYON - LYN', layer: new L.Marker([45.728000, 4.945000])},
+                        {label: 'LYON - LYS', layer: new L.Marker([45.726000, 5.091000])},
+                        {label: 'MACON - QNX', layer: new L.Marker([46.295000, 4.796000])},
+                        {label: 'MARSEILLE - MRS', layer: new L.Marker([43.436000, 5.214000])},
+                        {label: 'MENDE - MEN', layer: new L.Marker([44.502000, 3.533000])},
+                        {label: 'METZ - ETZ', layer: new L.Marker([48.982000, 6.254000])},
+                        {label: 'METZ - MZM', layer: new L.Marker([49.072000, 6.132000])},
+                        {label: 'MONTLUCON-GUERET - MCU', layer: new L.Marker([46.224000, 2.363000])},
+                        {label: 'MONTLUCON - MCU', layer: new L.Marker([46.352000, 2.570000])},
+                        {label: 'MONTPELLIER - MPL', layer: new L.Marker([43.576000, 3.963000])},
+                        {label: 'MORLAIX - MXN', layer: new L.Marker([48.603000, -3.816000])},
+                        {label: 'MOULINS - XMU', layer: new L.Marker([46.534000, 3.424000])},
+                        {label: 'MULHOUSE - MLH', layer: new L.Marker([47.589000, 7.530000])},
+                        {label: 'NANCY - ENC', layer: new L.Marker([48.692000, 6.230000])},
+                        {label: 'NANTES - NTE', layer: new L.Marker([47.153000, -1.611000])},
+                        {label: 'NEVERS - NVS', layer: new L.Marker([47.001000, 3.114000])},
+                        {label: 'NICE - NCE', layer: new L.Marker([43.661000, 7.218000])},
+                        {label: 'NIMES - FNI', layer: new L.Marker([43.757000, 4.416000])},
+                        {label: 'NIORT - NIT', layer: new L.Marker([46.311000, -0.401000])},
+                        {label: 'ORLEANS - ORE', layer: new L.Marker([47.988000, 1.761000])},
+                        {label: 'PARIS - CDG', layer: new L.Marker([49.013000, 2.550000])},
+                        {label: 'PARIS - LBG', layer: new L.Marker([48.969000, 2.441000])},
+                        {label: 'PARIS - ORY', layer: new L.Marker([48.725000, 2.359000])},
+                        {label: 'PAU - PUF', layer: new L.Marker([43.380000, -0.419000])},
+                        {label: 'PERIGUEUX - PGX', layer: new L.Marker([45.198000, 0.816000])},
+                        {label: 'PERPIGNAN - PGF', layer: new L.Marker([42.740000, 2.871000])},
+                        {label: 'POITIERS - PIS', layer: new L.Marker([46.588000, 0.307000])},
+                        {label: 'PONTOISE - POX', layer: new L.Marker([49.096000, 2.041000])},
+                        {label: 'QUIMPER - UIP', layer: new L.Marker([47.975000, -4.168000])},
+                        {label: 'REIMS - RHE', layer: new L.Marker([49.310000, 4.050000])},
+                        {label: 'RENNES - RNS', layer: new L.Marker([48.069000, -1.735000])},
+                        {label: 'ROANNE - RNE', layer: new L.Marker([46.058000, 4.001000])},
+                        {label: 'ROCHEFORT - RCO', layer: new L.Marker([45.888000, -0.983000])},
+                        {label: 'RODEZ - RDZ', layer: new L.Marker([44.408000, 2.482000])},
+                        {label: 'ROUEN - URO', layer: new L.Marker([49.384000, 1.175000])},
+                        {label: 'ROYAN - RYN', layer: new L.Marker([45.628000, -0.973000])},
+                        {label: 'ST.-BRIEUC ARMOR - SBK', layer: new L.Marker([48.538000, -2.854000])},
+                        {label: 'ST.-ETIENNE - EBU', layer: new L.Marker([45.540000, 4.296000])},
+                        {label: 'ST.-NAZAIRE - SNR', layer: new L.Marker([47.312000, -2.149000])},
+                        {label: 'STRASSBOURG - SXB', layer: new L.Marker([48.538000, 7.628000])},
+                        {label: 'TARBES - LDE', layer: new L.Marker([43.179000, -0.006000])},
+                        {label: 'TOULOUSE - TLS', layer: new L.Marker([43.629000, 1.364000])},
+                        {label: 'TOURS - TUF', layer: new L.Marker([47.432000, 0.728000])},
+                        {label: 'TOUSSOUS-LE-NOBLE - TNF', layer: new L.Marker([48.752000, 2.106000])},
+                        {label: 'TROYES - QYR', layer: new L.Marker([48.323000, 4.018000])},
+                        {label: 'VALENCE - VAF', layer: new L.Marker([44.921000, 4.970000])},
+                        {label: 'VANNES - VNE', layer: new L.Marker([47.723000, -2.718000])},
+                        {label: 'VICHY - VHY', layer: new L.Marker([46.169000, 3.404000])},
+                        {label: 'VILEFRANCE - XVF', layer: new L.Marker([45.916000, 4.641000])},
                     ]
                 }
             ]
         };
         /* ends airports */
-        var makePopups = function(node) {
+
+        const makePopups = function(node) {
             if (node.layer) {
                 node.layer.bindPopup(node.label);
             }
