@@ -11,8 +11,10 @@ export default [
                 ...globals.mocha,
                 ...globals.jest,
                 chai: true,
-                happen: true
-            }
+                happen: true,
+                MOVE_OVER_TYPE: true,
+                MOVE_OUT_TYPE: true,
+            },
         },
     },
     {
@@ -30,7 +32,7 @@ export default [
         },
         settings: {
             'html/indent': 'space',
-            'html/report-bad-indent': 2
+            'html/report-bad-indent': 2,
         },
         rules: {
             camelcase: 'error',
@@ -60,7 +62,7 @@ export default [
             'space-before-function-paren': ['error', 'never'],
             'space-in-parens': 'error',
             semi: ['error', 'always'],
-            strict: 'off'
+            strict: 'off',
         },
     },
 ];

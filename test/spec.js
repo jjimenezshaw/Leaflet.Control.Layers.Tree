@@ -206,11 +206,11 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, true, 0);
 
             // mouse over the control to show it.
-            happen.once(ctrl._container, {type: 'mouseover'});
+            happen.once(ctrl._container, MOVE_OVER_TYPE);
             checkHidden(inputs, false, 0);
             checkHidden(headers, false, 0);
             // Hi, let it as you found it.
-            happen.once(ctrl._container, {type: 'mouseout'});
+            happen.once(ctrl._container, MOVE_OUT_TYPE);
         });
     });
 
@@ -231,12 +231,12 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, true, 0);
 
             // mouse over the control to show it.
-            happen.once(ctrl._container, {type: 'mouseover'});
+            happen.once(ctrl._container, MOVE_OVER_TYPE);
             checkHidden(inputs, false, 0);
             checkHidden(headers, false, 1);
             checkHidden(headers, [1, 0, 0, 0, 0, 0, 0], 0); // see, root is hidden!
             // Hi, let it as you found it.
-            happen.once(ctrl._container, {type: 'mouseout'});
+            happen.once(ctrl._container, MOVE_OUT_TYPE);
         });
     });
 
@@ -268,11 +268,11 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, true, 0);
 
             // mouse over the control to show it.
-            happen.once(ctrl._container, {type: 'mouseover'});
+            happen.once(ctrl._container, MOVE_OVER_TYPE);
             checkHidden(inputs, false, 0);
             checkHidden(headers, false, 0);
             // Hi, let it as you found it.
-            happen.once(ctrl._container, {type: 'mouseout'});
+            happen.once(ctrl._container, MOVE_OUT_TYPE);
         });
     });
 
@@ -293,12 +293,12 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, true, 0);
 
             // mouse over the control to show it.
-            happen.once(ctrl._container, {type: 'mouseover'});
+            happen.once(ctrl._container, MOVE_OVER_TYPE);
             checkHidden(inputs, false, 0);
             checkHidden(headers, false, 1);
             checkHidden(headers, [1, 0, 0, 0, 0, 0, 0], 0);
             // Hi, let it as you found it.
-            happen.once(ctrl._container, {type: 'mouseout'});
+            happen.once(ctrl._container, MOVE_OUT_TYPE);
         });
     });
 

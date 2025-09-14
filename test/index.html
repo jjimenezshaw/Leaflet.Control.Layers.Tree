@@ -28,6 +28,10 @@
     <script>
         mocha.setup('bdd');
         mocha.globals(['L']);
+
+        // mouse events used in v1
+        globalThis.MOVE_OVER_TYPE = {type: 'mouseover'};
+        globalThis.MOVE_OUT_TYPE = {type: 'mouseout'};
     </script>
 
     <script src="spec.js"></script>
