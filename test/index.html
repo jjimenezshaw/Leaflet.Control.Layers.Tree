@@ -1,20 +1,24 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>L.Control.Layers.Tree Tests (v1)</title>
+    <title>L.Control.Layers.Tree Tests (v2)</title>
 
     <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
-    <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
-    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" /> -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" />
     <link rel="stylesheet" href="../L.Control.Layers.Tree.css" />
 
     <script src="../node_modules/chai/chai.js"></script>
     <script src="../node_modules/mocha/mocha.js"></script>
     <script src="../node_modules/happen/happen.js"></script>
 
-    <script src="../node_modules/leaflet/dist/leaflet.js"></script>
-    <!-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> -->
-    <script src="../L.Control.Layers.Tree.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
+                "LayersTree": "../LayersTree.js"
+            }
+        }
+    </script>
 
     <style>
         .map {
@@ -27,18 +31,27 @@
     <div id="map" class="map"></div>
     <div id="mocha"></div>
 
-    <script>
+    <script type="module">
+        import L from 'leaflet';
+        import {LayersTree} from 'LayersTree';
+
+        // include class in control layers to replicate previous behaviour
+        L.Control.Layers.Tree = LayersTree;
+        globalThis.L = L;
+    </script>
+
+    <script type="module">
         mocha.setup('bdd');
         mocha.globals(['L']);
 
-        // mouse events used in v1
-        globalThis.MOVE_OVER_TYPE = {type: 'mouseover'};
-        globalThis.MOVE_OUT_TYPE = {type: 'mouseout'};
+        // pointer events used in v2
+        globalThis.MOVE_OVER_TYPE = {type: 'pointerover'};
+        globalThis.MOVE_OUT_TYPE = {type: 'pointerout'};
     </script>
 
-    <script src="spec.js"></script>
+    <script type="module" src="spec.js"></script>
 
-    <script>
+    <script type="module">
         mocha.run();
     </script>
 </body>
