@@ -4,6 +4,7 @@ import globals from 'globals';
 import eslintTS from 'typescript-eslint';
 
 export default [
+    {ignores: ['**/dist**']},
     eslintJS.configs.recommended,
     ...eslintTS.configs.recommended,
     eslintTS.configs.eslintRecommended,

@@ -3,6 +3,7 @@ import eslintPluginHtml from 'eslint-plugin-html';
 import globals from 'globals';
 
 export default [
+    {ignores: ['**/dist**']},
     eslintJS.configs.recommended,
     {
         files: ['test/**'],

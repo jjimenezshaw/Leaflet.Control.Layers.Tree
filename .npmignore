@@ -4,6 +4,7 @@ eslint.*
 bower.json
 examples
 package-lock.json
+rollup-config.mjs
 test
 tsconfig.ts
 *.png

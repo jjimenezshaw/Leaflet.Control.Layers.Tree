@@ -8,17 +8,11 @@
     <link rel="stylesheet" href="../L.Control.Layers.Tree.css" />
 
     <script src="../node_modules/chai/chai.js"></script>
-    <script src="../node_modules/mocha/mocha.js"></script>
     <script src="../node_modules/happen/happen.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
 
-    <script type="importmap">
-        {
-            "imports": {
-                "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
-                "LayersTree": "../LayersTree.js"
-            }
-        }
-    </script>
+    <script src="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet-global.js"></script>
+    <script src="../dist/LayersTree.js" type="application/javascript"></script>
 
     <style>
         .map {
@@ -31,16 +25,7 @@
     <div id="map" class="map"></div>
     <div id="mocha"></div>
 
-    <script type="module">
-        import L from 'leaflet';
-        import {LayersTree} from 'LayersTree';
-
-        // include class in control layers to replicate previous behaviour
-        L.Control.Layers.Tree = LayersTree;
-        globalThis.L = L;
-    </script>
-
-    <script type="module">
+    <script>
         mocha.setup('bdd');
         mocha.globals(['L']);
 
@@ -49,9 +34,9 @@
         globalThis.MOVE_OUT_TYPE = {type: 'pointerout'};
     </script>
 
-    <script type="module" src="spec.js"></script>
+    <script src="spec.js"></script>
 
-    <script type="module">
+    <script>
         mocha.run();
     </script>
 </body>

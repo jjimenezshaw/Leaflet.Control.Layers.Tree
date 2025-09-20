@@ -520,3 +520,6 @@ export class LayersTree extends Control.Layers {
         return input;
     }
 }
+
+// include class in control layers to replicate previous behaviour
+Control.Layers.Tree = LayersTree;

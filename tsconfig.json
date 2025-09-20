@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "es6"
-    ],
+    "lib": ["dom", "es6"],
     "module": "commonjs",
     "noEmit": true
   },
@@ -11,7 +8,6 @@
     "./L.Control.Layers.Tree.d.ts",
     "./LayersTree.d.ts"
   ],
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["dist"]
 }
