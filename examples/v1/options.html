@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Leaflet (v1) Layers Tree Control: Advanced Options</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <link rel="stylesheet" href="../../L.Control.Layers.Tree.css"/>
+
+    <script type="text/javascript" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js" crossorigin=""></script>
+    <script type="text/javascript" src="../../L.Control.Layers.Tree.js"></script>
+
+    <style type="text/css">
+        html, body { width: 100%; height: 100%; margin: 0; }
+        #map { width: 100%; height: 100%; }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <script type="text/javascript">
+        const center = [40, 0];
+
+        const osm = new L.TileLayer(
+            '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {attribution: '© OpenStreetMap contributors'}
+        );
+
+        const osmDe = new L.TileLayer(
+            'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
+            {attribution: '© OpenStreetMap contributors'}
+        );
+
+        const otopomap = new L.TileLayer(
+            '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+            {attribution: '© OpenStreetMap contributors. OpenTopoMap.org'}
+        );
+
+        const thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'};
+        const transport = new L.TileLayer(
+            '//{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+            thunderAttr
+        );
+
+        const cycle = new L.TileLayer(
+            '//{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
+            thunderAttr
+        );
+
+        const map = new L.Map('map', {
+            layers: [osm],
+            center: center,
+            zoom: 5
+        });
+
+        const baseTree = [
+            {
+                label: 'OpenStreetMap',
+                layer: osm,
+                children: [
+                    {label: 'OSM.de', layer: osmDe, name: 'OpenStreetMap <b>DE</b>'},
+                    {label: 'OpenTopoMap', layer: otopomap, name: 'Topographic - OSM'},
+                ]
+            },
+            {
+                label: 'Thunder',
+                children: [
+                    {label: 'Cycle', layer: cycle},
+                    {label: 'Transport', layer: transport},
+                ]
+            },
+        ];
+
+        const granada = new L.Marker([37.133, -3.636]);
+        const malaga = new L.Marker([36.674, -4.499]);
+        const sevilla = new L.Marker([37.418, -5.893]);
+
+        malaga.addTo(map);
+        granada.addTo(map);
+        sevilla.addTo(map);
+
+        const overlaysTree = {
+            label: 'Some cities',
+            selectAllCheckbox: 'Un/select all',
+            children: [
+                {label: '<div id="onlysel">-Show only selected-</div>'},
+                {label: 'France', children: [
+                    {label: 'Lyon', layer: new L.Marker([45.728, 4.945])},
+                    {label: 'Paris', layer: new L.Marker([48.725, 2.359])},
+                    {label: 'Toulouse', layer: new L.Marker([43.629, 1.364])},
+                ]},
+                {label: 'Germany', selectAllCheckbox: true, children: [
+                    {label: 'Berlin', layer: new L.Marker([52.559, 13.287])},
+                    {label: 'Cologne', layer: new L.Marker([50.866, 7.143])},
+                    {label: 'Hamburg', layer: new L.Marker([53.630, 9.988])},
+                    {label: 'Munich', layer: new L.Marker([48.354, 11.786])},
+                ]},
+                {label: 'Spain',
+                    selectAllCheckbox: 'De/seleccionar todo',
+                    children: [
+                        {label: 'Madrid', layer: new L.Marker([40.472, -3.561])},
+                        {label: 'Andalucia', selectAllCheckbox: true, children: [
+                            {label: 'Granada', layer: granada},
+                            {label: 'Málaga', layer: malaga},
+                            {label: 'Sevilla', layer: sevilla},
+                        ]},
+                        {label: 'Bask Country', children: [
+                            {label: '---', layer: new L.LayerGroup([]), radioGroup: 'bc'},
+                            {label: 'Bilbao', layer: new L.Marker([43.301, -2.911]), radioGroup: 'bc'},
+                            {label: 'San Sebastian', layer: new L.Marker([43.356, -1.791]), radioGroup: 'bc'},
+                            {label: 'Vitoria', layer: new L.Marker([42.883, -2.724]), radioGroup: 'bc'},
+                        ]},
+                        {label: 'Catalonia', children: [
+                            {label: 'Barcelona', layer: new L.Marker([41.297, 2.078])},
+                            {label: 'Gerona', layer: new L.Marker([41.901, 2.760])},
+                        ]},
+                    ],
+                },
+            ]
+        };
+
+        const lay = new L.Control.Layers.Tree(baseTree, overlaysTree,
+            {
+                namedToggle: true,
+                selectorBack: false,
+                closedSymbol: '&#8862; &#x1f5c0;',
+                openedSymbol: '&#8863; &#x1f5c1;',
+                collapseAll: 'Collapse all',
+                expandAll: 'Expand all',
+                collapsed: false,
+            });
+
+        lay.addTo(map).collapseTree().expandSelected().collapseTree(true);
+        L.DomEvent.on(L.DomUtil.get('onlysel'), 'click', function() {
+            lay.collapseTree(true).expandSelected(true);
+        });
+    </script>
+</body>
+</html>

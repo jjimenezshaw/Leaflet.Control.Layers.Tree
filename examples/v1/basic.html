@@ -2,13 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Leaflet (v1) Tree Layers Control: Basic Demo</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" crossorigin=""/>
-    <link rel="stylesheet" href="../L.Control.Layers.Tree.css" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <link rel="stylesheet" href="../../L.Control.Layers.Tree.css"/>
 
-    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet-src.js" crossorigin=""></script>
-    <script src="../L.Control.Layers.Tree.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js" crossorigin=""></script>
+    <script type="text/javascript" src="../../L.Control.Layers.Tree.js"></script>
 
     <style type="text/css">
         html, body { width: 100%; height: 100%; margin: 0; }
@@ -75,7 +76,7 @@
             zoom: 5
         });
 
-        L.control.layers.tree(baseTree).addTo(map);
+        new L.Control.Layers.Tree(baseTree).addTo(map);
     </script>
 </body>
 </html>
