@@ -1,8 +1,8 @@
-import eslintJS from '@eslint/js';
-import eslintPluginHtml from 'eslint-plugin-html';
-import globals from 'globals';
+const eslintJS = require('@eslint/js');
+const eslintPluginHtml = require('eslint-plugin-html');
+const globals = require('globals');
 
-export default [
+module.exports = [
     {ignores: ['**/dist**']},
     eslintJS.configs.recommended,
     {
@@ -38,6 +38,7 @@ export default [
         },
         rules: {
             camelcase: 'error',
+            'comma-dangle': ['error', 'always-multiline'],
             'comma-spacing': ['error', {after: true}],
             'comma-style': 'error',
             indent: ['error', 4],

@@ -1,0 +1,32 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        args: [--maxkb=100]
+      - id: check-case-conflict
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v9.36.0
+    hooks:
+      - id: eslint
+        args: [--fix, --config, ./eslint.config.js]
+        files: \.[mjt]sx?$
+        types: [file]
+        additional_dependencies:
+          - eslint
+          - eslint-plugin-html
+          - globals
+          - typescript-eslint
+          - "@eslint/js"
+          - "@typescript-eslint/eslint-plugin"
+          - "@typescript-eslint/parser"
