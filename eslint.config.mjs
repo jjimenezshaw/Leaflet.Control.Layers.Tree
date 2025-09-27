@@ -25,6 +25,7 @@ export default [
                 ...globals.node,
                 ...globals.browser,
                 ...globals.es6,
+                ...globals.amd,
                 L: true,
             },
         },

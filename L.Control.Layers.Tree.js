@@ -1,9 +1,18 @@
 /*
- * Control like L.Control.Layers, but showing layers in a tree.
- * Do not forget to include the css file.
+ * Leaflet Control Layers Tree 1.1.1, a Leaflet plugin.
+ * (c) 2017-2025 Javier Jimenez Shaw
  */
+(function(global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('leaflet')) :
+        typeof define === 'function' && define.amd ? define(['exports', 'leaflet'], factory) :
+            (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.LayersTree = {}, global.L));
+})(this, (function(_exports, L) { 'use strict';
 
-(function(L) {
+    /*
+    * Control like L.Control.Layers, but showing layers in a tree.
+    * Do not forget to include the css file.
+    */
+
     if (typeof L === 'undefined') {
         throw new Error('Leaflet must be included first');
     }
@@ -522,4 +531,4 @@
         return new L.Control.Layers.Tree(base, overlays, options);
     };
 
-})(L);
+}));
