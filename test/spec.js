@@ -621,7 +621,7 @@ describe('L.Control.Layers.Tree', function() {
                 map.removeLayer(layerB);
                 map.removeLayer(markerA);
             });
-            chai.expect(counter).to.eql([2, 2, 2, 2]);
+            counter.should.be.eql([2, 2, 2, 2]);
         });
     });
 
