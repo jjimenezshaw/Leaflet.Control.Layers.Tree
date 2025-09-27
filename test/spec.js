@@ -1,7 +1,5 @@
 'use strict';
 
-const should = chai.should();
-
 const layerA = new L.TileLayer('');
 const layerB = new L.TileLayer('');
 

@@ -12,6 +12,7 @@ module.exports = [
                 ...globals.mocha,
                 ...globals.jest,
                 chai: true,
+                should: true,
                 OVER_EVENT: true,
                 OUT_EVENT: true,
             },
