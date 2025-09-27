@@ -13,12 +13,12 @@ export default [
         languageOptions: {
             globals: {
                 ...globals.node,
-                ...globals.es6
+                ...globals.es6,
             },
-            parser
+            parser,
         },
         rules: {
-            '@typescript-eslint/no-unused-expressions': 'off'
-        }
-    }
+            '@typescript-eslint/no-unused-expressions': 'off',
+        },
+    },
 ];

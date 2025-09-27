@@ -13,10 +13,10 @@ function baseArray1() {
             label: 'Node 1',
             children: [
                 {label: 'Leaf 11', name: 'Name Leaf 11', layer: layerA},
-                {label: 'Leaf 12', layer: new L.TileLayer('')}
-            ]
+                {label: 'Leaf 12', layer: new L.TileLayer('')},
+            ],
         },
-        {label: 'Leaf three', name: 'Name Leaf three', layer: layerB}
+        {label: 'Leaf three', name: 'Name Leaf three', layer: layerB},
     ];
 }
 
@@ -31,7 +31,7 @@ function baseTree1() {
     return {
         noShow: false,
         label: 'Root node',
-        children: baseArray1()
+        children: baseArray1(),
     };
 }
 
@@ -48,10 +48,10 @@ function overlaysArray1() {
             label: 'O Node 1',
             children: [
                 {label: 'Over 11', name: 'Name Over 11', layer: markerA},
-                {label: 'Over 12', layer: new L.LayerGroup([])}
-            ]
+                {label: 'Over 12', layer: new L.LayerGroup([])},
+            ],
         },
-        {label: 'Over three', name: 'Name Over three', layer: markerB}
+        {label: 'Over three', name: 'Name Over three', layer: markerB},
     ];
 }
 
@@ -73,11 +73,11 @@ function overlaysArraySelectAll(collapsed1, collapsed2) {
                     children: [
                         {label: 'Over 21', name: 'Name Over 21', layer: markerC},
                         {label: 'Over 22', layer: new L.LayerGroup([])},
-                    ]
+                    ],
                 },
-            ]
+            ],
         },
-        {label: 'Over three', name: 'Name Over three', layer: markerB}
+        {label: 'Over three', name: 'Name Over three', layer: markerB},
     ];
 }
 
@@ -89,7 +89,7 @@ function overlaysArrayEventedClasses(callbackSel, callbackUnsel) {
             label: '<span class="sel">Sel</span> <span class="unsel">Unsel</span> O Node 1',
             eventedClasses: [
                 {className: 'sel', selectAll: callbackSel ? callbackSel : true},
-                {className: 'unsel', selectAll: callbackUnsel ? callbackUnsel : false}
+                {className: 'unsel', selectAll: callbackUnsel ? callbackUnsel : false},
             ],
             children: [
                 {label: 'Over 11', name: 'Name Over 11', layer: markerA},
@@ -98,16 +98,16 @@ function overlaysArrayEventedClasses(callbackSel, callbackUnsel) {
                     label: '<span class="sel">Sel</span> <span class="unsel">Unsel</span> 1 Node 1',
                     eventedClasses: [
                         {className: 'sel', selectAll: callbackSel ? callbackSel : true},
-                        {className: 'unsel', selectAll: callbackUnsel ? callbackUnsel : false}
+                        {className: 'unsel', selectAll: callbackUnsel ? callbackUnsel : false},
                     ],
                     children: [
                         {label: 'Over 21', name: 'Name Over 21', layer: markerC},
                         {label: 'Over 22', layer: new L.LayerGroup([])},
-                    ]
+                    ],
                 },
-            ]
+            ],
         },
-        {label: 'Over three', name: 'Name Over three', layer: markerB}
+        {label: 'Over three', name: 'Name Over three', layer: markerB},
     ];
 }
 
@@ -115,7 +115,7 @@ function overlaysTree1() {
     return {
         noShow: false,
         label: 'Root O node',
-        children: overlaysArray1()
+        children: overlaysArray1(),
     };
 }
 

@@ -35,28 +35,28 @@
         // Define some base layers
         const osm = new TileLayer(
             '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {attribution: '© OpenStreetMap contributors'}
+            {attribution: '© OpenStreetMap contributors'},
         );
 
         const osmDe = new TileLayer(
             'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
-            {attribution: '© OpenStreetMap contributors'}
+            {attribution: '© OpenStreetMap contributors'},
         );
 
         const otopomap = new TileLayer(
             '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-            {attribution: '© OpenStreetMap contributors. OpenTopoMap.org'}
+            {attribution: '© OpenStreetMap contributors. OpenTopoMap.org'},
         );
 
         const thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'};
         const transport = new TileLayer(
             '//{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
-            thunderAttr
+            thunderAttr,
         );
 
         const cycle = new TileLayer(
             '//{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
-            thunderAttr
+            thunderAttr,
         );
 
         // The tree containing the layers
@@ -67,14 +67,14 @@
                     {label: 'OSM', layer: osm, name: 'OpenStreetMap'},
                     {label: 'OSM.de', layer: osmDe, name: 'OpenStreetMap <b>DE</b>'},
                     {label: 'OpenTopoMap', layer: otopomap, name: 'Topographic - OSM'},
-                ]
+                ],
             },
             {
                 label: 'Thunder',
                 children: [
                     {label: 'Cycle', layer: cycle},
                     {label: 'Transport', layer: transport},
-                ]
+                ],
             },
         ];
 
@@ -82,7 +82,7 @@
         const map = new Map('map', {
             layers: [osm],
             center: center,
-            zoom: 5
+            zoom: 5,
         });
 
         new LayersTree(baseTree).addTo(map);

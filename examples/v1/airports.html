@@ -25,29 +25,29 @@
 
         const osm = new L.TileLayer(
             '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {attribution: '© OpenStreetMap contributors'}
+            {attribution: '© OpenStreetMap contributors'},
         );
 
         const osmDe = new L.TileLayer(
             'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
-            {attribution: '© OpenStreetMap contributors'}
+            {attribution: '© OpenStreetMap contributors'},
         );
 
         const thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'};
         const transport = new L.TileLayer(
             'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
-            thunderAttr
+            thunderAttr,
         );
 
         const cycle = new L.TileLayer(
             'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
-            thunderAttr
+            thunderAttr,
         );
 
         const map = new L.Map('map', {
             layers: [osm],
             center: center,
-            zoom: 5
+            zoom: 5,
         });
 
         const baseTree = {
@@ -59,16 +59,16 @@
                     layer: osm,
                     children: [
                         {label: 'OSM.de', layer: osmDe, name: 'OpenStreetMap DE'},
-                    ]
+                    ],
                 },
                 {
                     label: 'Thunder',
                     children: [
                         {label: 'Cycle', layer: cycle},
                         {label: 'Transport', layer: transport},
-                    ]
+                    ],
                 },
-            ]
+            ],
         };
 
         const ctl = new L.Control.Layers.Tree(baseTree, null,
@@ -168,7 +168,7 @@
                         {label: 'TRIER - ZQF', layer: new L.Marker([49.863000, 6.789000])},
                         {label: 'WESTERLAND - GWT', layer: new L.Marker([54.913000, 8.340000])},
                         {label: 'WILHELMSHAVEN - WVN', layer: new L.Marker([53.505000, 8.053000])},
-                    ]
+                    ],
                 },
                 {label: 'SPAIN',
                     selectAllCheckbox: true,
@@ -207,7 +207,7 @@
                         {label: 'VIGO - VGO', layer: new L.Marker([42.232000, -8.627000])},
                         {label: 'VITORIA - VIT', layer: new L.Marker([42.883000, -2.724000])},
                         {label: 'ZARAGOZA - ZAZ', layer: new L.Marker([41.666000, -1.041000])},
-                    ]
+                    ],
                 },
                 {label: 'FRANCE',
                     selectAllCheckbox: true,
@@ -314,9 +314,9 @@
                         {label: 'VANNES - VNE', layer: new L.Marker([47.723000, -2.718000])},
                         {label: 'VICHY - VHY', layer: new L.Marker([46.169000, 3.404000])},
                         {label: 'VILEFRANCE - XVF', layer: new L.Marker([45.916000, 4.641000])},
-                    ]
-                }
-            ]
+                    ],
+                },
+            ],
         };
         /* ends airports */
 

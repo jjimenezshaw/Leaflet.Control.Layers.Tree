@@ -35,34 +35,34 @@
 
         const osm = new L.TileLayer(
             '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {attribution: '© OpenStreetMap contributors'}
+            {attribution: '© OpenStreetMap contributors'},
         );
 
         const osmDe = new L.TileLayer(
             'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
-            {attribution: '© OpenStreetMap contributors'}
+            {attribution: '© OpenStreetMap contributors'},
         );
 
         const otopomap = new L.TileLayer(
             '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-            {attribution: '© OpenStreetMap contributors. OpenTopoMap.org'}
+            {attribution: '© OpenStreetMap contributors. OpenTopoMap.org'},
         );
 
         const thunderAttr = {attribution: '© OpenStreetMap contributors. Tiles courtesy of Andy Allan'};
         const transport = new L.TileLayer(
             '//{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
-            thunderAttr
+            thunderAttr,
         );
 
         const cycle = new L.TileLayer(
             '//{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
-            thunderAttr
+            thunderAttr,
         );
 
         const map = new L.Map('map', {
             layers: [osm],
             center: center,
-            zoom: 5
+            zoom: 5,
         });
 
         const baseTree = [
@@ -72,14 +72,14 @@
                 children: [
                     {label: 'OSM.de', layer: osmDe, name: 'OpenStreetMap <b>DE</b>'},
                     {label: 'OpenTopoMap', layer: otopomap, name: 'Topographic - OSM'},
-                ]
+                ],
             },
             {
                 label: 'Thunder',
                 children: [
                     {label: 'Cycle', layer: cycle},
                     {label: 'Transport', layer: transport},
-                ]
+                ],
             },
         ];
 
@@ -128,7 +128,7 @@
                         ]},
                     ],
                 },
-            ]
+            ],
         };
 
         const lay = new LayersTree(baseTree, overlaysTree,
