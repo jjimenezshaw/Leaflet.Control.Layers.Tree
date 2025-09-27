@@ -1,9 +1,7 @@
-.github
-.vscode
+.*
+*.png
 eslint.*
-bower.json
 examples
 package-lock.json
 test
 tsconfig.ts
-*.png
