@@ -17,11 +17,17 @@ const config = {
     input: 'LayersTree.js',
     output: [
         {
-            file: './dist/LayersTree.js',
+            file: './dist/LayersTree-umd.js',
             name: 'LayersTree',
             format: 'umd',
             banner,
             globals: {leaflet: 'L'},
+        },
+        {
+            file: './dist/LayersTree.js',
+            name: 'LayersTree',
+            format: 'es',
+            banner,
         },
     ],
     plugins: [
