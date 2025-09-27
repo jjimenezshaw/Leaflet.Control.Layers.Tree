@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../../L.Control.Layers.Tree.css" />
 
     <script src="../../node_modules/chai/chai.js"></script>
-    <script src="../../node_modules/happen/happen.js"></script>
     <script src="../../node_modules/mocha/mocha.js"></script>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -30,8 +29,8 @@
         mocha.globals(['L']);
 
         // mouse events used in v1
-        globalThis.MOVE_OVER_TYPE = {type: 'mouseover'};
-        globalThis.MOVE_OUT_TYPE = {type: 'mouseout'};
+        globalThis.OVER_EVENT = 'mouseover';
+        globalThis.OUT_EVENT = 'mouseout';
     </script>
 
     <script src="../spec.js"></script>

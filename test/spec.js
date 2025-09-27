@@ -5,6 +5,14 @@ const should = chai.should();
 const layerA = new L.TileLayer('');
 const layerB = new L.TileLayer('');
 
+const markerO = new L.Marker([0, 0]);
+const markerA = new L.Marker([40, 0]);
+const markerB = new L.Marker([0, 30]);
+const markerC = new L.Marker([0, 20]);
+
+const evtIn = new Event(OVER_EVENT);
+const evtOut = new Event(OUT_EVENT);
+
 function baseArray1() {
     return [
         {label: 'Leaf one', name: 'Name Leaf one', layer: new L.TileLayer('')},
@@ -34,11 +42,6 @@ function baseTree1() {
         children: baseArray1(),
     };
 }
-
-const markerO = new L.Marker([0, 0]);
-const markerA = new L.Marker([40, 0]);
-const markerB = new L.Marker([0, 30]);
-const markerC = new L.Marker([0, 20]);
 
 function overlaysArray1() {
     return [
@@ -206,11 +209,11 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, true, 0);
 
             // mouse over the control to show it.
-            happen.once(ctrl._container, MOVE_OVER_TYPE);
+            ctrl._container.dispatchEvent(evtIn);
             checkHidden(inputs, false, 0);
             checkHidden(headers, false, 0);
             // Hi, let it as you found it.
-            happen.once(ctrl._container, MOVE_OUT_TYPE);
+            ctrl._container.dispatchEvent(evtOut);
         });
     });
 
@@ -231,12 +234,12 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, true, 0);
 
             // mouse over the control to show it.
-            happen.once(ctrl._container, MOVE_OVER_TYPE);
+            ctrl._container.dispatchEvent(evtIn);
             checkHidden(inputs, false, 0);
             checkHidden(headers, false, 1);
             checkHidden(headers, [1, 0, 0, 0, 0, 0, 0], 0); // see, root is hidden!
             // Hi, let it as you found it.
-            happen.once(ctrl._container, MOVE_OUT_TYPE);
+            ctrl._container.dispatchEvent(evtOut);
         });
     });
 
@@ -268,11 +271,11 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, true, 0);
 
             // mouse over the control to show it.
-            happen.once(ctrl._container, MOVE_OVER_TYPE);
+            ctrl._container.dispatchEvent(evtIn);
             checkHidden(inputs, false, 0);
             checkHidden(headers, false, 0);
             // Hi, let it as you found it.
-            happen.once(ctrl._container, MOVE_OUT_TYPE);
+            ctrl._container.dispatchEvent(evtOut);
         });
     });
 
@@ -293,12 +296,12 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, true, 0);
 
             // mouse over the control to show it.
-            happen.once(ctrl._container, MOVE_OVER_TYPE);
+            ctrl._container.dispatchEvent(evtIn);
             checkHidden(inputs, false, 0);
             checkHidden(headers, false, 1);
             checkHidden(headers, [1, 0, 0, 0, 0, 0, 0], 0);
             // Hi, let it as you found it.
-            happen.once(ctrl._container, MOVE_OUT_TYPE);
+            ctrl._container.dispatchEvent(evtOut);
         });
     });
 
@@ -317,7 +320,7 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(inputs, [0, 0, 0, 1, 1, 1, 1, 1, 0], 0);
             checkHidden(headers, [1, 0, 0, 0, 1, 1, 1, 1, 1, 0], 0);
 
-            happen.click(headers[3]);
+            headers[3].click();
             checkHidden(headers, [1, 0, 0, 0, 0, 0, 0, 1, 1, 0], 0);
         });
         it('inner collapsed', function() {
@@ -339,7 +342,7 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(inputs, [0, 0, 0, 1, 1, 1, 1, 1, 0], 0);
             checkHidden(headers, [1, 0, 0, 0, 1, 1, 1, 1, 1, 0], 0);
 
-            happen.click(headers[3]);
+            headers[3].click();
             checkHidden(headers, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0);
         });
     });
@@ -356,7 +359,7 @@ describe('L.Control.Layers.Tree', function() {
             headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
 
-            happen.click(headers[3].querySelector('.sel'));
+            headers[3].querySelector('.sel').click();
             map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
             map._layers[L.Util.stamp(markerC)].should.be.equal(markerC);
             should.not.exist(map._layers[L.Util.stamp(markerB)]);
@@ -371,10 +374,10 @@ describe('L.Control.Layers.Tree', function() {
             headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
 
-            happen.click(headers[3].querySelector('.sel'));
+            headers[3].querySelector('.sel').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(4);
 
-            happen.click(headers[3].querySelector('.unsel'));
+            headers[3].querySelector('.unsel').click();
             should.not.exist(map._layers[L.Util.stamp(markerA)]);
             should.not.exist(map._layers[L.Util.stamp(markerC)]);
             should.not.exist(map._layers[L.Util.stamp(markerB)]);
@@ -389,7 +392,7 @@ describe('L.Control.Layers.Tree', function() {
             headers[6].parentElement.querySelectorAll('input').length.should.be.equal(2);
             headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
 
-            happen.click(headers[6].querySelector('.sel'));
+            headers[6].querySelector('.sel').click();
             map._layers[L.Util.stamp(markerC)].should.be.equal(markerC);
             should.not.exist(map._layers[L.Util.stamp(markerA)]);
             should.not.exist(map._layers[L.Util.stamp(markerB)]);
@@ -404,10 +407,10 @@ describe('L.Control.Layers.Tree', function() {
             headers[6].parentElement.querySelectorAll('input').length.should.be.equal(2);
             headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
 
-            happen.click(headers[6].querySelector('.sel'));
+            headers[6].querySelector('.sel').click();
             headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(2);
 
-            happen.click(headers[6].querySelector('.unsel'));
+            headers[6].querySelector('.unsel').click();
             should.not.exist(map._layers[L.Util.stamp(markerA)]);
             should.not.exist(map._layers[L.Util.stamp(markerC)]);
             should.not.exist(map._layers[L.Util.stamp(markerB)]);
@@ -438,10 +441,10 @@ describe('L.Control.Layers.Tree', function() {
             headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
 
-            happen.click(headers[3].querySelector('.sel'));
+            headers[3].querySelector('.sel').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(4);
 
-            happen.click(headers[3].querySelector('.unsel'));
+            headers[3].querySelector('.unsel').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
         });
 
@@ -457,17 +460,18 @@ describe('L.Control.Layers.Tree', function() {
             headers[3].parentElement.querySelectorAll('input').length.should.be.equal(4);
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
 
-            happen.click(headers[3].querySelector('.sel'));
+            headers[3].querySelector('.sel').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(4);
-            happen.click(headers[3].querySelector('.sel'));
+            headers[3].querySelector('.sel').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
 
-            happen.click(headers[5].querySelector('input'));
+            headers[5].querySelector('input').click();
+
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(1);
 
-            happen.click(headers[3].querySelector('.sel'));
+            headers[3].querySelector('.sel').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
-            happen.click(headers[3].querySelector('.sel'));
+            headers[3].querySelector('.sel').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(4);
         });
     });
@@ -497,39 +501,39 @@ describe('L.Control.Layers.Tree', function() {
 
             headers[6].querySelector('input').title.should.be.equal('my title');
 
-            happen.click(headers[9].querySelector('input'));
+            headers[9].querySelector('input').click();
 
             headers[3].parentElement.querySelectorAll('input').length.should.be.equal(6);
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
 
-            happen.click(headers[3].querySelector('input'));
+            headers[3].querySelector('input').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
             shouldbe(true, true, true);
-            happen.click(headers[3].querySelector('input'));
+            headers[3].querySelector('input').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
             shouldbe(false, true, false);
 
-            happen.click(headers[9].querySelector('input'));
+            headers[9].querySelector('input').click();
             shouldbe(false, false, false);
 
-            happen.click(headers[4].querySelector('input'));
+            headers[4].querySelector('input').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(1);
             shouldbe(true, false, false);
             headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(1);
 
-            happen.click(headers[3].querySelector('input'));
+            headers[3].querySelector('input').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
             shouldbe(true, false, true);
-            happen.click(headers[3].querySelector('input'));
+            headers[3].querySelector('input').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
             shouldbe(false, false, false);
 
-            happen.click(headers[6].querySelector('input'));
+            headers[6].querySelector('input').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(3);
             headers[6].parentElement.querySelectorAll('input:checked').length.should.be.equal(3);
             headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(1);
             shouldbe(false, false, true);
-            happen.click(headers[3].querySelector('input'));
+            headers[3].querySelector('input').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
             shouldbe(true, false, true);
         });
@@ -540,29 +544,29 @@ describe('L.Control.Layers.Tree', function() {
 
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(0);
             headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(0);
-            happen.click(headers[3].querySelector('input'));
+            headers[3].querySelector('input').click();
             headers[3].parentElement.querySelectorAll('input:checked').length.should.be.equal(6);
             headers[3].parentElement.querySelectorAll('input:indeterminate').length.should.be.equal(0);
 
-            happen.click(headers[7].querySelector('input'));
+            headers[7].querySelector('input').click();
             headers[3].parentElement.querySelector('input').checked.should.be.false;
             headers[3].parentElement.querySelector('input').indeterminate.should.be.true;
             headers[6].parentElement.querySelector('input').checked.should.be.false;
             headers[6].parentElement.querySelector('input').indeterminate.should.be.true;
 
-            happen.click(headers[7].querySelector('input'));
+            headers[7].querySelector('input').click();
             headers[3].parentElement.querySelector('input').checked.should.be.true;
             headers[3].parentElement.querySelector('input').indeterminate.should.be.false;
             headers[6].parentElement.querySelector('input').checked.should.be.true;
             headers[6].parentElement.querySelector('input').indeterminate.should.be.false;
 
-            happen.click(headers[6].querySelector('input'));
+            headers[6].querySelector('input').click();
             headers[3].parentElement.querySelector('input').checked.should.be.false;
             headers[3].parentElement.querySelector('input').indeterminate.should.be.true;
             headers[6].parentElement.querySelector('input').checked.should.be.false;
             headers[6].parentElement.querySelector('input').indeterminate.should.be.false;
 
-            happen.click(headers[6].querySelector('input'));
+            headers[6].querySelector('input').click();
             headers[3].parentElement.querySelector('input').checked.should.be.true;
             headers[3].parentElement.querySelector('input').indeterminate.should.be.false;
             headers[6].parentElement.querySelector('input').checked.should.be.true;
@@ -582,9 +586,9 @@ describe('L.Control.Layers.Tree', function() {
             new L.Control.Layers.Tree(baseTree1(), null, {collapsed: false}).addTo(map);
             const headers = map._container.querySelectorAll('.leaflet-control-layers-base .leaflet-layerstree-header');
             headers.length.should.be.equal(7);
-            happen.click(headers[6].querySelector('label'));
+            headers[6].querySelector('label').click();
             map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
-            happen.click(headers[4].querySelector('label'));
+            headers[4].querySelector('label').click();
             map._layers[L.Util.stamp(layerA)].should.be.equal(layerA);
         });
 
@@ -598,23 +602,23 @@ describe('L.Control.Layers.Tree', function() {
                 headers.length.should.be.equal(14);
 
                 if (labelIsSelector === 'both' || labelIsSelector === 'base') {
-                    happen.click(headers[6].querySelector('label'));
+                    headers[6].querySelector('label').click();
                     map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
                     counter[0]++;
                 } else {
                     should.not.exist(headers[6].querySelector('label'));
-                    happen.click(headers[6].querySelector('input'));
+                    headers[6].querySelector('input').click();
                     map._layers[L.Util.stamp(layerB)].should.be.equal(layerB);
                     counter[1]++;
                 }
 
                 if (labelIsSelector === 'both' || labelIsSelector === 'overlay') {
-                    happen.click(headers[11].querySelector('label'));
+                    headers[11].querySelector('label').click();
                     map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
                     counter[2]++;
                 } else {
                     should.not.exist(headers[11].querySelector('label'));
-                    happen.click(headers[11].querySelector('input'));
+                    headers[11].querySelector('input').click();
                     map._layers[L.Util.stamp(markerA)].should.be.equal(markerA);
                     counter[3]++;
                 }
@@ -689,11 +693,11 @@ describe('L.Control.Layers.Tree', function() {
             const toggle = map._container.querySelector('.leaflet-control-layers-toggle');
             toggle.innerHTML.should.be.equal('Name Leaf three');
             const inputs = map._container.querySelectorAll('.leaflet-control-layers-list input');
-            happen.click(inputs[0]);
+            inputs[0].click();
             toggle.innerHTML.should.be.equal('Name Leaf one');
-            happen.click(inputs[2]);
+            inputs[2].click();
             toggle.innerHTML.should.be.equal('Name Leaf 11');
-            happen.click(inputs[8]);
+            inputs[8].click();
             toggle.innerHTML.should.be.equal('Name Leaf 11');
         });
     });
@@ -807,9 +811,9 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1], 0);
             const ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
             ct.length.should.be.equal(2);
-            happen.click(ct[0]);
+            ct[0].click();
             checkHidden(headers, [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1], 0);
-            happen.click(ct[1]);
+            ct[1].click();
             checkHidden(headers, false, 0);
         });
         it('collapseAll', function() {
@@ -820,9 +824,9 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, false, 0);
             const ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
             ct.length.should.be.equal(2);
-            happen.click(ct[0]);
+            ct[0].click();
             checkHidden(headers, [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0], 0);
-            happen.click(ct[1]);
+            ct[1].click();
             checkHidden(headers, [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1], 0);
         });
         it('Empties', function() {
@@ -843,9 +847,9 @@ describe('L.Control.Layers.Tree', function() {
             checkHidden(headers, [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], 0);
             const ct = map._container.querySelectorAll('.leaflet-layerstree-expand-collapse');
             ct.length.should.be.equal(2);
-            happen.click(ct[0]);
+            ct[0].click();
             checkHidden(headers, [1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0], 0);
-            happen.click(ct[1]);
+            ct[1].click();;
             checkHidden(headers, [1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0], 0);
         });
     });
@@ -865,7 +869,7 @@ describe('L.Control.Layers.Tree', function() {
 
             headers = map._container.querySelectorAll('.leaflet-layerstree-header');
             headers.length.should.be.equal(7);
-            happen.click(headers[4].querySelector('label'));
+            headers[4].querySelector('label').click();
             map._layers[L.Util.stamp(layerA)].should.be.equal(layerA);
         });
         it('case 2', function() {
