@@ -1,7 +1,3 @@
-/*
- * Leaflet Control Layers Tree 1.1.1, a Leaflet plugin.
- * (c) 2017-2025 Javier Jimenez Shaw
- */
 (function(global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('leaflet')) :
         typeof define === 'function' && define.amd ? define(['exports', 'leaflet'], factory) :

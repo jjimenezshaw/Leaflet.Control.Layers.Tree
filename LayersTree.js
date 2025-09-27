@@ -95,7 +95,6 @@ export class LayersTree extends Control.Layers {
             map.on('baselayerchange', function(e) {changeName(e.layer);}, this);
         }
         return ret;
-        // return this._container;
     }
 
     // Expands the whole tree (base other overlays)

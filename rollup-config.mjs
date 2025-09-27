@@ -44,7 +44,7 @@ const config = {
                 ];
                 for (const fileName of fileNames) {
                     const source = readFileSync(new URL(`./${fileName}`, import.meta.url));
-                    this.emitFile({type: 'asset',	fileName, source});
+                    this.emitFile({type: 'asset', fileName, source: `${banner}${source}`});
                 }
             },
         },
@@ -71,8 +71,9 @@ async function getVersion() {
 }
 
 export function createBanner(version) {
-    return `/* @preserve
+    return `/*
  * Leaflet Control Layers Tree ${version}, a Leaflet plugin.
  * (c) 2017-${new Date().getFullYear()} Javier Jimenez Shaw
- */`;
+ */
+`;
 }
