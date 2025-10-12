@@ -103,7 +103,8 @@ var overlaysTree = {
                         { label: 'Branderburger Tor', layer: L.marker([52.5162542, 13.3776805])},
                         { label: 'Kölner Dom', layer: L.marker([50.9413240, 6.9581201])},
                     ]
-                }, {label: 'Spain',
+                }, {
+                    label: 'Spain',
                     selectAllCheckbox: 'De/seleccionar todo',
                     children: [
                         { label: 'Palacio Real', layer: L.marker([40.4184145, -3.7137051])},
