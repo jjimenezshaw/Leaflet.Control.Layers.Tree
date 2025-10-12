@@ -1,8 +1,9 @@
-import eslintJS from '@eslint/js';
-import eslintPluginHtml from 'eslint-plugin-html';
-import globals from 'globals';
+const eslintJS = require('@eslint/js');
+const eslintPluginHtml = require('eslint-plugin-html');
+const globals = require('globals');
 
-export default [
+module.exports = [
+    {ignores: ['**/dist**']},
     eslintJS.configs.recommended,
     {
         files: ['test/**'],
@@ -11,8 +12,10 @@ export default [
                 ...globals.mocha,
                 ...globals.jest,
                 chai: true,
-                happen: true
-            }
+                should: true,
+                OVER_EVENT: true,
+                OUT_EVENT: true,
+            },
         },
     },
     {
@@ -22,6 +25,7 @@ export default [
                 ...globals.node,
                 ...globals.browser,
                 ...globals.es6,
+                ...globals.amd,
                 L: true,
             },
         },
@@ -30,10 +34,11 @@ export default [
         },
         settings: {
             'html/indent': 'space',
-            'html/report-bad-indent': 2
+            'html/report-bad-indent': 2,
         },
         rules: {
             camelcase: 'error',
+            'comma-dangle': ['error', 'always-multiline'],
             'comma-spacing': ['error', {after: true}],
             'comma-style': 'error',
             indent: ['error', 4],
@@ -60,7 +65,7 @@ export default [
             'space-before-function-paren': ['error', 'never'],
             'space-in-parens': 'error',
             semi: ['error', 'always'],
-            strict: 'off'
+            strict: 'off',
         },
     },
 ];

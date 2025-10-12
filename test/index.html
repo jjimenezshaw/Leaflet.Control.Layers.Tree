@@ -1,50 +1,43 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Leaflet.Control.Layers.Tree Tests</title>
+    <title>L.Control.Layers.Tree Tests (v2)</title>
+
     <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
-    <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" />
     <link rel="stylesheet" href="../L.Control.Layers.Tree.css" />
 
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+
+    <script src="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet-global.js"></script>
+    <script src="../dist/LayersTree-umd.js" type="application/javascript"></script>
+
     <style>
-        .map, .label {
+        .map {
             width: 400px;
             height: 400px;
-            float: left;
-        }
-        .label {
-            width: 40px;
-            text-align: left;
-            font-size: 40px;
-            padding: 20px 30px;
-        }
-        #mocha {
-            clear: both;
         }
     </style>
 </head>
 <body>
-    <div id="maps">
-        <div id="mapA" class="map"></div>
-    </div>
+    <div id="map" class="map"></div>
     <div id="mocha"></div>
 
-    <script src="../node_modules/leaflet/dist/leaflet.js"></script>
-
-    <script src="../L.Control.Layers.Tree.js" data-cover></script>
-
-    <script src="../node_modules/chai/chai.js"></script>
-    <script src="../node_modules/mocha/mocha.js"></script>
-    <script src="../node_modules/happen/happen.js"></script>
-
-    <script class="mocha-init">
+    <script>
         mocha.setup('bdd');
         mocha.globals(['L']);
+
+        // pointer events used in v2
+        globalThis.OVER_EVENT = 'pointerover';
+        globalThis.OUT_EVENT = 'pointerout';
+
+        globalThis.should = chai.should();
     </script>
 
     <script src="spec.js"></script>
 
-    <script class="mocha-exec">
+    <script>
         mocha.run();
     </script>
 </body>

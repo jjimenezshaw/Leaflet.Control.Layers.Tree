@@ -1,36 +1,36 @@
 import * as L from 'leaflet';
-import {LayersTree, type TreeObject, type TreeOptions} from '../LayersTree';
+import 'L.Control.Layers.Tree';
 
-const markerO = new L.Marker([0, 0]);
-const markerA = new L.Marker([40, 0]);
-const markerB = new L.Marker([0, 30]);
-const markerC = new L.Marker([0, 20]);
+const markerO = L.marker([0, 0]);
+const markerA = L.marker([40, 0]);
+const markerB = L.marker([0, 30]);
+const markerC = L.marker([0, 20]);
 
-const baseTree = {label: 'Base'} as TreeObject;
+const baseTree = {label: 'Base'} as L.Control.Layers.TreeObject;
 baseTree.name = 'None';
 
-const overlayTree = {label: 'Overlay'} as TreeObject;
+const overlayTree = {label: 'Overlay'} as L.Control.Layers.TreeObject;
 overlayTree.name = 'Root';
 overlayTree.layer = markerO;
 overlayTree.collapsed = true;
 overlayTree.selectAllCheckbox = true;
 overlayTree.children = [
     {label: 'Over one', name: 'Name Over one', layer: markerO},
-    {label: 'Over two', name: 'Name Over two', layer: new L.LayerGroup([])},
+    {label: 'Over two', name: 'Name Over two', layer: L.layerGroup([])},
     {
         label: 'O Node 1',
         selectAllCheckbox: true,
         collapsed: true,
         children: [
             {label: 'Over 11', name: 'Name Over 11', layer: markerA},
-            {label: 'Over 12', layer: new L.LayerGroup([])},
+            {label: 'Over 12', layer: L.layerGroup([])},
             {
                 label: '1 Node 1',
                 selectAllCheckbox: 'my title',
                 collapsed: false,
                 children: [
                     {label: 'Over 21', name: 'Name Over 21', layer: markerC},
-                    {label: 'Over 22', layer: new L.LayerGroup([])},
+                    {label: 'Over 22', layer: L.layerGroup([])},
                 ]
             },
         ]
@@ -38,7 +38,7 @@ overlayTree.children = [
     {label: 'Over three', name: 'Name Over three', layer: markerB}
 ];
 
-const treeOptions: TreeOptions = {} as TreeOptions;
+const treeOptions: L.Control.Layers.TreeOptions = {} as L.Control.Layers.TreeOptions;
 treeOptions.closedSymbol = '&#8862; &#x1f5c0;';
 treeOptions.collapseAll = 'Collapse all';
 treeOptions.expandAll = 'Expand all';
@@ -49,7 +49,7 @@ treeOptions.selectorBack = false;
 treeOptions.spaceSymbol = '~';
 treeOptions.collapsed = false; // from L.Control.LayersOptions
 
-const tree: LayersTree = new LayersTree(baseTree, overlayTree, treeOptions);
+const tree: L.Control.Layers.Tree = L.control.layers.tree(baseTree, overlayTree, treeOptions);
 
 tree.options.closedSymbol;
 tree.options.collapseAll;

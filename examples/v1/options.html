@@ -3,20 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leaflet Layers Tree Control: Advanced Options</title>
+    <title>Leaflet (v1) Layers Tree Control: Advanced Options</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" crossorigin=""/>
-    <link rel="stylesheet" href="../L.Control.Layers.Tree.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <link rel="stylesheet" href="../../L.Control.Layers.Tree.css"/>
 
-    <script src="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet-global.js"></script>
-    <script type="importmap">
-        {
-            "imports": {
-                "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
-                "LayersTree": "../LayersTree.js"
-            }
-        }
-    </script>
+    <script type="text/javascript" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.js" crossorigin=""></script>
+    <script type="text/javascript" src="../../L.Control.Layers.Tree.js"></script>
 
     <style type="text/css">
         html, body { width: 100%; height: 100%; margin: 0; }
@@ -27,10 +20,7 @@
 <body>
     <div id="map"></div>
 
-    <script type="module">
-        import L from 'leaflet';
-        import {LayersTree} from 'LayersTree';
-
+    <script type="text/javascript">
         const center = [40, 0];
 
         const osm = new L.TileLayer(
@@ -131,7 +121,7 @@
             ],
         };
 
-        const lay = new LayersTree(baseTree, overlaysTree,
+        const lay = new L.Control.Layers.Tree(baseTree, overlaysTree,
             {
                 namedToggle: true,
                 selectorBack: false,
@@ -146,7 +136,6 @@
         L.DomEvent.on(L.DomUtil.get('onlysel'), 'click', function() {
             lay.collapseTree(true).expandSelected(true);
         });
-
     </script>
 </body>
 </html>

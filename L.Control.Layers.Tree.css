@@ -5,19 +5,8 @@
     background-image: none;
 }
 
-.leaflet-layerstree-node {
-}
-
-.leaflet-layerstree-header input{
+.leaflet-layerstree-header input {
     margin-left: 0px;
-}
-
-
-.leaflet-layerstree-header {
-}
-
-.leaflet-layerstree-header-pointer {
-    cursor: pointer;
 }
 
 .leaflet-layerstree-header label {
@@ -25,13 +14,9 @@
     cursor: pointer;
 }
 
-.leaflet-layerstree-header-label {
-}
-
-.leaflet-layerstree-header-name {
-}
-
-.leaflet-layerstree-header-space {
+.leaflet-layerstree-header-pointer,
+.leaflet-layerstree-expand-collapse {
+    cursor: pointer;
 }
 
 .leaflet-layerstree-children {
@@ -42,20 +27,7 @@
     padding-left: 0px;
 }
 
-.leaflet-layerstree-closed {
-}
-
-.leaflet-layerstree-opened {
-}
-
-.leaflet-layerstree-hide {
-    display: none;
-}
-
+.leaflet-layerstree-hide,
 .leaflet-layerstree-nevershow {
     display: none;
-}
-
-.leaflet-layerstree-expand-collapse {
-    cursor: pointer;
 }

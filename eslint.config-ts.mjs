@@ -4,6 +4,7 @@ import globals from 'globals';
 import eslintTS from 'typescript-eslint';
 
 export default [
+    {ignores: ['**/dist**']},
     eslintJS.configs.recommended,
     ...eslintTS.configs.recommended,
     eslintTS.configs.eslintRecommended,
@@ -12,12 +13,12 @@ export default [
         languageOptions: {
             globals: {
                 ...globals.node,
-                ...globals.es6
+                ...globals.es6,
             },
-            parser
+            parser,
         },
         rules: {
-            '@typescript-eslint/no-unused-expressions': 'off'
-        }
-    }
+            '@typescript-eslint/no-unused-expressions': 'off',
+        },
+    },
 ];
