@@ -1,4 +1,4 @@
-// copied and adapted from leaftlet repository
+// copied and adapted from leaflet repository
 import {readFileSync} from 'node:fs';
 
 import json from '@rollup/plugin-json';

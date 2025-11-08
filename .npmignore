@@ -1,8 +1,10 @@
 .*
 *.png
+dist
 eslint.*
 examples
 package-lock.json
+pnpm-lock.yaml
 rollup-config.mjs
 test
 tsconfig.*
