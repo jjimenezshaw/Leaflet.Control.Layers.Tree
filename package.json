@@ -14,13 +14,14 @@
     "build": "rollup -c rollup-config.mjs",
     "lint:js": "eslint .",
     "lint:ts": "eslint --config eslint.config-ts.mjs *.ts",
-    "lint": "npm run lint:js && npm run lint:ts",
-    "lint:fix": "npm run lint:js -- --fix",
+    "lint": "pnpm lint:js && pnpm lint:ts",
+    "lint:fix": "pnpm lint:js -- --fix",
+    "spec:js:pre": "puppeteer browsers install chrome",
     "spec:js:v1": "mocha-headless-chrome -f test/v1/index.html -a no-sandbox",
     "spec:js": "mocha-headless-chrome -f test/index.html -a no-sandbox",
     "spec:ts": "tsc",
-    "spec": "npm run build && npm run spec:js && npm run spec:js:v1 && npm run spec:ts",
-    "test": "npm run lint && npm run spec"
+    "spec": "pnpm build && pnpm spec:js:pre && pnpm spec:js && pnpm spec:js:v1 && pnpm spec:ts",
+    "test": "pnpm lint && pnpm spec"
   },
   "repository": {
     "type": "git",
@@ -35,24 +36,27 @@
     "layers"
   ],
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
     "@rollup/plugin-json": "^6.1.0",
-    "@types/leaflet": "^1.9.20",
-    "@typescript-eslint/eslint-plugin": "^8.44.1",
-    "@typescript-eslint/parser": "^8.44.1",
+    "@types/leaflet": "^1.9.21",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
     "chai": "^4.5.0",
-    "eslint": "^9.36.0",
+    "eslint": "^9.39.1",
     "eslint-plugin-html": "^8.1.3",
+    "globals": "^16.5.0",
     "http-server": "^14.1.1",
     "leaflet": "^1.9.4",
-    "mocha": "^11.7.2",
+    "mocha": "^11.7.5",
     "mocha-headless-chrome": "^5.1.0",
-    "rollup": "^4.52.3",
+    "puppeteer": "^24.29.1",
+    "rollup": "^4.53.1",
     "rollup-plugin-delete": "^3.0.1",
     "rollup-plugin-git-version": "^0.3.1",
-    "simple-git": "^3.28.0",
+    "simple-git": "^3.30.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.44.1"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.3"
   },
   "peerDependencies": {
     "leaflet": "^1.1.0"
