@@ -58,6 +58,9 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.59.3"
   },
+  "resolutions": {
+    "puppeteer": "^25.0.2"
+  },
   "peerDependencies": {
     "leaflet": "^1.1.0"
   },
