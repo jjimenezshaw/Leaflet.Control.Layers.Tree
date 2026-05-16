@@ -41,7 +41,7 @@
     "@types/leaflet": "^1.9.21",
     "@typescript-eslint/eslint-plugin": "^8.59.3",
     "@typescript-eslint/parser": "^8.59.3",
-    "chai": "^4.5.0",
+    "chai": "^6.2.2",
     "eslint": "^10.4.0",
     "eslint-plugin-html": "^8.1.4",
     "globals": "^17.6.0",
