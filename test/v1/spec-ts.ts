@@ -1,5 +1,4 @@
 import * as L from 'leaflet';
-import 'L.Control.Layers.Tree';
 
 const markerO = L.marker([0, 0]);
 const markerA = L.marker([40, 0]);
