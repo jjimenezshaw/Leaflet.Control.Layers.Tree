@@ -1,0 +1,5 @@
+allowBuilds:
+  puppeteer: false
+
+overrides:
+  puppeteer: ^25.0.2
